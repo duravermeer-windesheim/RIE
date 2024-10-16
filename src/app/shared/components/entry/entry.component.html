@@ -1,0 +1,22 @@
+
+<div class="entry">
+	<label class="entry-label" for="entry-input-field-{{ this.labelCode }}">
+		{{ this.config.label }}
+		<span class="entry-label-asterisk" *ngIf="this.config.required">*</span>
+	</label>
+
+	<div class="entry-input-unit-field">
+		<input
+			id="entry-input-field-{{ this.labelCode }}"
+			class="entry-input {{ this.isValid ? '' : 'invalid'}}"
+			type="number"
+			inputmode="numeric"
+			[(ngModel)]="this.value"
+			[min]="this.config.min ?? null"
+			[max]="this.config.max ?? null"
+			[placeholder]="this.config.placeholder"
+			(ngModelChange)="onChange()"
+		/>
+		<div class="entry-unit">{{ this.config.unit }}</div>
+	</div>
+</div>

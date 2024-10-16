@@ -1,0 +1,66 @@
+
+.entry{
+	width: 100%;
+	height: 50px;
+}
+
+.entry-label {
+	color: var(--color-primary);
+	cursor: pointer;
+}
+
+.entry-label-asterisk {
+	color: red;
+}
+
+.entry-input-unit-field {
+	height: 30px;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.entry-input {
+	flex: 1 1 0; /* This will allow it to grow and shrink */
+	min-width: 0; /* Ensures it can shrink properly */
+	border: 1px solid #E9E9E9;
+	border-right: none;
+	border-radius: 3px 0 0 3px;
+	padding: 5px;
+}
+
+.entry-input.invalid {
+	border: 1px solid tomato;
+	border-right: none;
+}
+.entry-input.invalid + .entry-unit {
+	border: 1px solid tomato;
+	border-left: none;
+}
+
+.entry-input:focus {
+	outline: none;
+}
+
+.entry-unit {
+	flex: 0 0 auto; /* Ensure it stays at 25% but can expand to 50% */
+	min-width: 25%; /* It should not go below 25% */
+	max-width: 50%;
+	border: 1px solid #E9E9E9;
+	background-color: #E9E9E9;
+	border-radius: 0 3px 3px 0;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
+	line-height: 30px;
+	cursor: context-menu;
+}
+
+
+/* Hide the spin button */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+	-webkit-appearance: none !important;
+}
+input[type=number] {
+	-moz-appearance:textfield;
+}
