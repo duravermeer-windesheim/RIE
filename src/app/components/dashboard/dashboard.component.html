@@ -1,0 +1,13 @@
+
+<header id="header-title">
+	<h1>Eerste Hulp Bij Omleidingen - Risicotool</h1>
+</header>
+
+<div id="temp-demo-box">
+	<app-entry
+		*ngFor="let entry of entries"
+		[config]="entry"
+		(onInputChange)="onInputChange($event)"
+	></app-entry>
+	<p>Dit is allemaal tijdelijk. Gewoon de velden testen etc.</p>
+</div>
