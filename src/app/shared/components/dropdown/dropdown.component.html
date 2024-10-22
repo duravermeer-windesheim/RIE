@@ -17,9 +17,8 @@
 		<option
 			*ngFor="let item of this.config.items"
 			[disabled]="item.disabled"
-			[selected]="item.selected"
 			[ngValue]="item"
-		>
+			[attr.selected]="item.selected ? 'selected' : null">
 			{{ item.value }}
 		</option>
 	</select>

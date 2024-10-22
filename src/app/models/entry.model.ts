@@ -1,5 +1,5 @@
 
-export interface Entry {
+export interface EntryConfig {
 	label: string,
 	unit: string,
 	required?: boolean,
@@ -7,4 +7,5 @@ export interface Entry {
 	min?: number,
 	max?: number,
 	placeholder?: string
+	validationMessage?: string
 }

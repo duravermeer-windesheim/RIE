@@ -1,25 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Dropdown, DropdownItem} from '../../../models/dropdown.model';
-import {NgForOf, NgIf} from '@angular/common';
-import {EntryComponent} from '../entry/entry.component';
-import {FormsModule} from '@angular/forms';
+import {DropdownConfig, DropdownItem} from '../../../models/dropdown.model';
 
 @Component({
-  selector: 'app-dropdown',
-  standalone: true,
-	imports: [
-		NgIf,
-		NgForOf,
-		EntryComponent,
-		FormsModule
-	],
-  templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.css'
+	selector: 'app-dropdown',
+	templateUrl: './dropdown.component.html',
+	styleUrl: './dropdown.component.css'
 })
 export class DropdownComponent implements OnInit {
 
 	@Input({required: true})
-	public config!: Dropdown;
+	public config!: DropdownConfig;
 
 	@Output()
 	onInputChange = new EventEmitter<DropdownItem>();
@@ -36,7 +26,7 @@ export class DropdownComponent implements OnInit {
 			})
 		}
 
-		this.item = this.config?.items[0]
+		this.item = this.config?.items.find(item => item.selected) || this.config?.items[0];
 	}
 
 	onChange() {
