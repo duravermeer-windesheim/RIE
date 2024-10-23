@@ -3,16 +3,15 @@
 	<label
 		class="dropdown-label"
 		[class.invalid]="!isValid"
-		for="dropdown-input-field-{{ this.labelCode }}">
+		for="dropdown-input-field-{{ this.config.code }}">
 		{{ this.config.label }}
 		<span class="dropdown-label-asterisk" *ngIf="this.config.required">*</span>
 	</label>
 
 	<select
-		id="dropdown-select-field-{{ this.labelCode }}"
+		id="dropdown-select-field-{{ this.config.code }}"
 		class="dropdown-select {{ this.isValid ? '' : 'invalid'}}"
 		[(ngModel)]="this.item"
-		(ngModelChange)="onChange()"
 	>
 		<option
 			*ngFor="let item of this.config.items"

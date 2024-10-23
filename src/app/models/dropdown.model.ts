@@ -1,5 +1,6 @@
 export interface DropdownConfig {
 	label: string,
+	code: string,
 	required?: boolean,
 	validationMessage?: string,
 	addDefaultEmptyOption?: boolean,

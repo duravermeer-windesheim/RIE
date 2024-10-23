@@ -1,25 +1,10 @@
 
 <header id="header-title">
-	<h1>Eerste Hulp Bij Omleidingen - Risicotool</h1>
+	<h1>risico-inventarisatie en -evaluatie</h1>
 </header>
 
-<div id="temp-demo-box">
-	<div id="temp-demo-box-input">
-		<app-entry
-			*ngFor="let entry of entries"
-			[config]="entry"
-			(onInputChange)="onInputChange($event)"
-		></app-entry>
-		<app-dropdown
-			[config]="dropdown_conf"
-			(onInputChange)="onDropdownChange($event)"
-		></app-dropdown>
-
-		<p>Dit is allemaal tijdelijk. Gewoon de velden testen etc.</p>
-	</div>
-	<div id="temp-demo-box-output">
-		<pre *ngIf="this.entryChildren">
-{{ this.getValues() | json }}
-		</pre>
-	</div>
-</div>
+<main id="panels">
+	<app-info-panel></app-info-panel>
+	<app-entry-panel></app-entry-panel>
+	<app-result-panel [data]="getValues()"></app-result-panel>
+</main>

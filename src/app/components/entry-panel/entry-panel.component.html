@@ -1,0 +1,16 @@
+
+<div id="entry-panel">
+	<div class="panel-header">
+		<h2>Bekende informatie</h2>
+	</div>
+	<div class="panel-contents">
+		<app-dropdown
+			*ngFor="let dropdown of this.dropdowns"
+			[config]="dropdown"
+		></app-dropdown>
+		<app-entry
+			*ngFor="let entry of this.entries"
+			[config]="entry"
+		></app-entry>
+	</div>
+</div>
