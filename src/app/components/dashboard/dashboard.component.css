@@ -27,29 +27,20 @@ app-entry {
 	margin-bottom: 20px;
 }
 
-#temp-demo-box {
+#panels {
+	width: 80%;
+	height: auto;
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 40px;
+	margin-left: 10%;
+	margin-right: 10%;
+	padding: 5px;
 }
 
-#temp-demo-box-input {
-	width: 300px;
-	height: 350px;
-	padding: 20px;
-	background: var(--color-secondary);
-	margin: 50px 25px 25px;
-	box-shadow: 8px 12px 10px rgba(0, 0, 0, 0.25);
-	border-radius: 3px;
-}
-
-#temp-demo-box-output {
-	width: 300px;
-	height: 350px;
-	padding: 20px;
-	background: var(--color-secondary);
-	margin: 50px 25px 25px;
-	box-shadow: 8px 12px 10px rgba(0, 0, 0, 0.25);
-	border-radius: 3px;
+app-result-panel,
+app-entry-panel,
+app-info-panel {
+	width: 32%;
 }

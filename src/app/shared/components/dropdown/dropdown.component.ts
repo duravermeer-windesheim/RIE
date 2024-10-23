@@ -11,9 +11,6 @@ export class DropdownComponent implements OnInit {
 	@Input({required: true})
 	public config!: DropdownConfig;
 
-	@Output()
-	onInputChange = new EventEmitter<DropdownItem>();
-
 	public item!: DropdownItem;
 
 	ngOnInit() {
@@ -29,17 +26,6 @@ export class DropdownComponent implements OnInit {
 		this.item = this.config?.items.find(item => item.selected) || this.config?.items[0];
 	}
 
-	onChange() {
-		this.onInputChange.emit(this.item);
-	}
-
-	public get labelCode(): string {
-		return this.config.label
-			.toLowerCase()
-			.trim()
-			.replace(/\s+/g, '_');
-	}
-
 	public get isValid(): boolean {
 		if (!this.config.required) {
 			return true;
@@ -49,7 +35,10 @@ export class DropdownComponent implements OnInit {
 	}
 
 	public getValue() {
-		return this.item;
+		return {
+			"key": this.config.code,
+			"value": this.item
+		};
 	}
 
 }

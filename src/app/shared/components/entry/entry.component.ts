@@ -11,9 +11,6 @@ export class EntryComponent implements OnInit {
 	@Input({required: true})
 	public config!: EntryConfig;
 
-	@Output()
-	onInputChange = new EventEmitter<number>();
-
 	public value: number | null = null;
 	public validationMessage?: string;
 
@@ -21,17 +18,6 @@ export class EntryComponent implements OnInit {
 	ngOnInit() {
 		this.value = this.config.defaultValue ?? 0;
 		this.validationMessage = this.config.validationMessage;
-	}
-
-	onChange() {
-		this.onInputChange.emit(this.value ?? -1);
-	}
-
-	public get labelCode(): string {
-		return this.config.label
-			.toLowerCase()
-			.trim()
-			.replace(/\s+/g, '_');
 	}
 
 	// Checks if the value is valid.
@@ -59,7 +45,10 @@ export class EntryComponent implements OnInit {
 	}
 
 	public getValue() {
-		return this.value;
+		return {
+			"key": this.config.code,
+			"value": this.value
+		};
 	}
 
 }

@@ -3,22 +3,23 @@
 	<label
 		class="entry-label"
 		[class.invalid]="!isValid"
-		for="entry-input-field-{{ this.labelCode }}">
+		for="entry-input-field-{{ this.config.code }}">
 		{{ this.config.label }}
 		<span class="entry-label-asterisk" *ngIf="this.config.required">*</span>
 	</label>
 
 	<div class="entry-input-unit-field">
 		<input
-			id="entry-input-field-{{ this.labelCode }}"
+			id="entry-input-field-{{ this.config.code }}"
 			class="entry-input {{ this.isValid ? '' : 'invalid'}}"
 			type="number"
 			inputmode="numeric"
 			[(ngModel)]="this.value"
 			[min]="this.config.min ?? null"
 			[max]="this.config.max ?? null"
+			[step]="this.config.step ?? 0"
+			[disabled]="this.config.disabled ?? false"
 			[placeholder]="this.config.placeholder"
-			(ngModelChange)="onChange()"
 		/>
 		<div class="entry-unit">{{ this.config.unit }}</div>
 	</div>
