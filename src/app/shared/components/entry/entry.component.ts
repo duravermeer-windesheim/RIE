@@ -1,61 +1,65 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CommonModule, NgIf} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {Entry} from '../../../models/entry.model';
+import {EntryConfig} from '../../../models/entry.model';
 
 @Component({
-  selector: 'app-entry',
-  standalone: true,
-	imports: [
-		CommonModule,
-		FormsModule,
-		NgIf,
-	],
-  templateUrl: './entry.component.html',
-  styleUrl: './entry.component.css'
+	selector: 'app-entry',
+	templateUrl: './entry.component.html',
+	styleUrl: './entry.component.css'
 })
 export class EntryComponent implements OnInit {
 
 	@Input({required: true})
-	public config!: Entry;
+	public config!: EntryConfig;
 
 	@Output()
 	onInputChange = new EventEmitter<number>();
 
 	public value: number | null = null;
+	public validationMessage?: string;
+
 
 	ngOnInit() {
-		if (this.config.defaultValue != null) {
-			this.value = this.config.defaultValue ?? 0;
-		}
+		this.value = this.config.defaultValue ?? 0;
+		this.validationMessage = this.config.validationMessage;
 	}
 
-	get labelCode(): string {
+	onChange() {
+		this.onInputChange.emit(this.value ?? -1);
+	}
+
+	public get labelCode(): string {
 		return this.config.label
 			.toLowerCase()
 			.trim()
 			.replace(/\s+/g, '_');
 	}
 
-	get isValid(): boolean {
+	// Checks if the value is valid.
+	public get isValid(): boolean {
 		if (this.config.required && this.value == null) {
+			this.validationMessage = this.config.validationMessage;
 			return false;
 		}
 
 		if (this.value != null) {
 			if (this.config.max != null && this.value > this.config.max) {
+				this.validationMessage = this.config.validationMessage;
 				return false;
 			}
 			if (this.config.min != null && this.value < this.config.min) {
+				this.validationMessage = this.config.validationMessage;
 				return false;
 			}
+		} else {
+			this.validationMessage = this.config.validationMessage;
+			return false;
 		}
 
 		return true;
 	}
 
-	onChange() {
-		this.onInputChange.emit(this.value ?? -1);
+	public getValue() {
+		return this.value;
 	}
 
 }

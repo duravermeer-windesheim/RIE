@@ -1,0 +1,28 @@
+
+<div class="dropdown">
+	<label
+		class="dropdown-label"
+		[class.invalid]="!isValid"
+		for="dropdown-input-field-{{ this.labelCode }}">
+		{{ this.config.label }}
+		<span class="dropdown-label-asterisk" *ngIf="this.config.required">*</span>
+	</label>
+
+	<select
+		id="dropdown-select-field-{{ this.labelCode }}"
+		class="dropdown-select {{ this.isValid ? '' : 'invalid'}}"
+		[(ngModel)]="this.item"
+		(ngModelChange)="onChange()"
+	>
+		<option
+			*ngFor="let item of this.config.items"
+			[disabled]="item.disabled"
+			[ngValue]="item"
+			[attr.selected]="item.selected ? 'selected' : null">
+			{{ item.value }}
+		</option>
+	</select>
+	<sup class="dropdown-validation-message" *ngIf="!this.isValid">
+		{{ config.validationMessage ?? "Dit veld is niet valide" }}
+	</sup>
+</div>
