@@ -9,6 +9,7 @@
 {{ this.data.effect }} x {{ this.data.frequency }} x {{ this.data.probability }} = {{ this.data.effect * this.data.frequency * this.data.probability }}
 		</pre>
 		<div id="result-panel-invalid" *ngIf="!this.allValid">
+			<app-clock [tick]="4"></app-clock>
 			<p>
 
 				Vul eerst de bekende informatie in.

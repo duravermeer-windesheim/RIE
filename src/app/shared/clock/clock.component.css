@@ -1,0 +1,44 @@
+.circle {
+	width: 100px;
+	height: 100px;
+	margin: 20px;
+	border: 3px solid #1E1E1E;
+	border-radius: 50%;
+	background: conic-gradient(
+		#32b432 0deg 120deg,
+		#FFC000 120deg 240deg,
+		#ec3737 240deg 360deg
+	);
+}
+
+.inner-circle {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	width: 70%;
+	height: 70%;
+	border-radius: 50%;
+	background-color: #1E1E1E;
+	transform: translate(-50%, -50%);
+}
+
+.dot {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	width: 10%;
+	height: 10%;
+	border-radius: 50%;
+	background-color: #D9D9D9;
+	transform: translate(-50%, -50%);
+}
+
+.line {
+	position: relative;
+	width: 2px;
+	height: 47%;
+	background-color: #D9D9D9;
+	left: 50%;
+	transform-origin: bottom;
+	transform: translate(-100%, -143%) rotate(313deg);
+}
