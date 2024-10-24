@@ -4,15 +4,17 @@
 		<h2>Resultaat</h2>
 	</div>
 	<div class="panel-contents">
-		<pre *ngIf="this.data">
+		<pre *ngIf="this.data && this.allValid">
 {{ this.data | json }}
-		</pre>
-
-		<hr style="color: var(--color-primary)"/>
-
-		<pre>
 {{ this.data.effect }} x {{ this.data.frequency }} x {{ this.data.probability }} = {{ this.data.effect * this.data.frequency * this.data.probability }}
 		</pre>
+		<div id="result-panel-invalid" *ngIf="!this.allValid">
+			<p>
+
+				Vul eerst de bekende informatie in.
+			</p>
+			<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
+		</div>
 	</div>
 </div>
 

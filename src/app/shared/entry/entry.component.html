@@ -2,7 +2,7 @@
 <div class="entry">
 	<label
 		class="entry-label"
-		[class.invalid]="!isValid"
+		[class.invalid]="!isValid()"
 		for="entry-input-field-{{ this.config.code }}">
 		{{ this.config.label }}
 		<span class="entry-label-asterisk" *ngIf="this.config.required">*</span>
@@ -11,19 +11,19 @@
 	<div class="entry-input-unit-field">
 		<input
 			id="entry-input-field-{{ this.config.code }}"
-			class="entry-input {{ this.isValid ? '' : 'invalid'}}"
+			class="entry-input {{ this.isValid() ? '' : 'invalid'}}"
 			type="number"
 			inputmode="numeric"
 			[(ngModel)]="this.value"
 			[min]="this.config.min ?? null"
 			[max]="this.config.max ?? null"
-			[step]="this.config.step ?? 0"
+			[step]="this.config.step"
 			[disabled]="this.config.disabled ?? false"
 			[placeholder]="this.config.placeholder"
 		/>
 		<div class="entry-unit">{{ this.config.unit }}</div>
 	</div>
-	<sup class="entry-validation-message" *ngIf="!this.isValid">
+	<sup class="entry-validation-message" *ngIf="!this.isValid()">
 		{{ this.validationMessage ?? 'Dit veld is niet valide' }}
 	</sup>
 </div>

@@ -1,5 +1,5 @@
 
-export interface OutputModel {
+export interface ResultModel {
 	riskType: string,
 	situation: string,
 	probability: number,

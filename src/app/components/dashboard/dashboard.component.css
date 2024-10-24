@@ -39,8 +39,46 @@ app-entry {
 	padding: 5px;
 }
 
-app-result-panel,
-app-entry-panel,
-app-info-panel {
-	width: 32%;
+/* Small Devices (Phones) */
+@media (max-width: 576px) {
+	app-result-panel,
+	app-input-panel,
+	app-info-panel {
+		width: 100%;
+		margin-bottom: 30px;
+	}
+
+	#panels {
+		flex-direction: column;
+	}
+
 }
+
+/* Small Devices (Tablets) */
+@media (min-width: 576px) and (max-width: 992px) {
+	app-result-panel,
+	app-input-panel,
+	app-info-panel {
+		width: 100%;
+		margin-bottom: 30px;
+	}
+
+	#panels {
+		flex-direction: column;
+	}
+}
+
+/* Large Devices (Desktops) */
+@media (min-width: 992px) {
+	app-result-panel,
+	app-input-panel,
+	app-info-panel {
+		width: 32%;
+	}
+
+	#panels {
+		flex-direction: row;
+	}
+}
+
+

@@ -2,9 +2,10 @@
 app-dashboard {
 	display: block;
 	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
+	height: auto;
+	min-height: 100vh;
+	position: absolute;
 	background-color: var(--color-primary);
+	top: 0;
+	left: 0;
 }
-
-
