@@ -10,7 +10,7 @@ export abstract class BaseInputComponent<T extends InputConfig> implements OnIni
 	@Input({ required: true }) public config!: T;
 
 	public validationMessage?: string;
-	protected hasInteracted: boolean = true;
+	protected hasInteracted: boolean = false;
 	protected abstract value: any;
 
 
