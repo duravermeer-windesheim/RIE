@@ -1,27 +1,22 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EntryConfig} from '../../../models/entry.model';
+import {EntryConfig} from '../../models/entry.model';
+import {BaseInputComponent} from '../base-input.component';
 
 @Component({
 	selector: 'app-entry',
 	templateUrl: './entry.component.html',
 	styleUrl: './entry.component.css'
 })
-export class EntryComponent implements OnInit {
-
-	@Input({required: true})
-	public config!: EntryConfig;
-
+export class EntryComponent extends BaseInputComponent<EntryConfig> {
 	public value: number | null = null;
-	public validationMessage?: string;
 
-
-	ngOnInit() {
+	init() {
 		this.value = this.config.defaultValue ?? 0;
 		this.validationMessage = this.config.validationMessage;
 	}
 
 	// Checks if the value is valid.
-	public get isValid(): boolean {
+	public isValid(): boolean {
 		if (this.config.required && this.value == null) {
 			this.validationMessage = this.config.validationMessage;
 			return false;
@@ -44,11 +39,5 @@ export class EntryComponent implements OnInit {
 		return true;
 	}
 
-	public getValue() {
-		return {
-			"key": this.config.code,
-			"value": this.value
-		};
-	}
 
 }

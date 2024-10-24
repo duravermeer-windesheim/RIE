@@ -2,7 +2,7 @@
 <div class="dropdown">
 	<label
 		class="dropdown-label"
-		[class.invalid]="!isValid"
+		[class.invalid]="displayInvalid"
 		for="dropdown-input-field-{{ this.config.code }}">
 		{{ this.config.label }}
 		<span class="dropdown-label-asterisk" *ngIf="this.config.required">*</span>
@@ -10,8 +10,10 @@
 
 	<select
 		id="dropdown-select-field-{{ this.config.code }}"
-		class="dropdown-select {{ this.isValid ? '' : 'invalid'}}"
-		[(ngModel)]="this.item"
+		class="dropdown-select {{ displayInvalid ? 'invalid' : ''}}"
+		(focus)="onInteract()"
+		(change)="onInteract()"
+		[(ngModel)]="this.value"
 	>
 		<option
 			*ngFor="let item of this.config.items"
@@ -21,7 +23,7 @@
 			{{ item.value }}
 		</option>
 	</select>
-	<sup class="dropdown-validation-message" *ngIf="!this.isValid">
+	<sup class="dropdown-validation-message" *ngIf="displayInvalid">
 		{{ config.validationMessage ?? "Dit veld is niet valide" }}
 	</sup>
 </div>

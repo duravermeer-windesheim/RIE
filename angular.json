@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ORT": {
+    "RIE": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -29,7 +29,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ort",
+            "outputPath": "dist/rie",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -75,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ORT:build:production"
+              "buildTarget": "RIE:build:production"
             },
             "development": {
-              "buildTarget": "ORT:build:development"
+              "buildTarget": "RIE:build:development"
             }
           },
           "defaultConfiguration": "development"

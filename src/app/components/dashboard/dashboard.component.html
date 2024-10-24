@@ -1,10 +1,14 @@
 
 <header id="header-title">
-	<h1>risico-inventarisatie en -evaluatie</h1>
+	<h1>Dura Vermeer RI&E</h1>
 </header>
 
 <main id="panels">
 	<app-info-panel></app-info-panel>
-	<app-entry-panel></app-entry-panel>
-	<app-result-panel [data]="getValues()"></app-result-panel>
+	<app-input-panel></app-input-panel>
+	<app-result-panel
+		*ngIf="inputPanel"
+		[data]="this.inputPanel.getData()"
+		[allValid]="this.inputPanel.allValid()"
+	></app-result-panel>
 </main>
