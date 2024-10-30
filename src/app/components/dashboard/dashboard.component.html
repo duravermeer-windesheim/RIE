@@ -10,5 +10,6 @@
 		*ngIf="inputPanel"
 		[data]="this.inputPanel.getData()"
 		[allValid]="this.inputPanel.allValid()"
+		(onRemoveMeasure)="this.inputPanel.removeMeasure($event)"
 	></app-result-panel>
 </main>

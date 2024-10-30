@@ -1,21 +1,4 @@
 
-#input-panel {
-	background-color: var(--color-secondary);
-	color: var(--color-primary);
-	box-shadow: 8px 12px 10px rgba(0, 0, 0, 0.25);
-	border-radius: 3px;
-	padding: 20px;
-	box-sizing: border-box;
-	height: 100%;
-	width: 100%;
-}
-
-.panel-header {
-	border-bottom: 2px solid var(--color-primary);
-	text-align: center;
-	margin-top: -20px;
-}
-
 app-dropdown {
 	display: block;
 	margin-top: 20px;
@@ -29,3 +12,24 @@ app-entry {
 	margin-top: 9px;
 }
 
+#measure {
+	margin-top: 20px;
+	border-top: 2px solid var(--color-primary);
+	display: flex;
+	flex-direction: column;
+	justify-content: right;
+}
+
+#measure-add-button {
+	background-color: var(--color-primary);
+	color: var(--color-secondary);
+	width: 150px;
+	margin-top: -20px;
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: none;
+	text-align: center;
+	align-self: flex-end;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+}

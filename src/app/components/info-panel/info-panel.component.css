@@ -1,25 +1,4 @@
 
-#info-panel {
-	background-color: var(--color-secondary);
-	color: var(--color-primary);
-	box-shadow: 8px 12px 10px rgba(0, 0, 0, 0.25);
-	border-radius: 3px;
-	box-sizing: border-box;
-	height: 100%;
-	width: 100%;
-	padding: 20px;
-}
-
-.panel-header {
-	border-bottom: 2px solid var(--color-primary);
-	text-align: center;
-	margin-top: -20px;
-}
-
-.panel-footer {
-	margin-top: 30px;
-}
-
 #info-panel-database-redirect {
 	background-color: var(--color-primary);
 	color: var(--color-secondary);
@@ -29,4 +8,7 @@
 	text-align: center;
 	text-decoration: none;
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+	display: block;
+	margin-top: 30px;
+	width: 150px;
 }

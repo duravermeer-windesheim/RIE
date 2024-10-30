@@ -1,16 +1,28 @@
 
-<div id="input-panel">
-	<div class="panel-header">
-		<h2>Bekende informatie</h2>
-	</div>
-	<div class="panel-contents">
+<app-panel header="Bekende informatie">
+	<app-dropdown
+		[config]="this.dropdowns['riskType']"
+		[items]="this.dropdowns['riskType'].defaultItems"
+	></app-dropdown>
+	<app-dropdown
+		[config]="this.dropdowns['personType']"
+		[items]="this.dropdowns['personType'].defaultItems"
+	></app-dropdown>
+	<app-dropdown
+		[config]="this.dropdowns['situationType']"
+		[items]="this.dropdowns['situationType'].defaultItems"
+	></app-dropdown>
+	<app-entry [config]="this.entries['probability']"></app-entry>
+	<app-entry [config]="this.entries['frequency']"></app-entry>
+	<app-entry [config]="this.entries['effect']"></app-entry>
+
+	<div id="measure" *ngIf="this.currentMeasureOptions.length > 0">
 		<app-dropdown
-			*ngFor="let dropdown of this.dropdowns"
-			[config]="dropdown"
+			[config]="this.dropdowns['measure']"
+			[items]="this.currentMeasureOptions"
+			#measure
 		></app-dropdown>
-		<app-entry
-			*ngFor="let entry of this.entries"
-			[config]="entry"
-		></app-entry>
+		<button (click)="addSelectedMeasure()" id="measure-add-button">Pas maatregel toe</button>
 	</div>
-</div>
+
+</app-panel>

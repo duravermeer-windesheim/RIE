@@ -4,12 +4,14 @@ import { EntryComponent } from './entry/entry.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import {FormsModule} from '@angular/forms';
 import {ClockComponent} from './clock/clock.component';
+import {PanelComponent} from './panel/panel.component';
 
 @NgModule({
 	declarations: [
 		EntryComponent,
 		DropdownComponent,
-		ClockComponent
+		ClockComponent,
+		PanelComponent,
 	],
 	imports: [
 		CommonModule,
@@ -23,7 +25,8 @@ import {ClockComponent} from './clock/clock.component';
 	exports: [
 		EntryComponent,
 		DropdownComponent,
-		ClockComponent
+		ClockComponent,
+		PanelComponent
 	]
 })
 export class SharedModule { }

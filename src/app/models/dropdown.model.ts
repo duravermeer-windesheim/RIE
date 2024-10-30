@@ -4,11 +4,11 @@ export interface DropdownConfig {
 	required?: boolean,
 	validationMessage?: string,
 	addDefaultEmptyOption?: boolean,
-	items: DropdownItem[],
+	defaultItems: DropdownItem[],
 }
 
 export interface DropdownItem {
-	key: string,
+	key: number,
 	value: string,
 	selected?: boolean,
 	disabled?: boolean

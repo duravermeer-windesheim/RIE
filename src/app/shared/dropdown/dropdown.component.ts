@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterRenderRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DropdownConfig, DropdownItem} from '../../models/dropdown.model';
 import {BaseInputComponent} from '../base-input.component';
 
@@ -10,19 +10,26 @@ import {BaseInputComponent} from '../base-input.component';
 export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	public value!: DropdownItem;
 
+	@Input({required: true})
+	public items!: DropdownItem[];
 
 	init() {
 		if (this.config.addDefaultEmptyOption) {
-			this.config.items.unshift({
-				key: '-1',
+			this.items.unshift( {
+				key: -1,
 				value: 'Selecteer een optie...',
 				disabled: this.config.required,
 				selected: true
-			})
+			});
 		}
 
-		this.value = this.config?.items.find(item => item.selected) || this.config?.items[0];
 		this.validationMessage = this.config.validationMessage;
+		this.refreshItems();
+	}
+
+	public refreshItems() {
+		this.value = this.items.find(item => item.selected) || this.items[0];
+		this.items.sort((a, b) => a.key - b.key);
 	}
 
 	public isValid(): boolean {
@@ -30,9 +37,7 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 			return true;
 		}
 
-		return this.value.key !== '-1';
+		return this.value.key !== -1;
 	}
-
-
 
 }

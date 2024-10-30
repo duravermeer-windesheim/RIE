@@ -14,7 +14,7 @@
 	color: red;
 }
 
-.entry-input-unit-field {
+.entry-input-help-field {
 	height: 30px;
 	display: flex;
 	flex-wrap: nowrap;
@@ -33,7 +33,7 @@
 	border: 2px solid tomato;
 	border-right: none;
 }
-.entry-input.invalid + .entry-unit {
+.entry-input.invalid + .entry-help {
 	border: 2px solid tomato;
 	border-left: none;
 }
@@ -50,9 +50,9 @@
 	outline: none;
 }
 
-.entry-unit {
+.entry-help {
 	flex: 0 0 auto;
-	min-width: 25%;
+	min-width: 10%;
 	max-width: 50%;
 	border: 1px solid #E9E9E9;
 	background-color: #E9E9E9;
@@ -61,7 +61,7 @@
 	padding-right: 5px;
 	text-align: center;
 	line-height: 30px;
-	cursor: context-menu;
+	cursor: pointer;
 }
 
 /* Hide the spin button */
