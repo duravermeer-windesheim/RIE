@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {SharedModule} from '../../shared/shared.module';
 import {InfoPanelComponent} from '../info-panel/info-panel.component';
@@ -21,6 +21,14 @@ import {ResultModel} from '../../models/result.model';
 	templateUrl: './dashboard.component.html',
 	styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
-	@ViewChild(InputPanelComponent) public inputPanel!: InputPanelComponent;
+export class DashboardComponent implements AfterViewInit {
+	@ViewChild(InputPanelComponent) public inputPanel?: InputPanelComponent;
+
+	constructor(private cdref: ChangeDetectorRef) {}
+
+	ngAfterViewInit() {
+		if (this.inputPanel) {
+			this.cdref.detectChanges();
+		}
+	}
 }

@@ -16,7 +16,7 @@
 		[(ngModel)]="this.value"
 	>
 		<option
-			*ngFor="let item of this.config.items"
+			*ngFor="let item of this.items"
 			[disabled]="item.disabled"
 			[ngValue]="item"
 			[attr.selected]="item.selected ? 'selected' : null">

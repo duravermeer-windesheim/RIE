@@ -1,8 +1,9 @@
+import {HelpModel} from './help.model';
 
 export interface EntryConfig {
 	label: string,
 	code: string,
-	unit: string,
+	help: HelpModel,
 	required?: boolean,
 	defaultValue?: number,
 	min?: number,

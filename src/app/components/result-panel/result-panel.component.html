@@ -1,21 +1,32 @@
-
-<div id="result-panel">
-	<div class="panel-header">
-		<h2>Resultaat</h2>
-	</div>
-	<div class="panel-contents">
+<app-panel header="Resultaat">
+	<div id="result-panel" *ngIf="this.allValid">
 		<pre *ngIf="this.data && this.allValid">
-{{ this.data | json }}
 {{ this.data.effect }} x {{ this.data.frequency }} x {{ this.data.probability }} = {{ this.data.effect * this.data.frequency * this.data.probability }}
-		</pre>
-		<div id="result-panel-invalid" *ngIf="!this.allValid">
-			<app-clock [tick]="0"></app-clock>
-			<p>
 
-				Vul eerst de bekende informatie in.
-			</p>
-			<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
+after effects got removed by the nums:
+{{ this.data.effect + getAllEffects().effect }} x {{ this.data.frequency + getAllEffects().frequency }} x {{ this.data.probability + this.getAllEffects().probability }} = {{ (this.data.effect + getAllEffects().effect) * (this.data.frequency + getAllEffects().frequency) * (this.data.probability + getAllEffects().probability) }}
+		</pre>
+
+		<hr/>
+		<!--Measurements -->
+		<div id="measures" *ngIf="this.data.measures.length > 0">
+			<p><b>Maatregelen</b></p>
+			<table>
+				<tr *ngFor="let measure of this.data.measures">
+					<td>{{ measure["value"] }}</td>
+					<td>
+						<button (click)="removeMeasure(measure)">X</button>
+					</td>
+				</tr>
+			</table>
+			<pre>
+{{ this.getAllEffects() | json }}
+			</pre>
 		</div>
 	</div>
-</div>
-
+	<div id="result-panel-invalid" *ngIf="!this.allValid">
+		<app-clock [tick]="0"></app-clock>
+		<p>Vul eerst de bekende informatie in.</p>
+		<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
+	</div>
+</app-panel>

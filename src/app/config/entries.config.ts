@@ -1,11 +1,15 @@
 import {DropdownConfig} from '../models/dropdown.model';
 import {EntryConfig} from '../models/entry.model';
 
-export const entryConfigs: EntryConfig[] = [
-	{
+export const entryConfigs: { [key: string]: EntryConfig } = {
+	"probability": {
 		label: 'Waarschijnlijkheid',
 		code: 'probability',
-		unit: '?',
+		help: {
+			code: 'help_probability',
+			title: 'Waarschijnlijkheid hulp',
+			description: 'blabla',
+		},
 		required: true,
 		min: 0,
 		max: 10,
@@ -14,10 +18,14 @@ export const entryConfigs: EntryConfig[] = [
 		placeholder: 'Een nummer tussen 0 en 10',
 		validationMessage: 'Waarschijnlijkheid moet tussen 0 en 10 zijn'
 	},
-	{
+	"frequency": {
 		label: 'Blootstelling',
 		code: 'frequency',
-		unit: '?',
+		help: {
+			code: 'help_frequency',
+			title: 'Blootstelling hulp',
+			description: 'blabla',
+		},
 		required: true,
 		min: 0.5,
 		max: 10,
@@ -26,10 +34,14 @@ export const entryConfigs: EntryConfig[] = [
 		placeholder: 'Een nummer tussen 0.5 en 10',
 		validationMessage: 'Blootstelling moet tussen 0.5 en 10 zijn'
 	},
-	{
+	"effect": {
 		label: 'Effect',
 		code: 'effect',
-		unit: '?',
+		help: {
+			code: 'help_effect',
+			title: 'Effect hulp',
+			description: 'blabla',
+		},
 		required: true,
 		min: 0,
 		max: 40,
@@ -38,4 +50,4 @@ export const entryConfigs: EntryConfig[] = [
 		placeholder: 'Een nummer tussen 0 en 40',
 		validationMessage: 'Effect moet tussen 0 en 40 zijn'
 	},
-]
+}

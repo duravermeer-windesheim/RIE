@@ -8,7 +8,7 @@
 		<span class="entry-label-asterisk" *ngIf="this.config.required">*</span>
 	</label>
 
-	<div class="entry-input-unit-field">
+	<div class="entry-input-help-field">
 		<input
 			id="entry-input-field-{{ this.config.code }}"
 			class="entry-input {{ this.isValid() ? '' : 'invalid'}}"
@@ -21,7 +21,7 @@
 			[disabled]="this.config.disabled ?? false"
 			[placeholder]="this.config.placeholder"
 		/>
-		<div class="entry-unit">{{ this.config.unit }}</div>
+		<div class="entry-help">?</div>
 	</div>
 	<sup class="entry-validation-message" *ngIf="!this.isValid()">
 		{{ this.validationMessage ?? 'Dit veld is niet valide' }}

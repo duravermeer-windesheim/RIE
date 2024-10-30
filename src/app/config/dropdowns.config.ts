@@ -1,59 +1,79 @@
 import {DropdownConfig} from '../models/dropdown.model';
 
-export const dropdownConfigs: DropdownConfig[] = [
-	{
+export const dropdownConfigs: { [key: string]: DropdownConfig } = {
+	"riskType": {
 		label: 'Type risico',
 		code: 'riskType',
 		required: true,
-		addDefaultEmptyOption: true,
-		items: [
+		addDefaultEmptyOption: false,
+		defaultItems: [
 			{
-				key: '0',
+				key: 0,
 				value: 'Aangereden op de vluchtstrook',
 			},
 			{
-				key: '1',
+				key: 1,
 				value: 'Schade bij omwoonende',
 			},
 		]
 	},
-	{
-		label: 'Weggebruiker persoon ofzo',
-		code: 'riskType',
+	"personType": {
+		label: 'Weggebruiker type',
+		code: 'personType',
 		required: true,
-		addDefaultEmptyOption: true,
-		items: [
+		addDefaultEmptyOption: false,
+		defaultItems: [
 			{
-				key: '0',
-				value: 'Wegwerker 1',
+				key: 10,
+				value: 'Wegwerker',
 			},
 			{
-				key: '1',
+				key: 11,
 				value: 'Bordenman',
 			},
 			{
-				key: '12',
+				key: 12,
 				value: 'Weggebruiker',
 			},
 			{
-				key: '13',
+				key: 13,
 				value: 'Omwonende',
 			},
 		]
 	},
-	{
+	"situationType": {
 		label: 'Bereken voor situatie',
-		code: 'situation',
+		code: 'situationType',
 		required: true,
-		items: [
+		defaultItems: [
 			{
-				key: 'wa',
+				key: 2,
 				value: 'Gedeeltelijk afsluiten',
 			},
 			{
-				key: 'va',
+				key: 1,
 				value: 'Vierkant afsluiten',
 			},
 		]
+	},
+	"measure": {
+		label: 'Maatregel',
+		code: 'measure',
+		defaultItems: [
+			{
+				key: 1,
+				value: 'Snelheid verlagen',
+			},
+			{
+				key: 2,
+				value: 'Flitscamera\'s',
+			},
+			{
+				key: 3,
+				value: 'Wegversmalling',
+			},
+		]
 	}
-]
+}
+
+
