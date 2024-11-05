@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
 import {DropdownItem} from '../../models/dropdown.model';
-import {MeasureModel} from '../../models/measure.model';
-import {measuresConfig} from '../../config/measures.config';
 import {MeasureTargetType} from '../../models/measure.config';
+import {KeyValuePair} from '../../models/keyvalue.model';
+import {SheetDataService} from '../../services/sheet-data.service';
 
 @Component({
 	selector: 'app-result-panel',
@@ -19,7 +19,7 @@ import {MeasureTargetType} from '../../models/measure.config';
 	templateUrl: './result-panel.component.html',
 	styleUrl: './result-panel.component.css'
 })
-export class ResultPanelComponent {
+export class ResultPanelComponent implements OnInit {
 
 	@Input({required: true})
 	data!: ResultModel;
@@ -28,22 +28,27 @@ export class ResultPanelComponent {
 	allValid!: boolean;
 
 	@Output()
-	public onRemoveMeasure = new EventEmitter<MeasureModel>();
+	public onRemoveMeasure = new EventEmitter<KeyValuePair>();
 
+	private spreadsheetCache: any;
 
-	constructor(private cdref: ChangeDetectorRef) {
+	constructor(private cdref: ChangeDetectorRef, private sheetDataService: SheetDataService) {
+	}
+
+	async ngOnInit() {
+		await this.handleSpreadsheetCache();
 	}
 
 	public getAllEffects() {
 		let effects: {[key in MeasureTargetType]: number } = {
-			[MeasureTargetType.Frequency]: 0,
 			[MeasureTargetType.Effect]: 0,
+			[MeasureTargetType.Frequency]: 0,
 			[MeasureTargetType.Probability]: 0
 		};
 
 		this.data.measures.forEach(measure => {
 			let targets = this.getMeasureEffectTargetsByKey(measure.key);
-			targets.forEach(target => {
+			targets.forEach((target: any) => {
 				switch (target.type) {
 					case MeasureTargetType.Frequency:
 						effects[MeasureTargetType.Frequency] += target.effect
@@ -61,18 +66,41 @@ export class ResultPanelComponent {
 		return effects;
 	}
 
-	removeMeasure(measure: MeasureModel) {
+	removeMeasure(measure: KeyValuePair) {
 		this.onRemoveMeasure.emit(measure);
 		this.cdref.detectChanges();
 	}
 
+	async handleSpreadsheetCache() {
+		try {
+			const result = await this.sheetDataService.getSheetData('Maatregelen');
+			this.spreadsheetCache = result.values.splice(1) || [];
+		} catch (error) {
+			console.error("Could not retrieve data from sheet. Error: ", error);
+			this.spreadsheetCache = [];
+		}
+	}
+
 	getMeasureEffectTargetsByKey(key: number) {
-		let measure = measuresConfig.find(measure => measure.key == key);
+		let measure = this.spreadsheetCache.find((record: any) => record[0] == key)
 		if (measure == null) {
 			console.log("Requested measure key could not be found");
 			return [];
 		}
 
-		return measure.targets;
+		return [
+			{
+				type: MeasureTargetType.Effect,
+				effect: parseInt(measure[2]) || 0,
+			},
+			{
+				type: MeasureTargetType.Frequency,
+				effect: parseInt(measure[3]) || 0,
+			},
+			{
+				type: MeasureTargetType.Probability,
+				effect: parseInt(measure[4]) || 0,
+			}
+		]
 	}
 }

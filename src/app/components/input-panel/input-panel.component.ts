@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {SharedModule} from '../../shared/shared.module';
 import {NgForOf, NgIf} from '@angular/common';
 import {EntryComponent} from '../../shared/entry/entry.component';
@@ -7,7 +7,8 @@ import {ResultModel} from '../../models/result.model';
 import {entryConfigs} from '../../config/entries.config';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {DropdownItem} from '../../models/dropdown.model';
-import {MeasureModel} from '../../models/measure.model';
+import {KeyValuePair} from '../../models/keyvalue.model';
+import {SheetDataService} from '../../services/sheet-data.service';
 
 @Component({
 	selector: 'app-input-panel',
@@ -20,7 +21,7 @@ import {MeasureModel} from '../../models/measure.model';
 	templateUrl: './input-panel.component.html',
 	styleUrl: './input-panel.component.css'
 })
-export class InputPanelComponent {
+export class InputPanelComponent implements OnInit {
 	@ViewChildren(EntryComponent) entryChildren!: QueryList<EntryComponent>;
 	@ViewChildren(DropdownComponent) dropdownChildren!: QueryList<DropdownComponent>;
 	@ViewChild("measure") measureElement!: DropdownComponent;
@@ -30,9 +31,14 @@ export class InputPanelComponent {
 
 	public currentMeasureOptions: DropdownItem[] = this.dropdowns["measure"].defaultItems;
 
-	public measures: MeasureModel[] = [];
+	public measures: KeyValuePair[] = [];
 
-	constructor(private cdref: ChangeDetectorRef) {
+	constructor(private cdref: ChangeDetectorRef, private sheetDataService: SheetDataService) {
+	}
+
+	async ngOnInit() {
+		this.currentMeasureOptions = await this.getMeasureOptions();
+		this.measureElement.value = this.currentMeasureOptions[0];
 	}
 
 	// Gets all data of the entry and dropdown fields, then turns them into an ResultModel.
@@ -53,6 +59,24 @@ export class InputPanelComponent {
 
 		values["measures"] = this.measures;
 		return values as ResultModel;
+	}
+
+	async getMeasureOptions() {
+		// Get data from Google sheets.
+		let data;
+		try {
+			const result = await this.sheetDataService.getSheetData('Maatregelen');
+			data = result.values || [];
+		} catch (error) {
+			console.error("Could not retrieve data from sheet. Error: ", error);
+			data = [];
+		}
+
+		// Format the data as a list of dropdown items.
+		return data.slice(1).map((item: any) => ({
+			key: item[0],
+			value: item[1],
+		}));
 	}
 
 	// Checks if everything in the input panel is valid.
@@ -82,7 +106,7 @@ export class InputPanelComponent {
 		this.measureElement?.refreshItems();
 	}
 
-	public removeMeasure(measure: MeasureModel) {
+	public removeMeasure(measure: KeyValuePair) {
 		// Remove the measure from the selection of measures.
 		this.measures = this.measures.filter(measureCode => measureCode.key !== measure.key);
 

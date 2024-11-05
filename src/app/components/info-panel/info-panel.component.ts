@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {SharedModule} from '../../shared/shared.module';
+import {environment} from '../../../environments/environment';
 
 @Component({
 	selector: 'app-info-panel',
@@ -12,4 +13,7 @@ import {SharedModule} from '../../shared/shared.module';
 })
 export class InfoPanelComponent {
 
+	getBankUri() {
+		return "https://docs.google.com/spreadsheets/d/" + environment.googleSpreadsheetId + "/edit"
+	}
 }
