@@ -12,9 +12,9 @@
 		[config]="this.dropdowns['situationType']"
 		[items]="this.dropdowns['situationType'].defaultItems"
 	></app-dropdown>
-	<app-entry [config]="this.entries['probability']"></app-entry>
-	<app-entry [config]="this.entries['frequency']"></app-entry>
 	<app-entry [config]="this.entries['effect']"></app-entry>
+	<app-entry [config]="this.entries['frequency']"></app-entry>
+	<app-entry [config]="this.entries['probability']"></app-entry>
 
 	<div id="measure" *ngIf="this.currentMeasureOptions.length > 0">
 		<app-dropdown
