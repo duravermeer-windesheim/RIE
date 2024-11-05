@@ -4,7 +4,6 @@ import {SharedModule} from '../../shared/shared.module';
 import {InfoPanelComponent} from '../info-panel/info-panel.component';
 import {InputPanelComponent} from '../input-panel/input-panel.component';
 import {ResultPanelComponent} from '../result-panel/result-panel.component';
-import {ResultModel} from '../../models/result.model';
 
 @Component({
 	selector: 'app-dashboard',

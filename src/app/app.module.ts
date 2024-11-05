@@ -4,18 +4,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {SharedModule} from './shared/shared.module';
+import {provideHttpClient} from '@angular/common/http';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 	],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        SharedModule,
-        DashboardComponent,
-    ],
-	providers: [],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		SharedModule,
+		DashboardComponent,
+	],
+	providers: [
+		provideHttpClient()
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

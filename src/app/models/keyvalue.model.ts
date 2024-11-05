@@ -1,5 +1,5 @@
 
-export interface MeasureModel {
+export interface KeyValuePair {
 	key: number,
 	value: string
 }

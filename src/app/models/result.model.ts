@@ -1,4 +1,4 @@
-import {MeasureModel} from './measure.model';
+import {KeyValuePair} from './keyvalue.model';
 
 export interface ResultModel {
 	riskType: string,
@@ -7,5 +7,5 @@ export interface ResultModel {
 	probability: number,
 	frequency: number,
 	effect: number,
-	measures: MeasureModel[]
+	measures: KeyValuePair[]
 }
