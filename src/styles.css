@@ -10,5 +10,13 @@ body {
 :root {
 	--color-primary: #005951;
 	--color-secondary: #F3E33F;
+	--font-size: 15px;
 }
 
+/* Apply font-size to all general text-based elements */
+p, label, button, option, select, input, a {
+	font-size: var(--font-size) !important;
+}
+
+
+/* default 15, max 30, min 10 */

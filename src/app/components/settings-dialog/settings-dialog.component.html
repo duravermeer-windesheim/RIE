@@ -1,0 +1,27 @@
+<div id="setting-title">
+	<h2>Instellingen</h2>
+</div>
+<div class="mat-dialog-content">
+	<div id="settings-section-colors">
+		<p id="settings-section-colors-header">Kleuren</p>
+		<div id="settings-section-colors-buttons">
+			<button (click)="setColorMode(1)" id="settings-section-colors-button-bw">Zwart en wit</button>
+			<button (click)="setColorMode(2)" id="settings-section-colors-button-hc">Hoog contrast</button>
+		</div>
+	</div>
+	<div id="settings-section-font-size">
+		<p id="settings-section-font-size-header">Letter grootte</p>
+		<div id="settings-section-font-size-holder">
+			<button (click)="setFontSize(-1)" id="settings-section-font-size-minus">-</button>
+			<p id="settings-section-font-size-val">{{ this.fontSize}}</p>
+			<button (click)="setFontSize(1)" id="settings-section-font-size-plus">+</button>
+		</div>
+		<sup>
+			Waarschuwing: Aanpassing aan de lettergrootte<br/>
+			kan onverwachte gevolgen hebben bij de layout.
+		</sup>
+	</div>
+</div>
+<div class="mat-dialog-actions">
+	<button (click)="reset()">Reset</button>
+</div>

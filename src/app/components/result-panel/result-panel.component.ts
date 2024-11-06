@@ -3,9 +3,16 @@ import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
 import {DropdownItem} from '../../models/dropdown.model';
-import {MeasureTargetType} from '../../models/measure.config';
 import {KeyValuePair} from '../../models/keyvalue.model';
 import {SheetDataService} from '../../services/sheet-data.service';
+
+
+export enum MeasureTargetType {
+	Probability = 'probability',
+	Frequency = 'frequency',
+	Effect = 'effect'
+}
+
 
 @Component({
 	selector: 'app-result-panel',

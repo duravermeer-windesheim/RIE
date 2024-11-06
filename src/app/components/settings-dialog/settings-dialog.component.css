@@ -1,0 +1,116 @@
+.settings-dialog-container {
+	color: white;
+	font-family: "Trebuchet MS", serif !important;
+}
+
+.mdc-dialog__surface {
+	border-radius: 4px;
+	background-color: var(--color-primary);
+	box-shadow: 8px 12px 10px rgba(0, 0, 0, 0.25);
+	padding: 10px;
+}
+
+#setting-title {
+	text-align: center;
+	width: 80%;
+	margin-left: 10%;
+	border-bottom: 2px solid white;
+}
+
+#settings-section-font-size,
+#settings-section-colors {
+	background-color: rgba(255, 255, 255, 0.25);
+	padding: 20px;
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 20px;
+	box-sizing: border-box;
+	border-radius: 3px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+#settings-section-colors-header,
+#settings-section-font-size-header {
+	font-size: 18px;
+	text-align: center;
+	margin-top: -5px;
+}
+
+#settings-section-colors-buttons {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#settings-section-colors-buttons button {
+	padding: 12px;
+	font-family: "Trebuchet MS", serif;
+	font-size: 16px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+#settings-section-colors-buttons button:focus {
+	outline: none;
+}
+#settings-section-colors-button-bw {
+	background-color: #000;
+	color: #fff;
+}
+#settings-section-colors-button-hc {
+	background-color: darkblue;
+	color: yellow;
+}
+
+#settings-section-font-size-holder {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#settings-section-font-size-minus,
+#settings-section-font-size-plus {
+	height: 40px;
+	width: 40px;
+	border-radius: 0;
+	border: none;
+	background-color: var(--color-secondary);
+	color: var(--color-primary);
+	cursor: pointer;
+}
+
+#settings-section-font-size-val {
+	height: 40px;
+	width: 80px;
+	text-align: center;
+	background-color: white;
+	color: var(--color-primary);
+	line-height: 40px;
+}
+
+#settings-section-font-size sup {
+	display: block;
+	text-align: center;
+	font-size: 11px;
+}
+
+.mat-dialog-actions {
+	display: flex;
+	justify-content: right;
+	width: 80%;
+	margin-left: 10%;
+}
+.mat-dialog-actions button {
+	border: 1px solid var(--color-primary);
+	background-color: var(--color-secondary);
+	color: var(--color-primary);
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+	display: block;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	width: 150px;
+}

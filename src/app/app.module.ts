@@ -6,6 +6,7 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {SharedModule} from './shared/shared.module';
 import {provideHttpClient} from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {EasterEggComponent} from './shared/easter-egg/easter-egg.component';
 
 @NgModule({
 	declarations: [
@@ -16,6 +17,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 		AppRoutingModule,
 		SharedModule,
 		DashboardComponent,
+		EasterEggComponent,
 	],
 	providers: [
 		provideHttpClient(),

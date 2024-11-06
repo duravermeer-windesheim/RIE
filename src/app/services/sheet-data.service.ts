@@ -19,11 +19,3 @@ export class SheetDataService {
 	}
 
 }
-
-//
-// try {
-// 	const result = await this.sheetDataService.getSheetData('Sheet1');
-// 	this.data = result.values || [];
-// } catch (error) {
-// 	this.data = [];
-// }
