@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {DecimalPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
 import {MeasureModel} from '../../models/measure.model';
@@ -20,9 +20,11 @@ export enum MeasureTargetType {
 		NgIf,
 		SharedModule,
 		NgForOf,
+		DecimalPipe,
 	],
 	templateUrl: './result-panel.component.html',
-	styleUrl: './result-panel.component.css'
+	styleUrl: './result-panel.component.css',
+	providers: [DecimalPipe]
 })
 export class ResultPanelComponent {
 
@@ -36,6 +38,10 @@ export class ResultPanelComponent {
 	public onRemoveMeasure = new EventEmitter<MeasureModel>();
 
 	constructor(private cdref: ChangeDetectorRef) {
+	}
+
+	get effects() {
+		return this.getAllEffects();
 	}
 
 	public getAllEffects() {

@@ -12,17 +12,31 @@ after effects got removed by the nums:
 		<!--Measurements -->
 		<div id="measures" *ngIf="this.data.measures.length > 0">
 			<p><b>Maatregelen</b></p>
-			<table>
+			<table class="result-panel-measure-table">
+				<tr>
+					<th>Maatregel</th>
+					<th>E</th>
+					<th>B</th>
+					<th>W</th>
+					<th></th>
+				</tr>
 				<tr *ngFor="let measure of this.data.measures">
 					<td>{{ measure.label }}</td>
-					<td>
-						<button (click)="removeMeasure(measure)">X</button>
+					<td>{{ measure.effect != 0 ? measure.effect : '' }}</td>
+					<td>{{ measure.frequency != 0 ? measure.frequency : '' }}</td>
+					<td>{{ measure.probability != 0 ? measure.probability : '' }}</td>
+					<td class="result-panel-measure-button-holder">
+						<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>
 					</td>
 				</tr>
+				<tr class="result-panel-measure-table-last-row">
+					<td><strong>Totaal</strong></td>
+					<td>{{ this.effects.effect > 0 ? '+' : ''}}{{ this.effects.effect | number}}</td>
+					<td>{{ this.effects.frequency > 0 ? '+' : '' }}{{ this.effects.frequency | number}}</td>
+					<td>{{ this.effects.probability > 0 ? '+' : '' }}{{ this.effects.probability | number}}</td>
+					<td></td>
+				</tr>
 			</table>
-			<pre>
-{{ this.getAllEffects() | json }}
-			</pre>
 		</div>
 	</div>
 	<div id="result-panel-invalid" *ngIf="!this.allValid">

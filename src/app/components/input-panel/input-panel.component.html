@@ -20,9 +20,14 @@
 		<app-dropdown
 			[config]="this.dropdowns['measure']"
 			[items]="this.currentMeasureDropdownOptions"
+			[disabled]="this.currentMeasureDropdownOptions.length <= 0"
 			#measure
 		></app-dropdown>
-		<button (click)="addSelectedMeasure()" id="measure-add-button">Pas maatregel toe</button>
+		<button
+			id="measure-add-button"
+			(click)="addSelectedMeasure()"
+			*ngIf="this.currentMeasureDropdownOptions.length > 0"
+		>Pas maatregel toe</button>
 	</div>
 
 </app-panel>

@@ -13,6 +13,9 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	@Input({required: true})
 	public items!: DropdownItem[];
 
+	@Input()
+	public disabled = false;
+
 	init() {
 		if (this.config.addDefaultEmptyOption) {
 			this.items.unshift( {

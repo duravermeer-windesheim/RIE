@@ -11,3 +11,62 @@
 #result-panel-invalid img {
 	width: 60px;
 }
+
+.result-panel-measure-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.result-panel-measure-table tr:nth-child(odd) {
+	background-color: rgba(255, 255,255, 0.5);
+}
+.result-panel-measure-table tr:nth-child(even) {
+	background-color: rgba(255, 255,255, 0.25);
+}
+
+.result-panel-measure-table th,
+.result-panel-measure-table td {
+	border: 1px solid var(--color-primary);
+	text-align: left;
+	padding: 8px;
+}
+
+.result-panel-measure-table th {
+	background-color: var(--color-primary);
+	color: var(--color-secondary)
+}
+
+.result-panel-measure-button-holder {
+	padding: 0 !important;
+	width: 30px;
+	height: 30px;
+	margin: 0;
+}
+
+.result-panel-measure-table-last-row {
+	border: 1px solid var(--color-primary);
+}
+.result-panel-measure-table-last-row td {
+	border: none;
+	border-top: 3px solid var(--color-primary);
+}
+
+.result-panel-measure-button {
+	border: 1px solid transparent;
+	background-color: tomato;
+	color: var(--color-primary);
+	padding: 2px;
+	cursor: pointer;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+	width: 34px;
+	height: 34px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 12px !important;
+	transition: border 150ms;
+}
+
+.result-panel-measure-button:hover {
+	border: 1px solid var(--color-primary);
+}
