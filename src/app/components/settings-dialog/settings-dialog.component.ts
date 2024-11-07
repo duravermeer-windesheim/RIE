@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatDialogActions, MatDialogContent} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
-import {colorConfig, defaultFontSize} from '../../config/app.config';
 import {ColorService} from '../../services/color.service';
 import {FontService} from '../../services/font.service';
+import {environment} from '../../../environments/environment';
+import {NgIf} from '@angular/common';
 
 @Component({
 	selector: 'app-settings-dialog',
@@ -11,7 +12,8 @@ import {FontService} from '../../services/font.service';
 	imports: [
 		MatDialogContent,
 		MatDialogActions,
-		MatButton
+		MatButton,
+		NgIf
 	],
 	templateUrl: './settings-dialog.component.html',
 	styleUrl: './settings-dialog.component.css',
@@ -19,13 +21,21 @@ import {FontService} from '../../services/font.service';
 })
 export class SettingsDialogComponent implements OnInit {
 
-	public fontSize: number = defaultFontSize;
+	public fontSize: number = environment.fontConfig.defaultFontSize;
 
 	constructor(private colorService: ColorService, private fontService: FontService) {
 	}
 
 	ngOnInit() {
 		this.fontSize = this.fontService.getFontSize();
+	}
+
+	get decrementButtonVisible() {
+		return this.fontSize > environment.fontConfig.minimumFontSize;
+	}
+
+	get incrementButtonVisible() {
+		return this.fontSize < environment.fontConfig.maximumFontSize;
 	}
 
 	// Mode:
@@ -37,14 +47,14 @@ export class SettingsDialogComponent implements OnInit {
 		let primary, secondary;
 
 		if (mode == 0) {
-			primary = colorConfig.dv.primary;
-			secondary = colorConfig.dv.secondary;
+			primary = environment.colorConfig.dv.primary;
+			secondary = environment.colorConfig.dv.secondary;
 		} else if (mode == 1) {
-			primary = colorConfig.bw.primary;
-			secondary = colorConfig.bw.secondary;
+			primary = environment.colorConfig.bw.primary;
+			secondary = environment.colorConfig.bw.secondary;
 		} else {
-			primary = colorConfig.hc.primary;
-			secondary = colorConfig.hc.secondary;
+			primary = environment.colorConfig.hc.primary;
+			secondary = environment.colorConfig.hc.secondary;
 		}
 
 		this.colorService.changeColor('--color-primary', primary);
@@ -57,7 +67,10 @@ export class SettingsDialogComponent implements OnInit {
 		this.fontSize = this.fontService.getFontSize();
 	}
 
+	// Resets everything.
 	reset() {
 		this.setColorMode(0);
+		this.fontService.setFontSize(environment.fontConfig.defaultFontSize);
+		this.fontSize = this.fontService.getFontSize();
 	}
 }

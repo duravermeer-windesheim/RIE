@@ -78,6 +78,12 @@
 	cursor: pointer;
 }
 
+#settings-section-font-size-minus:disabled,
+#settings-section-font-size-plus:disabled {
+	background-color: #D9D9D9;
+	cursor: not-allowed;
+}
+
 #settings-section-font-size-val {
 	height: 40px;
 	width: 80px;
@@ -93,13 +99,13 @@
 	font-size: 11px;
 }
 
-.mat-dialog-actions {
+.settings-mat-dialog-actions {
 	display: flex;
 	justify-content: right;
 	width: 80%;
 	margin-left: 10%;
 }
-.mat-dialog-actions button {
+.settings-mat-dialog-actions button {
 	border: 1px solid var(--color-primary);
 	background-color: var(--color-secondary);
 	color: var(--color-primary);

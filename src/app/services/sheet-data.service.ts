@@ -11,9 +11,9 @@ export class SheetDataService {
 
 	public getSheetData(sheet: string) {
 		let apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/
-			${ environment.googleSpreadsheetId }/values/
+			${ environment.googleSpreadsheet.googleSpreadsheetId }/values/
 			${ sheet }?key=
-			${ environment.googleSpreadsheetApiKey}`;
+			${ environment.googleSpreadsheet.googleSpreadsheetApiKey}`;
 
 		return lastValueFrom(this.http.get<any>(apiUrl));
 	}

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import {colorConfig} from '../config/app.config';
 import {SettingsService} from './settings.service';
-import {SettingsModel} from '../models/settings.model';
 
 @Injectable({
 	providedIn: 'root'

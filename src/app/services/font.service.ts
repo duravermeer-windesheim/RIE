@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {SettingsService} from './settings.service';
-import {defaultFontSize} from '../config/app.config';
+import {environment} from '../../environments/environment';
 
 @Injectable({
 	providedIn: 'root'
@@ -22,25 +22,31 @@ export class FontService {
 	public getFontSize() {
 		// Retrieve current settings.
 		let settings = this.settingsService.loadSettings();
-		return settings.fontSize ?? defaultFontSize
+		return settings.fontSize ?? environment.fontConfig.defaultFontSize;
 	}
 
-	public incrementFontSize(fontSize: number) {
+	public incrementFontSize(increment: number) {
+		let fontSize = this.getFontSize();
+		this.setFontSize(fontSize + increment);
+	}
+
+	public setFontSize(fontSize: number) {
+		// Boundary check.
+		if (fontSize < environment.fontConfig.minimumFontSize || fontSize > environment.fontConfig.maximumFontSize) {
+			return;
+		}
+
 		// Retrieve current settings.
 		let settings = this.settingsService.loadSettings();
 
 		// Apply new font to settings.
-		if (settings.fontSize == null) {
-			settings.fontSize = defaultFontSize;
-		} else {
-			settings.fontSize += fontSize;
-		}
+		settings.fontSize = fontSize;
 
 		// Save updated settings.
 		this.settingsService.saveSettings(settings);
 
 		// Apply font size.
-		this.applyFontSize(fontSize);
+		this.applyFontSize(settings.fontSize);
 	}
 
 	private applyFontSize(fontSize: number) {
