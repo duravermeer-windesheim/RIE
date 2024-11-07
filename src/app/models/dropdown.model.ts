@@ -10,6 +10,5 @@ export interface DropdownConfig {
 export interface DropdownItem {
 	key: number,
 	value: string,
-	selected?: boolean,
 	disabled?: boolean
 }

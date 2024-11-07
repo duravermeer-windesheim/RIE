@@ -1,4 +1,4 @@
-import {AfterRenderRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DropdownConfig, DropdownItem} from '../../models/dropdown.model';
 import {BaseInputComponent} from '../base-input.component';
 
@@ -19,7 +19,6 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 				key: -1,
 				value: 'Selecteer een optie...',
 				disabled: this.config.required,
-				selected: true
 			});
 		}
 
@@ -28,7 +27,7 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	}
 
 	public refreshItems() {
-		this.value = this.items.find(item => item.selected) || this.items[0];
+		this.value = this.items[0];
 		this.items.sort((a, b) => a.key - b.key);
 	}
 

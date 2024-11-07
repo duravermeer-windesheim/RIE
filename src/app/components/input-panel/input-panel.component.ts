@@ -7,8 +7,8 @@ import {ResultModel} from '../../models/result.model';
 import {entryConfigs} from '../../config/entries.config';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {DropdownItem} from '../../models/dropdown.model';
-import {KeyValuePair} from '../../models/keyvalue.model';
 import {SheetDataService} from '../../services/sheet-data.service';
+import {MeasureModel} from '../../models/measure.model';
 
 @Component({
 	selector: 'app-input-panel',
@@ -29,16 +29,23 @@ export class InputPanelComponent implements OnInit {
 	public entries = entryConfigs;
 	public dropdowns = dropdownConfigs;
 
-	public currentMeasureOptions: DropdownItem[] = this.dropdowns["measure"].defaultItems;
+	public currentMeasureDropdownOptions: DropdownItem[] = [];
 
-	public measures: KeyValuePair[] = [];
+	public spreadsheetMeasures: MeasureModel[] = [];
+	public appliedMeasures: MeasureModel[] = [];
 
 	constructor(private cdref: ChangeDetectorRef, private sheetDataService: SheetDataService) {
 	}
 
 	async ngOnInit() {
-		this.currentMeasureOptions = await this.getMeasureOptions();
-		this.measureElement.value = this.currentMeasureOptions[0];
+		this.spreadsheetMeasures = await this.sheetDataService.getMeasuresFromSheets();
+
+		this.currentMeasureDropdownOptions = this.spreadsheetMeasures.map(measure => ({
+			key: measure.code,
+			value: measure.label
+		}));
+
+		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
 	// Gets all data of the entry and dropdown fields, then turns them into an ResultModel.
@@ -57,26 +64,8 @@ export class InputPanelComponent implements OnInit {
 			values[kp.key] = kp.value;
 		});
 
-		values["measures"] = this.measures;
+		values["measures"] = this.appliedMeasures;
 		return values as ResultModel;
-	}
-
-	async getMeasureOptions() {
-		// Get data from Google sheets.
-		let data;
-		try {
-			const result = await this.sheetDataService.getSheetData('Maatregelen');
-			data = result.values || [];
-		} catch (error) {
-			console.error("Could not retrieve data from sheet. Error: ", error);
-			data = [];
-		}
-
-		// Format the data as a list of dropdown items.
-		return data.slice(1).map((item: any) => ({
-			key: item[0],
-			value: item[1],
-		}));
 	}
 
 	// Checks if everything in the input panel is valid.
@@ -90,28 +79,35 @@ export class InputPanelComponent implements OnInit {
 		return true;
 	}
 
-	addSelectedMeasure() {
+	async addSelectedMeasure() {
 		// Get selected measure.
 		let keyValue = this.measureElement.getKeyValue();
-		let measure = keyValue.value;
+
+		let measure = this.spreadsheetMeasures.find(m => m.code === keyValue.value.key);
+		if (measure == null) {
+			return;
+		}
 
 		// Add the measure.
-		this.measures.push(measure);
+		this.appliedMeasures.push(measure);
 
 		// Remove measure from dropdown options.
-		this.currentMeasureOptions = this.currentMeasureOptions.filter(mes => mes.key != measure.key);
+		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.key != measure.code);
 
 		// Update the dropdown
 		this.cdref.detectChanges();
 		this.measureElement?.refreshItems();
 	}
 
-	public removeMeasure(measure: KeyValuePair) {
+	public removeMeasure(measure: MeasureModel) {
 		// Remove the measure from the selection of measures.
-		this.measures = this.measures.filter(measureCode => measureCode.key !== measure.key);
+		this.appliedMeasures = this.appliedMeasures.filter(m => m.code !== measure.code);
 
 		// Add measure to the dropdown option.
-		this.currentMeasureOptions.push(measure);
+		this.currentMeasureDropdownOptions.push({
+			key: measure.code,
+			value: measure.label
+		});
 
 		// Update the dropdown.
 		this.cdref.detectChanges();

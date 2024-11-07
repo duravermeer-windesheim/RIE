@@ -3,6 +3,9 @@ export const environment = {
 		googleSpreadsheetId: '<Your spreadsheet ID here>',
 		googleSpreadsheetApiKey: '<Your API Key here>',
 	},
+	sheetNames: {
+		measures: "Maatregelen",
+	},
 	colorConfig: {
 		dv: {
 			primary: "#005951",

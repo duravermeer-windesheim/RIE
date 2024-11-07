@@ -59,20 +59,8 @@ export const dropdownConfigs: { [key: string]: DropdownConfig } = {
 	"measure": {
 		label: 'Maatregel',
 		code: 'measure',
-		defaultItems: [
-			{
-				key: 1,
-				value: 'Snelheid verlagen',
-			},
-			{
-				key: 2,
-				value: 'Flitscamera\'s',
-			},
-			{
-				key: 3,
-				value: 'Wegversmalling',
-			},
-		]
+		addDefaultEmptyOption: true,
+		defaultItems: []
 	}
 }
 

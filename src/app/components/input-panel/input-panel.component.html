@@ -16,10 +16,10 @@
 	<app-entry [config]="this.entries['frequency']"></app-entry>
 	<app-entry [config]="this.entries['probability']"></app-entry>
 
-	<div id="measure" *ngIf="this.currentMeasureOptions.length > 0">
+	<div id="measure">
 		<app-dropdown
 			[config]="this.dropdowns['measure']"
-			[items]="this.currentMeasureOptions"
+			[items]="this.currentMeasureDropdownOptions"
 			#measure
 		></app-dropdown>
 		<button (click)="addSelectedMeasure()" id="measure-add-button">Pas maatregel toe</button>

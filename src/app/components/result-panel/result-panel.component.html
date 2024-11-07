@@ -14,7 +14,7 @@ after effects got removed by the nums:
 			<p><b>Maatregelen</b></p>
 			<table>
 				<tr *ngFor="let measure of this.data.measures">
-					<td>{{ measure["value"] }}</td>
+					<td>{{ measure.label }}</td>
 					<td>
 						<button (click)="removeMeasure(measure)">X</button>
 					</td>
