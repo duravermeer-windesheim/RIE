@@ -14,6 +14,6 @@ body {
 }
 
 /* Apply font-size to all general text-based elements */
-p, label, button, option, select, input, a {
+p, label, button, option, select, input, a, td, tr {
 	font-size: var(--font-size) !important;
 }
