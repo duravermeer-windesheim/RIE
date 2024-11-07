@@ -1,16 +1,16 @@
 
 <app-panel header="Bekende informatie">
+<!--	<app-dropdown-->
+<!--		[config]="this.dropdowns['situationType']"-->
+<!--		[items]="this.dropdowns['situationType'].defaultItems"-->
+<!--	></app-dropdown>-->
+<!--	<app-dropdown-->
+<!--		[config]="this.dropdowns['personType']"-->
+<!--		[items]="this.dropdowns['personType'].defaultItems"-->
+<!--	></app-dropdown>-->
 	<app-dropdown
 		[config]="this.dropdowns['riskType']"
 		[items]="this.dropdowns['riskType'].defaultItems"
-	></app-dropdown>
-	<app-dropdown
-		[config]="this.dropdowns['personType']"
-		[items]="this.dropdowns['personType'].defaultItems"
-	></app-dropdown>
-	<app-dropdown
-		[config]="this.dropdowns['situationType']"
-		[items]="this.dropdowns['situationType'].defaultItems"
 	></app-dropdown>
 	<app-entry [config]="this.entries['effect']"></app-entry>
 	<app-entry [config]="this.entries['frequency']"></app-entry>

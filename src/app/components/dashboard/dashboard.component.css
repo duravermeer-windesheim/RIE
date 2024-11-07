@@ -37,6 +37,19 @@ app-entry {
 	padding: 5px;
 }
 
+mat-icon {
+	position: absolute;
+	top: 30px;
+	right: 20px;
+	color: var(--color-secondary);
+	cursor: pointer;
+	padding: 10px;
+}
+mat-icon:hover {
+	background-color: rgba(255, 255, 255, 0.25);
+	border-radius: 50%;
+}
+
 /* Small Devices (Phones) */
 @media (max-width: 576px) {
 	app-result-panel,

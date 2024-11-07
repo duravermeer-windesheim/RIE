@@ -14,6 +14,6 @@ import {environment} from '../../../environments/environment';
 export class InfoPanelComponent {
 
 	getBankUri() {
-		return "https://docs.google.com/spreadsheets/d/" + environment.googleSpreadsheetId + "/edit"
+		return "https://docs.google.com/spreadsheets/d/" + environment.googleSpreadsheet.googleSpreadsheetId + "/edit"
 	}
 }
