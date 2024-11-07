@@ -17,6 +17,3 @@ body {
 p, label, button, option, select, input, a {
 	font-size: var(--font-size) !important;
 }
-
-
-/* default 15, max 30, min 10 */

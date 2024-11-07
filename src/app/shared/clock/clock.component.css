@@ -1,6 +1,6 @@
 .circle {
-	width: 80px;
-	height: 80px;
+	width: 50px;
+	height: 50px;
 	margin: 20px;
 	border: 3px solid #1E1E1E;
 	border-radius: 50%;
@@ -38,7 +38,7 @@
 	width: 2px;
 	height: 47%;
 	background-color: #D9D9D9;
-	left: 50%;
+	left: 51%;
 	transform-origin: bottom;
-	transform: translate(-100%, -143%) rotate(313deg);
+	transform: translate(-100%, -144%);
 }
