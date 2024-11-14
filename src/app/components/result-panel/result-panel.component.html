@@ -1,47 +1,64 @@
-<app-panel header="Resultaat">
-	<div id="result-panel" *ngIf="this.allValid">
-		<pre *ngIf="this.data && this.allValid">
-{{ this.data.effect }} x {{ this.data.frequency }} x {{ this.data.probability }} = {{ this.data.effect * this.data.frequency * this.data.probability }}
-
-after effects got removed by the nums:
-{{ this.data.effect + getAllEffects().effect }} x {{ this.data.frequency + getAllEffects().frequency }} x {{ this.data.probability + this.getAllEffects().probability }} = {{ (this.data.effect + getAllEffects().effect) * (this.data.frequency + getAllEffects().frequency) * (this.data.probability + getAllEffects().probability) }}
-		</pre>
-
-		<hr/>
-		<app-clock [tick]="0"></app-clock>
-		<!--Measurements -->
-		<div id="measures" *ngIf="this.data.measures.length > 0">
-			<p><b>Maatregelen</b></p>
-			<table class="result-panel-measure-table">
-				<tr>
-					<th>Maatregel</th>
-					<th>E</th>
-					<th>B</th>
-					<th>W</th>
-					<th></th>
-				</tr>
-				<tr *ngFor="let measure of this.data.measures">
-					<td>{{ measure.label }}</td>
-					<td>{{ measure.effect != 0 ? measure.effect : '' }}</td>
-					<td>{{ measure.frequency != 0 ? measure.frequency : '' }}</td>
-					<td>{{ measure.probability != 0 ? measure.probability : '' }}</td>
-					<td class="result-panel-measure-button-holder">
-						<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>
-					</td>
-				</tr>
-				<tr class="result-panel-measure-table-last-row">
-					<td><strong>Totaal</strong></td>
-					<td>{{ this.effects.effect > 0 ? '+' : ''}}{{ this.effects.effect | number}}</td>
-					<td>{{ this.effects.frequency > 0 ? '+' : '' }}{{ this.effects.frequency | number}}</td>
-					<td>{{ this.effects.probability > 0 ? '+' : '' }}{{ this.effects.probability | number}}</td>
-					<td></td>
-				</tr>
-			</table>
+<div id="result-panel" *ngIf="this.allValid">
+<!--	<pre *ngIf="this.data && this.allValid">-->
+<!--{{ this.data | json }}-->
+<!--	</pre>-->
+	<div id="result-panel-clocks">
+		<div id="result-panel-clocks-scenario-a" class="result-panel-clocks-scenario">
+			<p class="result-panel-clocks-scenario-title"><strong>Scenario A</strong></p>
+			<div class="result-panel-clocks-holder">
+				<app-clock [tick]="ticks[0]" [valueVisible]="true" header="Weggebruikers"></app-clock>
+				<app-clock [tick]="ticks[1]" [valueVisible]="true" header="Omwonende"></app-clock>
+				<app-clock [tick]="ticks[2]" [valueVisible]="true" header="VKM Ploeg"></app-clock>
+				<app-clock [tick]="ticks[3]" [valueVisible]="true" header="Wegwerkers"></app-clock>
+			</div>
+		</div>
+		<div id="result-panel-clocks-scenario-b" class="result-panel-clocks-scenario">
+			<p class="result-panel-clocks-scenario-title"><strong>Scenario B</strong></p>
+			<div class="result-panel-clocks-holder">
+				<app-clock [tick]="ticks[4]" [valueVisible]="true" header="Weggebruikers"></app-clock>
+				<app-clock [tick]="ticks[5]" [valueVisible]="true" header="Omwonende"></app-clock>
+				<app-clock [tick]="ticks[6]" [valueVisible]="true" header="VKM Ploeg"></app-clock>
+				<app-clock [tick]="ticks[7]" [valueVisible]="true" header="Wegwerkers"></app-clock>
+			</div>
 		</div>
 	</div>
-	<div id="result-panel-invalid" *ngIf="!this.allValid">
-		<app-clock [tick]="0"></app-clock>
-		<p>Vul eerst de bekende informatie in.</p>
-		<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
+
+	<p>
+		<strong>Advies: </strong>Scenario B is beter gok ik.<br/>
+		Dit is gekozen omdat we een dobbelsteen op hebben gegooid.
+	</p>
+
+	<!--Measurements -->
+	<div id="measures" *ngIf="this.data.measures.length > 0">
+		<table class="result-panel-measure-table">
+			<tr>
+				<th>Maatregel</th>
+				<th>E</th>
+				<th>B</th>
+				<th>W</th>
+				<th></th>
+			</tr>
+			<tr *ngFor="let measure of this.data.measures">
+				<td>{{ measure.label }}</td>
+				<td>{{ measure.effect != 0 ? measure.effect : '' }}</td>
+				<td>{{ measure.frequency != 0 ? measure.frequency : '' }}</td>
+				<td>{{ measure.probability != 0 ? measure.probability : '' }}</td>
+				<td class="result-panel-measure-button-holder">
+					<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>
+				</td>
+			</tr>
+			<tr class="result-panel-measure-table-last-row">
+				<td><strong>Totaal</strong></td>
+				<td>{{ this.effects.effect > 0 ? '+' : ''}}{{ this.effects.effect | number}}</td>
+				<td>{{ this.effects.frequency > 0 ? '+' : '' }}{{ this.effects.frequency | number}}</td>
+				<td>{{ this.effects.probability > 0 ? '+' : '' }}{{ this.effects.probability | number}}</td>
+				<td></td>
+			</tr>
+		</table>
 	</div>
-</app-panel>
+</div>
+<div id="result-panel-invalid" *ngIf="!this.allValid">
+	<app-clock [tick]="0" style="margin-bottom: 30px"></app-clock>
+	<p>Vul eerst de bekende informatie in.</p>
+	<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
+</div>

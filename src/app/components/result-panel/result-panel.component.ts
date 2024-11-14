@@ -44,6 +44,9 @@ export class ResultPanelComponent {
 		return this.getAllEffects();
 	}
 
+	// TEMP.
+	public ticks = Array.from({ length: 8 }, () => Math.floor(Math.random() * 5) + 1);
+
 	public getAllEffects() {
 		let effects: {[key in MeasureTargetType]: number } = {
 			[MeasureTargetType.Effect]: 0,

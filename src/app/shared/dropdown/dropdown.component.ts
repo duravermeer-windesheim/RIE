@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {DropdownConfig, DropdownItem} from '../../models/dropdown.model';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {defaultDropdownItem, DropdownConfig, DropdownItem} from '../../models/dropdown.model';
 import {BaseInputComponent} from '../base-input.component';
 
 @Component({
@@ -8,6 +8,8 @@ import {BaseInputComponent} from '../base-input.component';
 	styleUrl: './dropdown.component.css'
 })
 export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
+
+	@Input({required: true})
 	public value!: DropdownItem;
 
 	@Input({required: true})
@@ -16,21 +18,14 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	@Input()
 	public disabled = false;
 
+	@Output()
+	public onValueChange = new EventEmitter<DropdownItem>();
+
 	init() {
 		if (this.config.addDefaultEmptyOption) {
-			this.items.unshift( {
-				key: -1,
-				value: 'Selecteer een optie...',
-				disabled: this.config.required,
-			});
+			this.items.unshift(defaultDropdownItem);
 		}
 
-		this.validationMessage = this.config.validationMessage;
-		this.refreshItems();
-	}
-
-	public refreshItems() {
-		this.value = this.items[0];
 		this.items.sort((a, b) => a.key - b.key);
 	}
 
@@ -42,4 +37,7 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 		return this.value.key !== -1;
 	}
 
+	onChange() {
+		this.onValueChange.emit(this.value);
+	}
 }

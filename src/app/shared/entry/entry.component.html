@@ -5,7 +5,6 @@
 		[class.invalid]="!isValid()"
 		for="entry-input-field-{{ this.config.code }}">
 		{{ this.config.label }}
-		<span class="entry-label-asterisk" *ngIf="this.config.required">*</span>
 	</label>
 
 	<div class="entry-input-help-field">
@@ -20,10 +19,11 @@
 			[step]="this.config.step"
 			[disabled]="this.config.disabled ?? false"
 			[placeholder]="this.config.placeholder"
+			(ngModelChange)="onChange()"
 		/>
 		<div class="entry-help" (click)="openHelpDialog()">?</div>
 	</div>
 	<sup class="entry-validation-message" *ngIf="!this.isValid()">
-		{{ this.validationMessage ?? 'Dit veld is niet valide' }}
+		{{ this.config.validationMessage ?? 'Dit veld is niet valide' }}
 	</sup>
 </div>

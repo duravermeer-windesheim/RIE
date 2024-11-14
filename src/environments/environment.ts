@@ -5,6 +5,7 @@ export const environment = {
 	},
 	sheetNames: {
 		measures: "Maatregelen",
+		risks: "Risicos"
 	},
 	colorConfig: {
 		dv: {

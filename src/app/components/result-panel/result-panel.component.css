@@ -12,9 +12,51 @@
 	width: 60px;
 }
 
+
+#result-panel-clocks {
+	height: 300px;
+	display: flex;
+	justify-content: center;
+}
+
+.result-panel-clocks-scenario {
+	box-sizing: border-box;
+	height: 100%;
+}
+#result-panel-clocks-scenario-a {
+	border-right: 2px solid var(--color-primary);
+}
+
+.result-panel-clocks-scenario-title {
+	text-align: center;
+}
+
+.result-panel-clocks-holder {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.result-panel-clocks-holder app-clock {
+	display: inline-block;
+	width: 40%;
+	margin: 5px 5px 50px;
+}
+
 .result-panel-measure-table {
 	border-collapse: collapse;
 	width: 100%;
+}
+
+.result-panel-measure-table th {
+	min-width: 10px;
+	width: auto;
+}
+
+.result-panel-measure-table th,
+.result-panel-measure-table td {
+	text-align: center;
 }
 
 .result-panel-measure-table tr:nth-child(odd) {

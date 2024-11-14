@@ -10,35 +10,29 @@ import {HelpDialogComponent} from '../help-dialog/help-dialog.component';
 	styleUrl: './entry.component.css'
 })
 export class EntryComponent extends BaseInputComponent<EntryConfig> {
-	public value: number | null = null;
+
+	@Input({required: true})
+	public value: number = 0;
+
+	@Output()
+	public onValueChange = new EventEmitter<number>();
 
 	constructor(private dialog: MatDialog) {
 		super();
 	}
 
-	init() {
-		this.value = this.config.defaultValue ?? 0;
-		this.validationMessage = this.config.validationMessage;
-	}
+	init() { }
 
 	// Checks if the value is valid.
 	public isValid(): boolean {
-		if (this.config.required && this.value == null) {
-			this.validationMessage = this.config.validationMessage;
-			return false;
-		}
-
 		if (this.value != null) {
 			if (this.config.max != null && this.value > this.config.max) {
-				this.validationMessage = this.config.validationMessage;
 				return false;
 			}
 			if (this.config.min != null && this.value < this.config.min) {
-				this.validationMessage = this.config.validationMessage;
 				return false;
 			}
 		} else {
-			this.validationMessage = this.config.validationMessage;
 			return false;
 		}
 
@@ -53,5 +47,9 @@ export class EntryComponent extends BaseInputComponent<EntryConfig> {
 				help: this.config.help
 			},
 		});
+	}
+
+	onChange() {
+		this.onValueChange.emit(this.value)
 	}
 }

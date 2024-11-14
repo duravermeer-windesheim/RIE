@@ -1,6 +1,9 @@
-<div class="circle">
-	<div class="inner-circle">
-		<div class="dot"></div>
+<div class="clock" [title]="header ?? ''">
+	<div class="clock-circle">
+		<div class="clock-inner-circle">
+			<div class="clock-dot"></div>
+		</div>
+		<div class="clock-line" #line></div>
+		<p class="clock-value" *ngIf="valueVisible">{{ this.tick }}</p>
 	</div>
-	<div class="line" #line></div>
 </div>

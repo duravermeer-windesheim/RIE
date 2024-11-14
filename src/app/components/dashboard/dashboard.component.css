@@ -22,10 +22,6 @@
 	font-size: 35px;
 }
 
-app-entry {
-	display: block;
-	margin-bottom: 20px;
-}
 
 #panels {
 	width: 80%;
@@ -52,9 +48,7 @@ mat-icon:hover {
 
 /* Small Devices (Phones) */
 @media (max-width: 576px) {
-	app-result-panel,
-	app-input-panel,
-	app-info-panel {
+	app-panel {
 		width: 100%;
 		margin-bottom: 30px;
 	}
@@ -67,9 +61,7 @@ mat-icon:hover {
 
 /* Small Devices (Tablets) */
 @media (min-width: 576px) and (max-width: 992px) {
-	app-result-panel,
-	app-input-panel,
-	app-info-panel {
+	app-panel {
 		width: 100%;
 		margin-bottom: 30px;
 	}
@@ -81,9 +73,7 @@ mat-icon:hover {
 
 /* Large Devices (Desktops) */
 @media (min-width: 992px) {
-	app-result-panel,
-	app-input-panel,
-	app-info-panel {
+	app-panel {
 		width: 32%;
 	}
 

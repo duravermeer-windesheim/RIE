@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {MatDialogActions, MatDialogContent} from '@angular/material/dialog';
+import {Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {MatDialogActions, MatDialogContent, MatDialogRef} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import {ColorService} from '../../services/color.service';
 import {FontService} from '../../services/font.service';
@@ -20,6 +20,8 @@ import {NgIf} from '@angular/common';
 	encapsulation: ViewEncapsulation.None
 })
 export class SettingsDialogComponent implements OnInit {
+
+	private dialogRef = inject(MatDialogRef<SettingsDialogComponent>);
 
 	public fontSize: number = environment.fontConfig.defaultFontSize;
 
@@ -72,5 +74,9 @@ export class SettingsDialogComponent implements OnInit {
 		this.setColorMode(0);
 		this.fontService.setFontSize(environment.fontConfig.defaultFontSize);
 		this.fontSize = this.fontService.getFontSize();
+	}
+
+	close() {
+		this.dialogRef.close();
 	}
 }

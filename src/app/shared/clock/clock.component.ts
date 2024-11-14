@@ -12,6 +12,12 @@ export class ClockComponent implements AfterViewInit {
 	@Input({required: true})
 	public tick: number = 0;
 
+	@Input()
+	public valueVisible: boolean = false;
+
+	@Input()
+	public header?: string;
+
 	ngAfterViewInit(): void {
 		if (this.tick <= 0 || this.tick > 5) {
 			this.rotate();
