@@ -15,7 +15,7 @@
 		(change)="onInteract()"
 		[(ngModel)]="this.value"
 		[disabled]="this.disabled"
-	>
+		(ngModelChange)="onChange()">
 		<option
 			*ngFor="let item of this.items"
 			[disabled]="item.disabled"
@@ -24,6 +24,6 @@
 		</option>
 	</select>
 	<sup class="dropdown-validation-message" *ngIf="displayInvalid">
-		{{ config.validationMessage ?? "Dit veld is niet valide" }}
+		{{ this.config.validationMessage ?? "Dit veld is niet valide" }}
 	</sup>
 </div>

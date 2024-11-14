@@ -1,8 +1,7 @@
-import {DropdownConfig} from '../models/dropdown.model';
 import {EntryConfig} from '../models/entry.model';
 
 export const entryConfigs: { [key: string]: EntryConfig } = {
-	"effect": {
+	effect: {
 		label: 'Effect',
 		code: 'effect',
 		help: {
@@ -12,15 +11,13 @@ export const entryConfigs: { [key: string]: EntryConfig } = {
 				'wanneer het riscico zich voordoet. De schaal gaan van 1 tot 100.\n' +
 				'Bekijk fine-kinney voor meer informatie',
 		},
-		required: true,
 		min: 0,
 		max: 40,
-		defaultValue: 38,
 		step: 1,
 		placeholder: 'Een nummer tussen 0 en 40',
 		validationMessage: 'Effect moet tussen 0 en 40 zijn'
 	},
-	"frequency": {
+	frequency: {
 		label: 'Blootstelling',
 		code: 'frequency',
 		help: {
@@ -30,15 +27,13 @@ export const entryConfigs: { [key: string]: EntryConfig } = {
 				'De waardeschaal van de blootstelling gaat van 0,5 tot 10,\n' +
 				'Bekijk fine-kinney voor meer informatie',
 		},
-		required: true,
 		min: 0.5,
 		max: 10,
-		defaultValue: 1,
 		step: 0.5,
 		placeholder: 'Een nummer tussen 0.5 en 10',
 		validationMessage: 'Blootstelling moet tussen 0.5 en 10 zijn'
 	},
-	"probability": {
+	probability: {
 		label: 'Waarschijnlijkheid',
 		code: 'probability',
 		help: {
@@ -49,10 +44,8 @@ export const entryConfigs: { [key: string]: EntryConfig } = {
 				'Bekijk fine-kinney voor meer informatie',
 
 		},
-		required: true,
 		min: 0,
 		max: 10,
-		defaultValue: 7,
 		step: 1,
 		placeholder: 'Een nummer tussen 0 en 10',
 		validationMessage: 'Waarschijnlijkheid moet tussen 0 en 10 zijn'

@@ -1,16 +1,9 @@
 import {MeasureModel} from './measure.model';
+import {RiskScoreModel} from './risk.model';
+import {DropdownItem} from './dropdown.model';
 
 export interface ResultModel {
-	riskType: string,
-	situationType: string,
-	personType: string,
-	probability: number,
-	frequency: number,
-	effect: number,
+	riskType: DropdownItem,
+	riskScoreValues: RiskScoreModel,
 	measures: MeasureModel[]
-}
-
-export interface KeyValuePair {
-	key: number,
-	value: string
 }

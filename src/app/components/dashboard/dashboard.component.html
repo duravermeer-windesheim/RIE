@@ -6,12 +6,18 @@
 <mat-icon (click)="openSettings()">menu</mat-icon>
 
 <main id="panels">
-	<app-info-panel></app-info-panel>
-	<app-input-panel></app-input-panel>
-	<app-result-panel
-		*ngIf="inputPanel"
-		[data]="this.inputPanel.getData()"
-		[allValid]="this.inputPanel.allValid()"
-		(onRemoveMeasure)="this.inputPanel.removeMeasure($event)"
-	></app-result-panel>
+	<app-panel header="De RI&E tool">
+		<app-info-panel></app-info-panel>
+	</app-panel>
+	<app-panel header="Bekende informatie">
+		<app-input-panel></app-input-panel>
+	</app-panel>
+	<app-panel header="Resultaat">
+		<app-result-panel
+			*ngIf="inputPanel"
+			[data]="this.inputPanel.data"
+			[allValid]="this.inputPanel.allValid()"
+			(onRemoveMeasure)="this.inputPanel.removeMeasure($event)"
+		></app-result-panel>
+	</app-panel>
 </main>

@@ -10,10 +10,6 @@
 	cursor: pointer;
 }
 
-.entry-label-asterisk {
-	color: red;
-}
-
 .entry-input-help-field {
 	height: 30px;
 	display: flex;

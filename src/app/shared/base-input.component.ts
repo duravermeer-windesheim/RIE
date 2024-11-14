@@ -10,7 +10,6 @@ export abstract class BaseInputComponent<T extends DropdownConfig | EntryConfig>
 
 	@Input({ required: true }) public config!: T;
 
-	public validationMessage?: string;
 	protected hasInteracted: boolean = false;
 	protected abstract value: any;
 

@@ -1,33 +1,39 @@
+<app-dropdown
+	[config]="this.dropdowns['riskType']"
+	[items]="this.currentRiskDropdownOptions"
+	[disabled]="this.currentRiskDropdownOptions.length <= 0"
+	[value]="this.data.riskType"
+	(onValueChange)="this.setRiskType($event)"
+	#risk
+></app-dropdown>
 
-<app-panel header="Bekende informatie">
-<!--	<app-dropdown-->
-<!--		[config]="this.dropdowns['situationType']"-->
-<!--		[items]="this.dropdowns['situationType'].defaultItems"-->
-<!--	></app-dropdown>-->
-<!--	<app-dropdown-->
-<!--		[config]="this.dropdowns['personType']"-->
-<!--		[items]="this.dropdowns['personType'].defaultItems"-->
-<!--	></app-dropdown>-->
+<app-entry
+	[value]="this.data.riskScoreValues.effect"
+	[config]="this.entries['effect']"
+	(onValueChange)="this.setRiskScore('effect', $event)"
+></app-entry>
+<app-entry
+	[value]="this.data.riskScoreValues.frequency"
+	[config]="this.entries['frequency']"
+	(onValueChange)="this.setRiskScore('frequency', $event)"
+></app-entry>
+<app-entry
+	[value]="this.data.riskScoreValues.probability"
+	[config]="this.entries['probability']"
+	(onValueChange)="this.setRiskScore('probability', $event)"
+></app-entry>
+
+<div id="measure">
 	<app-dropdown
-		[config]="this.dropdowns['riskType']"
-		[items]="this.dropdowns['riskType'].defaultItems"
+		[config]="this.dropdowns['measure']"
+		[items]="this.currentMeasureDropdownOptions"
+		[disabled]="this.currentMeasureDropdownOptions.length <= 0"
+		[value]="this.defaultDropdownValues.measure"
+		#measure
 	></app-dropdown>
-	<app-entry [config]="this.entries['effect']"></app-entry>
-	<app-entry [config]="this.entries['frequency']"></app-entry>
-	<app-entry [config]="this.entries['probability']"></app-entry>
-
-	<div id="measure">
-		<app-dropdown
-			[config]="this.dropdowns['measure']"
-			[items]="this.currentMeasureDropdownOptions"
-			[disabled]="this.currentMeasureDropdownOptions.length <= 0"
-			#measure
-		></app-dropdown>
-		<button
-			id="measure-add-button"
-			(click)="addSelectedMeasure()"
-			*ngIf="this.currentMeasureDropdownOptions.length > 0"
-		>Pas maatregel toe</button>
-	</div>
-
-</app-panel>
+	<button
+		id="measure-add-button"
+		(click)="addSelectedMeasure()"
+		*ngIf="this.currentMeasureDropdownOptions.length > 0"
+	>Pas maatregel toe</button>
+</div>
