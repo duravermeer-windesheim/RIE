@@ -18,12 +18,17 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 	@Input()
 	public header?: string;
 
+	@Input()
+	public rotating: boolean = false;
+
 	ngAfterViewInit(): void {
-		if (this.tick <= 0 || this.tick > 5) {
+		if (this.rotating) {
 			this.rotate();
-		} else {
-			this.setRotation(((this.tick - 1) * 72) + 2);
+			return;
 		}
+
+		// Rotate.
+		this.setRotation(((this.tick - 1) * 72) + 2, true)
 	}
 
 	ngOnChanges() {
@@ -31,10 +36,16 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 			return;
 		}
 
-		this.setRotation(((this.tick - 1) * 72) + 2)
+		this.ngAfterViewInit();
 	}
 
-	setRotation(degrees: number) {
+	setRotation(degrees: number, doTransition: boolean) {
+		if (doTransition) {
+			this.line.nativeElement.style.transition = 'transform 0.3s linear';
+		} else {
+			this.line.nativeElement.style.transition = 'none';
+		}
+
 		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees + "deg)";
 	}
 
@@ -47,7 +58,7 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 		for (let i = 0; i < 360; i++) {
 			setTimeout(() => {
 				currentRotation += 1;
-				this.setRotation(currentRotation);
+				this.setRotation(currentRotation, false);
 			}, i * 2);
 		}
 	}
@@ -56,7 +67,7 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 		let currentRotation = 0;
 		setInterval(() => {
 			currentRotation = (currentRotation + 1) % 360;
-			this.setRotation(currentRotation);
+			this.setRotation(currentRotation, false);
 		}, 10);
 	}
 }

@@ -42,15 +42,4 @@ export class DashboardComponent implements AfterViewInit {
 			this.cdref.detectChanges();
 		}
 	}
-
-	tempTickReload() {
-		if (!this.resultPanel) {
-			return;
-		}
-		this.resultPanel.ticks = Array.from({ length: 8 }, () => Math.floor(Math.random() * 5) + 1);
-		this.cdref.detectChanges();
-
-
-	}
-
 }
