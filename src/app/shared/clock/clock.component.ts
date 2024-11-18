@@ -46,7 +46,7 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 			this.line.nativeElement.style.transition = 'none';
 		}
 
-		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees + "deg)";
+		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees % 360 + "deg)";
 	}
 
 	rotateOnce() {
