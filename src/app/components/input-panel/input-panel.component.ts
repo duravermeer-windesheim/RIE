@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	OnInit,
+	Output,
+	QueryList,
+	ViewChild,
+	ViewChildren
+} from '@angular/core';
 import {SharedModule} from '../../shared/shared.module';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {EntryComponent} from '../../shared/entry/entry.component';
@@ -7,10 +16,9 @@ import {ResultModel} from '../../models/result.model';
 import {entryConfigs} from '../../config/entries.config';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
-import {MeasureModel} from '../../models/measure.model';
-import {RiskModel, RiskScoreModel} from '../../models/risk.model';
-import {SheetMeasureService} from '../../services/sheet-services/sheet-measure.service';
-import {SheetRiskService} from '../../services/sheet-services/sheet-risk.service';
+import {RiskScoreGroupCollectionModel, RiskScoreModel} from '../../models/risk.model';
+import {SheetDataService} from '../../services/sheet-data.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
 	selector: 'app-input-panel',
@@ -30,14 +38,17 @@ export class InputPanelComponent implements OnInit {
 	@ViewChild("measure") measureElement!: DropdownComponent;
 	@ViewChild("risk") riskElement!: DropdownComponent;
 
+	@Output()
+	public tempOnTickReload = new EventEmitter();
+
 	public entries = entryConfigs;
 	public dropdowns = dropdownConfigs;
 
 	public currentMeasureDropdownOptions: DropdownItem[] = [];
 	public currentRiskDropdownOptions: DropdownItem[] = []
 
-	private spreadsheetRisks: RiskModel[] = [];
-	private spreadsheetMeasures: MeasureModel[] = [];
+	private spreadsheetRisks: RiskScoreGroupCollectionModel[] = [];
+	private spreadsheetMeasures: RiskScoreGroupCollectionModel[] = [];
 
 
 	// In case you want to change the default values in the dropdowns.
@@ -56,21 +67,20 @@ export class InputPanelComponent implements OnInit {
 		measures: []
 	}
 
-	constructor (
-		private sheetMeasureService: SheetMeasureService,
-		private sheetRiskService: SheetRiskService) { }
+	constructor(private sheetService: SheetDataService) {
+	}
 
 	async ngOnInit() {
-		this.spreadsheetRisks = await this.sheetRiskService.getSheetData();
-		this.spreadsheetMeasures = await this.sheetMeasureService.getSheetData();
+		this.spreadsheetRisks = await this.sheetService.getRiskGroups(environment.sheetNames.risks);
+		this.spreadsheetMeasures = await this.sheetService.getRiskGroups(environment.sheetNames.measures);
 
 		this.currentRiskDropdownOptions = this.spreadsheetRisks.map((risk, index) => ({
 			key: index,
 			value: risk.label
 		}));
 
-		this.currentMeasureDropdownOptions = this.spreadsheetMeasures.map(measure => ({
-			key: measure.code,
+		this.currentMeasureDropdownOptions = this.spreadsheetMeasures.map((measure, index) => ({
+			key: index,
 			value: measure.label
 		}));
 
@@ -92,8 +102,9 @@ export class InputPanelComponent implements OnInit {
 	async addSelectedMeasure() {
 		// Get selected measure.
 		let keyValue = this.measureElement.getKeyValue();
+		let measureIdx = keyValue.value.key;
+		let measure = this.spreadsheetMeasures[measureIdx];
 
-		let measure = this.spreadsheetMeasures.find(m => m.code === keyValue.value.key);
 		if (measure == null) {
 			return;
 		}
@@ -101,18 +112,24 @@ export class InputPanelComponent implements OnInit {
 		// Add the measure.
 		this.data.measures.push(measure);
 
+		// TEMP. Change the clocks.
+		this.tempOnTickReload.emit();
+
 		// Remove measure from dropdown options.
-		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.key != measure.code);
+		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.key != measureIdx)
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
-	public removeMeasure(measure: MeasureModel) {
+	public removeMeasure(measure: RiskScoreGroupCollectionModel) {
+		// Find location of measure.
+		let measureIdx = this.spreadsheetMeasures.indexOf(measure);
+
 		// Remove the measure from the selection of measures.
-		this.data.measures = this.data.measures.filter(m => m.code !== measure.code);
+		this.data.measures = this.data.measures.filter(m => m != measure);
 
 		// Add measure to the dropdown option.
 		this.currentMeasureDropdownOptions.push({
-			key: measure.code,
+			key: measureIdx,
 			value: measure.label
 		});
 

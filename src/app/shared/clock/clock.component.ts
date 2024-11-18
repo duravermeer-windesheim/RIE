@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-clock',
   templateUrl: './clock.component.html',
   styleUrl: './clock.component.css'
 })
-export class ClockComponent implements AfterViewInit {
+export class ClockComponent implements AfterViewInit, OnChanges {
 
 	@ViewChild('line') line!: ElementRef;
 
@@ -26,8 +26,30 @@ export class ClockComponent implements AfterViewInit {
 		}
 	}
 
+	ngOnChanges() {
+		if (!this.line) {
+			return;
+		}
+
+		this.setRotation(((this.tick - 1) * 72) + 2)
+	}
+
 	setRotation(degrees: number) {
 		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees + "deg)";
+	}
+
+	rotateOnce() {
+		if (this.tick == 0) {
+			return;
+		}
+
+		let currentRotation = ((this.tick - 1) * 72) + 2
+		for (let i = 0; i < 360; i++) {
+			setTimeout(() => {
+				currentRotation += 1;
+				this.setRotation(currentRotation);
+			}, i * 2);
+		}
 	}
 
 	rotate() {

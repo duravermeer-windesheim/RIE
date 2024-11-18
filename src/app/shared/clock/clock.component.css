@@ -54,6 +54,7 @@
 	left: 51%;
 	transform-origin: bottom;
 	transform: translate(-100%, -144%);
+	transition: transform 0.3s linear;
 }
 
 .clock-value {
