@@ -2,14 +2,7 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from 
 import {DecimalPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
-import {MeasureModel} from '../../models/measure.model';
-
-
-export enum MeasureTargetType {
-	Probability = 'probability',
-	Frequency = 'frequency',
-	Effect = 'effect'
-}
+import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 
 
 @Component({
@@ -35,35 +28,16 @@ export class ResultPanelComponent {
 	allValid!: boolean;
 
 	@Output()
-	public onRemoveMeasure = new EventEmitter<MeasureModel>();
+	public onRemoveMeasure = new EventEmitter<RiskScoreGroupCollectionModel>();
 
 	constructor(private cdref: ChangeDetectorRef) {
-	}
-
-	get effects() {
-		return this.getAllEffects();
 	}
 
 	// TEMP.
 	public ticks = Array.from({ length: 8 }, () => Math.floor(Math.random() * 5) + 1);
 
-	public getAllEffects() {
-		let effects: {[key in MeasureTargetType]: number } = {
-			[MeasureTargetType.Effect]: 0,
-			[MeasureTargetType.Frequency]: 0,
-			[MeasureTargetType.Probability]: 0
-		};
 
-		this.data.measures.forEach(measure => {
-			effects[MeasureTargetType.Effect] += measure.effect;
-			effects[MeasureTargetType.Frequency] += measure.frequency;
-			effects[MeasureTargetType.Probability] += measure.probability;
-		});
-
-		return effects;
-	}
-
-	removeMeasure(measure: MeasureModel) {
+	removeMeasure(measure: RiskScoreGroupCollectionModel) {
 		this.onRemoveMeasure.emit(measure);
 		this.cdref.detectChanges();
 	}

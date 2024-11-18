@@ -26,6 +26,7 @@ import {SettingsDialogComponent} from '../settings-dialog/settings-dialog.compon
 })
 export class DashboardComponent implements AfterViewInit {
 	@ViewChild(InputPanelComponent) public inputPanel?: InputPanelComponent;
+	@ViewChild(ResultPanelComponent) public resultPanel?: ResultPanelComponent;
 
 	constructor(private cdref: ChangeDetectorRef, private dialog: MatDialog) {}
 
@@ -40,6 +41,16 @@ export class DashboardComponent implements AfterViewInit {
 		if (this.inputPanel) {
 			this.cdref.detectChanges();
 		}
+	}
+
+	tempTickReload() {
+		if (!this.resultPanel) {
+			return;
+		}
+		this.resultPanel.ticks = Array.from({ length: 8 }, () => Math.floor(Math.random() * 5) + 1);
+		this.cdref.detectChanges();
+
+
 	}
 
 }

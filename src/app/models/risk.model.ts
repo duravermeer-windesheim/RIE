@@ -1,10 +1,10 @@
 
-export interface RiskModel {
+export interface RiskScoreGroupCollectionModel  {
 	label: string,
-	riskGroups: RiskGroupModel[]
+	riskGroups: RiskScoreGroupModel[]
 }
 
-export interface RiskGroupModel {
+export interface RiskScoreGroupModel {
 	group: string,
 	situationARiskScores: RiskScoreModel,
 	situationBRiskScores: RiskScoreModel,
