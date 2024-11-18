@@ -2,7 +2,7 @@
 	[config]="this.dropdowns['riskType']"
 	[items]="this.currentRiskDropdownOptions"
 	[disabled]="this.currentRiskDropdownOptions.length <= 0"
-	[value]="this.data.riskType"
+	[value]="this.selectedRiskDropdownOption"
 	(onValueChange)="this.setRiskType($event)"
 	#risk
 ></app-dropdown>

@@ -12,7 +12,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {EntryComponent} from '../../shared/entry/entry.component';
 import {DropdownComponent} from '../../shared/dropdown/dropdown.component';
-import {ResultModel} from '../../models/result.model';
+import {CalculationModel} from '../../models/result.model';
 import {entryConfigs} from '../../config/entries.config';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
@@ -38,14 +38,12 @@ export class InputPanelComponent implements OnInit {
 	@ViewChild("measure") measureElement!: DropdownComponent;
 	@ViewChild("risk") riskElement!: DropdownComponent;
 
-	@Output()
-	public tempOnTickReload = new EventEmitter();
-
 	public entries = entryConfigs;
 	public dropdowns = dropdownConfigs;
 
 	public currentMeasureDropdownOptions: DropdownItem[] = [];
 	public currentRiskDropdownOptions: DropdownItem[] = []
+	public selectedRiskDropdownOption: DropdownItem = defaultDropdownItem;
 
 	private spreadsheetRisks: RiskScoreGroupCollectionModel[] = [];
 	private spreadsheetMeasures: RiskScoreGroupCollectionModel[] = [];
@@ -57,13 +55,14 @@ export class InputPanelComponent implements OnInit {
 		measure: defaultDropdownItem
 	}
 
-	public data: ResultModel = {
+
+	public data: CalculationModel = {
 		riskScoreValues: {
 			probability: 0,
 			frequency: 0.5,
 			effect: 0
 		},
-		riskType: this.defaultDropdownValues.riskType,
+		riskType: {},
 		measures: []
 	}
 
@@ -84,9 +83,19 @@ export class InputPanelComponent implements OnInit {
 			value: measure.label
 		}));
 
+		// Default risk type is the first one found.
+		this.setRiskType(this.currentRiskDropdownOptions[0]);
+
+		// Set the dropdowns to display the first item.
 		this.riskElement.value = this.currentRiskDropdownOptions[0];
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
+
+	// Trigger the angular change detection system.
+	private reloadData() {
+		this.data = { ...this.data }
+	}
+
 
 	// Checks if everything in the input panel is valid.
 	public allValid(): boolean {
@@ -111,9 +120,7 @@ export class InputPanelComponent implements OnInit {
 
 		// Add the measure.
 		this.data.measures.push(measure);
-
-		// TEMP. Change the clocks.
-		this.tempOnTickReload.emit();
+		this.reloadData();
 
 		// Remove measure from dropdown options.
 		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.key != measureIdx)
@@ -125,8 +132,8 @@ export class InputPanelComponent implements OnInit {
 		let measureIdx = this.spreadsheetMeasures.indexOf(measure);
 
 		// Remove the measure from the selection of measures.
-		this.data.measures = this.data.measures.filter(m => m != measure);
-
+		// this.data.measures = this.data.measures.filter(m => m != measure);
+		this.data = { ...this.data, measures: this.data.measures.filter(m => m !== measure) };
 		// Add measure to the dropdown option.
 		this.currentMeasureDropdownOptions.push({
 			key: measureIdx,
@@ -141,12 +148,13 @@ export class InputPanelComponent implements OnInit {
 	// Update methods.
 	setRiskScore(key: "effect" | "probability" | "frequency", value: number) {
 		this.data.riskScoreValues[key] = value;
+		this.reloadData();
 	}
 
 	setRiskType(item: DropdownItem) {
-		this.data.riskType = item;
+		this.data.riskType = this.spreadsheetRisks[item.key];
 
-		// TEMP.
+		// TEMP. Just add the default values into the entries.
 		this.spreadsheetRisks.forEach(risk => {
 			if (risk.label == item.value) {
 				this.data.riskScoreValues.probability = risk.riskGroups[3].situationARiskScores.probability;
@@ -154,5 +162,7 @@ export class InputPanelComponent implements OnInit {
 				this.data.riskScoreValues.effect = risk.riskGroups[3].situationARiskScores.effect;
 			}
 		});
+
+		this.reloadData();
 	}
 }

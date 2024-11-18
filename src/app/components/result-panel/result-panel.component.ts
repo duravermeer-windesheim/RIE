@@ -1,8 +1,18 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	SimpleChanges
+} from '@angular/core';
 import {DecimalPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {ResultModel} from '../../models/result.model';
+import {CalculationModel, ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
+import {RiskCalculationService} from '../../services/risk-calculation.service';
 
 
 @Component({
@@ -19,10 +29,10 @@ import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 	styleUrl: './result-panel.component.css',
 	providers: [DecimalPipe]
 })
-export class ResultPanelComponent {
+export class ResultPanelComponent implements OnInit, OnChanges {
 
 	@Input({required: true})
-	data!: ResultModel;
+	data!: CalculationModel;
 
 	@Input({required: true})
 	allValid!: boolean;
@@ -30,12 +40,21 @@ export class ResultPanelComponent {
 	@Output()
 	public onRemoveMeasure = new EventEmitter<RiskScoreGroupCollectionModel>();
 
-	constructor(private cdref: ChangeDetectorRef) {
+	public results!: ResultModel;
+
+	constructor(
+		private riskCalculationService: RiskCalculationService,
+		private cdref: ChangeDetectorRef) {
 	}
 
-	// TEMP.
-	public ticks = Array.from({ length: 8 }, () => Math.floor(Math.random() * 5) + 1);
-
+	ngOnInit() {
+		this.results = this.riskCalculationService.getRiskNumbers(this.data);
+	}
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['data']) {
+			this.results = this.riskCalculationService.getRiskNumbers(this.data);
+		}
+	}
 
 	removeMeasure(measure: RiskScoreGroupCollectionModel) {
 		this.onRemoveMeasure.emit(measure);

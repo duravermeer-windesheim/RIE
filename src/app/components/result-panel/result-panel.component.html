@@ -6,19 +6,51 @@
 		<div id="result-panel-clocks-scenario-a" class="result-panel-clocks-scenario">
 			<p class="result-panel-clocks-scenario-title"><strong>Scenario A</strong></p>
 			<div class="result-panel-clocks-holder">
-				<app-clock [tick]="ticks[0]" [valueVisible]="true" header="Weggebruikers"></app-clock>
-				<app-clock [tick]="ticks[1]" [valueVisible]="true" header="Omwonende"></app-clock>
-				<app-clock [tick]="ticks[2]" [valueVisible]="true" header="VKM Ploeg"></app-clock>
-				<app-clock [tick]="ticks[3]" [valueVisible]="true" header="Wegwerkers"></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioAResults.roadUser"
+					[valueVisible]="true"
+					header="Weggebruikers"
+				></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioAResults.residents"
+					[valueVisible]="true"
+					header="Omwonende"
+				></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioAResults.vkm"
+					[valueVisible]="true"
+					header="VKM Ploeg"
+				></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioAResults.roadWorker"
+					[valueVisible]="true"
+					header="Wegwerkers"
+				></app-clock>
 			</div>
 		</div>
 		<div id="result-panel-clocks-scenario-b" class="result-panel-clocks-scenario">
 			<p class="result-panel-clocks-scenario-title"><strong>Scenario B</strong></p>
 			<div class="result-panel-clocks-holder">
-				<app-clock [tick]="ticks[4]" [valueVisible]="true" header="Weggebruikers"></app-clock>
-				<app-clock [tick]="ticks[5]" [valueVisible]="true" header="Omwonende"></app-clock>
-				<app-clock [tick]="ticks[6]" [valueVisible]="true" header="VKM Ploeg"></app-clock>
-				<app-clock [tick]="ticks[7]" [valueVisible]="true" header="Wegwerkers"></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioBResults.roadUser"
+					[valueVisible]="true"
+					header="Weggebruikers"
+				></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioBResults.residents"
+					[valueVisible]="true"
+					header="Omwonende"
+				></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioBResults.vkm"
+					[valueVisible]="true"
+					header="VKM Ploeg"
+				></app-clock>
+				<app-clock
+					[tick]="this.results.scenarioBResults.roadWorker"
+					[valueVisible]="true"
+					header="Wegwerkers"
+				></app-clock>
 			</div>
 		</div>
 	</div>
@@ -58,7 +90,7 @@
 	</div>
 </div>
 <div id="result-panel-invalid" *ngIf="!this.allValid">
-	<app-clock [tick]="0" style="margin-bottom: 30px"></app-clock>
+	<app-clock [tick]="0" [rotating]="true" style="margin-bottom: 30px"></app-clock>
 	<p>Vul eerst de bekende informatie in.</p>
 	<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
 </div>
