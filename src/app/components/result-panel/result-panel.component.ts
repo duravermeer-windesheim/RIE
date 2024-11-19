@@ -42,9 +42,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 
 	public results!: ResultModel;
 
-	constructor(
-		private riskCalculationService: RiskCalculationService,
-		private cdref: ChangeDetectorRef) {
+	constructor(private riskCalculationService: RiskCalculationService) {
 	}
 
 	ngOnInit() {
@@ -73,7 +71,6 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 
 	removeMeasure(measure: RiskScoreGroupCollectionModel) {
 		this.onRemoveMeasure.emit(measure);
-		this.cdref.detectChanges();
 	}
 
 }

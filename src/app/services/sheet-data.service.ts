@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {lastValueFrom} from 'rxjs';
@@ -24,7 +24,6 @@ export class SheetDataService {
 		}
 	}
 
-	// TODO: This needs a lot of checks. Data is very fragile.
 	public async getRiskGroups(sheet: string): Promise<RiskScoreGroupCollectionModel[]> {
 		let sheetData = await this.getSheetData(sheet);
 
@@ -58,18 +57,17 @@ export class SheetDataService {
 				bufferGroups.push({
 					group: record[0],
 					situationARiskScores: {
-						effect: parseInt(record[1]),
-						frequency: parseInt(record[2]),
-						probability: parseInt(record[3]),
+						effect: this.parseScore(record[1]),
+						frequency: this.parseScore(record[2]),
+						probability: this.parseScore(record[3]),
 					},
 					situationBRiskScores: {
-						effect: parseInt(record[4]),
-						frequency: parseInt(record[5]),
-						probability: parseInt(record[6]),
+						effect: this.parseScore(record[4]),
+						frequency: this.parseScore(record[5]),
+						probability: this.parseScore(record[6]),
 					}
-				})
+				});
 			}
-
 			idx++;
 		});
 
@@ -82,12 +80,20 @@ export class SheetDataService {
 		return collections;
 	}
 
+	private parseScore(score: string) {
+		if (!score) {
+			return 0;
+		}
+
+		let parsed = parseFloat(score.replace(',', '.'));
+		return isNaN(parsed) ? 0 : parsed;
+	}
 
 	public mapRiskGroupsToDropdownItems(risks: RiskScoreGroupCollectionModel[]) {
 		return risks.map((risk, index) => ({
 			key: index,
 			value: risk.label
-		}));
+		})).sort((a, b) => a.value.localeCompare(b.value));
 	}
 
 }

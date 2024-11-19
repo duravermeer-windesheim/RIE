@@ -62,9 +62,9 @@ export class InputPanelComponent implements OnInit {
 
 	public data: CalculationModel = {
 		riskScoreValues: {
-			probability: 1,
-			frequency: 1,
-			effect: 1
+			probability: 0,
+			frequency: 0,
+			effect: 0
 		},
 		riskType: undefined,
 		measures: []
@@ -86,6 +86,7 @@ export class InputPanelComponent implements OnInit {
 		this.setRiskType(this.currentRiskDropdownOptions[0]);
 
 		// Set the dropdowns to display the first item.
+
 		this.riskElement.value = this.currentRiskDropdownOptions[0];
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
@@ -131,8 +132,8 @@ export class InputPanelComponent implements OnInit {
 		let measureIdx = this.spreadsheetMeasures.indexOf(measure);
 
 		// Remove the measure from the selection of measures.
-		// this.data.measures = this.data.measures.filter(m => m != measure);
 		this.data = { ...this.data, measures: this.data.measures.filter(m => m !== measure) };
+
 		// Add measure to the dropdown option.
 		this.currentMeasureDropdownOptions.push({
 			key: measureIdx,
@@ -145,7 +146,6 @@ export class InputPanelComponent implements OnInit {
 
 
 	// Update methods.
-
 	setRiskScore(key: "effect" | "frequency" | "probability", value: number) {
 		this.data.riskScoreValues[key] = value;
 		this.reloadData();
@@ -153,7 +153,6 @@ export class InputPanelComponent implements OnInit {
 
 	setRiskType(item: DropdownItem) {
 		this.data.riskType = this.spreadsheetRisks[item.key];
-
 		this.reloadData();
 	}
 
