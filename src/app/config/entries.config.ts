@@ -27,10 +27,10 @@ export const entryConfigs: { [key: string]: EntryConfig } = {
 				'De waardeschaal van de blootstelling gaat van 0,5 tot 10,\n' +
 				'Bekijk fine-kinney voor meer informatie',
 		},
-		min: 0.5,
+		min: 0,
 		max: 10,
 		step: 0.5,
-		placeholder: 'Een nummer tussen 0.5 en 10',
+		placeholder: 'Een nummer tussen 0 en 10',
 		validationMessage: 'Blootstelling moet tussen 0.5 en 10 zijn'
 	},
 	probability: {
