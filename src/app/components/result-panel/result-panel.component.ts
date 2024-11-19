@@ -48,15 +48,8 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
-		if (!this.allValid) {
-			return;
-		}
-
-		let results = this.riskCalculationService.getRiskNumbers(this.data);
-		if (results) {
-			this.results = results;
-		} else {
-			console.error("Could not calculate risk numbers");
+		if (this.allValid) {
+			this.getResults();
 		}
 	}
 	ngOnChanges(changes: SimpleChanges): void {
@@ -65,12 +58,16 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 		}
 
 		if (changes['data']) {
-			let results = this.riskCalculationService.getRiskNumbers(this.data);
-			if (results) {
-				this.results = results;
-			} else {
-				console.error("Could not calculate risk numbers");
-			}
+			this.getResults();
+		}
+	}
+
+	getResults() {
+		let results = this.riskCalculationService.getRiskNumbers(this.data);
+		if (results) {
+			this.results = results;
+		} else {
+			console.error("Could not calculate risk numbers");
 		}
 	}
 

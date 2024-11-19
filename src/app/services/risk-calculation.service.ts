@@ -10,15 +10,20 @@ export class RiskCalculationService {
 	constructor() { }
 
 	public getRiskNumbers(calculationModel: CalculationModel): ResultModel | null {
-		if (!('label' in calculationModel.riskType)) {
+		// Deep copy of the calculation model so that the measures' changes don't persist
+		calculationModel = JSON.parse(JSON.stringify(calculationModel));
+
+		if (!calculationModel.riskType) {
 			return null;
 		}
 
+		// Grab a variable for each of the riskGroups.
 		let rou = calculationModel.riskType.riskGroups[2];
 		let row = calculationModel.riskType.riskGroups[0];
 		let vkm = calculationModel.riskType.riskGroups[1];
 		let res = calculationModel.riskType.riskGroups[3];
 
+		// For each of the present measures, change each of the base values.
 		calculationModel.measures.forEach(measure => {
 			let m_rou = measure.riskGroups[2];
 			let m_row = measure.riskGroups[0];

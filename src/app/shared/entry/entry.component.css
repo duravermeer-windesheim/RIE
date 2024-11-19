@@ -46,6 +46,16 @@
 	outline: none;
 }
 
+.entry-input:disabled {
+	cursor: not-allowed;
+}
+
+.entry-input:disabled + .entry-help {
+	cursor: not-allowed;
+	background-color: rgba(255, 255, 255, 0.5);
+	border: none;
+}
+
 .entry-help {
 	flex: 0 0 auto;
 	min-width: 10%;

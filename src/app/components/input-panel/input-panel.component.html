@@ -7,23 +7,36 @@
 	#risk
 ></app-dropdown>
 
-<app-entry
-	[value]="this.data.riskScoreValues.effect"
-	[config]="this.entries['effect']"
-	(onValueChange)="this.setRiskScore('effect', $event)"
-></app-entry>
-<app-entry
-	[value]="this.data.riskScoreValues.frequency"
-	[config]="this.entries['frequency']"
-	(onValueChange)="this.setRiskScore('frequency', $event)"
-></app-entry>
-<app-entry
-	[value]="this.data.riskScoreValues.probability"
-	[config]="this.entries['probability']"
-	(onValueChange)="this.setRiskScore('probability', $event)"
-></app-entry>
+<div id="input-panel-select-risk-scores">
+	<p *ngIf="this.selectedSituationRiskGroup; else selectRiskGroupSituationWarning">
+		<strong>Geselecteerd</strong><br/>
+		Situatie {{ this.selectedSituationRiskGroup.situation }},
+		Risicogroep: {{ riskGroup[this.selectedSituationRiskGroup.riskGroup] }}
+	</p>
+	<ng-template #selectRiskGroupSituationWarning>
+		<p>Selecteer een risicogroep / situatie om de individuele risico scores aan te passen.</p>
+	</ng-template>
+	<app-entry
+		[value]="this.data.riskScoreValues.effect"
+		[config]="this.entries['effect']"
+		[disabled]="!this.selectedSituationRiskGroup"
+		(onValueChange)="this.setRiskScore('effect', $event)"
+	></app-entry>
+	<app-entry
+		[value]="this.data.riskScoreValues.frequency"
+		[config]="this.entries['frequency']"
+		[disabled]="!this.selectedSituationRiskGroup"
+		(onValueChange)="this.setRiskScore('frequency', $event)"
+	></app-entry>
+	<app-entry
+		[value]="this.data.riskScoreValues.probability"
+		[config]="this.entries['probability']"
+		[disabled]="!this.selectedSituationRiskGroup"
+		(onValueChange)="this.setRiskScore('probability', $event)"
+	></app-entry>
+</div>
 
-<div id="measure">
+<div id="input-panel-select-measure">
 	<app-dropdown
 		[config]="this.dropdowns['measure']"
 		[items]="this.currentMeasureDropdownOptions"
@@ -32,8 +45,22 @@
 		#measure
 	></app-dropdown>
 	<button
-		id="measure-add-button"
+		id="input-panel-select-measure-button"
 		(click)="addSelectedMeasure()"
 		*ngIf="this.currentMeasureDropdownOptions.length > 0"
 	>Pas maatregel toe</button>
+</div>
+
+
+<div id="temp-detail-risk-score-btns">
+	<button (click)="setDetailRiskScore('a', 0)">A - Road worker</button>
+	<button (click)="setDetailRiskScore('a', 1)">A - VKM</button>
+	<button (click)="setDetailRiskScore('a', 2)">A - Road users</button>
+	<button (click)="setDetailRiskScore('a', 3)">A - Residents</button>
+	<br/>
+	<br/>
+	<button (click)="setDetailRiskScore('b', 0)">B - Road worker</button>
+	<button (click)="setDetailRiskScore('b', 1)">B - VKM</button>
+	<button (click)="setDetailRiskScore('b', 2)">B - Road users</button>
+	<button (click)="setDetailRiskScore('b', 3)">B - Residents</button>
 </div>

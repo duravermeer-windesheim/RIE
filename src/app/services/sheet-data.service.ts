@@ -80,5 +80,11 @@ export class SheetDataService {
 	}
 
 
+	public mapRiskGroupsToDropdownItems(risks: RiskScoreGroupCollectionModel[]) {
+		return risks.map((risk, index) => ({
+			key: index,
+			value: risk.label
+		}));
+	}
 
 }
