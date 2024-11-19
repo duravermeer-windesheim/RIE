@@ -18,17 +18,17 @@ export class RiskCalculationService {
 		}
 
 		// Grab a variable for each of the riskGroups.
-		let rou = calculationModel.riskType.riskGroups[2];
-		let row = calculationModel.riskType.riskGroups[0];
-		let vkm = calculationModel.riskType.riskGroups[1];
-		let res = calculationModel.riskType.riskGroups[3];
+		let rou = calculationModel.riskType.riskGroups[0];
+		let res = calculationModel.riskType.riskGroups[1];
+		let vkm = calculationModel.riskType.riskGroups[2];
+		let row = calculationModel.riskType.riskGroups[3];
 
 		// For each of the present measures, change each of the base values.
 		calculationModel.measures.forEach(measure => {
-			let m_rou = measure.riskGroups[2];
-			let m_row = measure.riskGroups[0];
-			let m_vkm = measure.riskGroups[1];
-			let m_res = measure.riskGroups[3];
+			let m_rou = measure.riskGroups[0];
+			let m_res = measure.riskGroups[1];
+			let m_vkm = measure.riskGroups[2];
+			let m_row = measure.riskGroups[3];
 
 			// A.
 			row.situationARiskScores.frequency += m_row.situationARiskScores.frequency;
@@ -79,15 +79,15 @@ export class RiskCalculationService {
 		return {
 			scenarioAResults: {
 				roadUser: a_rou,
-				roadWorker: a_row,
-				vkm: a_vkm,
 				residents: a_res,
+				vkm: a_vkm,
+				roadWorker: a_row,
 			},
 			scenarioBResults: {
 				roadUser: b_rou,
-				roadWorker: b_row,
-				vkm: b_vkm,
 				residents: b_res,
+				vkm: b_vkm,
+				roadWorker: b_row,
 			}
 		}
 	}

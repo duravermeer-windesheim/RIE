@@ -12,10 +12,10 @@ import {SheetDataService} from '../../services/sheet-data.service';
 import {environment} from '../../../environments/environment';
 
 export enum RiskGroup {
-	'Wegwerker' = 0,
-	'VKM ploeg' = 1,
-	'Weggebruiker' = 2,
-	'Omwonende' = 3,
+	'Weggebruiker' = 0,
+	'Omwonende' = 1,
+	'VKM ploeg' = 2,
+	'Wegwerker' = 3,
 }
 
 @Component({
@@ -146,7 +146,7 @@ export class InputPanelComponent implements OnInit {
 
 	// Update methods.
 
-	setRiskScore(key: "effect" | "probability" | "frequency", value: number) {
+	setRiskScore(key: "effect" | "frequency" | "probability", value: number) {
 		this.data.riskScoreValues[key] = value;
 		this.reloadData();
 	}
