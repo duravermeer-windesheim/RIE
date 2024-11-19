@@ -1,4 +1,4 @@
-<div class="clock" [title]="header ?? ''" (click)="rotateOnce()">
+<div class="clock" [title]="header ?? ''" (click)="onClockClick($event)">
 	<div class="clock-circle">
 		<div class="clock-inner-circle">
 			<div class="clock-dot"></div>
