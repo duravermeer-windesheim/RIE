@@ -31,10 +31,13 @@ export class SheetDataService {
 		let collections: RiskScoreGroupCollectionModel[] = [];
 		let idx = 0;
 
+		// Buffer values.
 		let bufferLabel: string = '';
 		let bufferGroups: RiskScoreGroupModel[] = [];
 
+		// For each row in the sheet, except the headers.
 		sheetData.slice(1).forEach((record: string[]) => {
+			// If it's the start of a new risk.
 			if (idx % 5 == 0) {
 
 				// New object. Store the buffer.
@@ -55,14 +58,14 @@ export class SheetDataService {
 				bufferGroups.push({
 					group: record[0],
 					situationARiskScores: {
-						probability: parseInt(record[1]),
+						effect: parseInt(record[1]),
 						frequency: parseInt(record[2]),
-						effect: parseInt(record[3]),
+						probability: parseInt(record[3]),
 					},
 					situationBRiskScores: {
-						probability: parseInt(record[4]),
+						effect: parseInt(record[4]),
 						frequency: parseInt(record[5]),
-						effect: parseInt(record[6]),
+						probability: parseInt(record[6]),
 					}
 				})
 			}
@@ -80,5 +83,11 @@ export class SheetDataService {
 	}
 
 
+	public mapRiskGroupsToDropdownItems(risks: RiskScoreGroupCollectionModel[]) {
+		return risks.map((risk, index) => ({
+			key: index,
+			value: risk.label
+		}));
+	}
 
 }

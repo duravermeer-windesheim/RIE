@@ -1,10 +1,7 @@
 <div id="result-panel" *ngIf="this.allValid">
-<!--	<pre *ngIf="this.data && this.allValid">-->
-<!--{{ this.data | json }}-->
-<!--	</pre>-->
 	<div id="result-panel-clocks">
 		<div id="result-panel-clocks-scenario-a" class="result-panel-clocks-scenario">
-			<p class="result-panel-clocks-scenario-title"><strong>Scenario A</strong></p>
+			<p class="result-panel-clocks-scenario-title"><strong>Situatie A</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
 					[tick]="this.results.scenarioAResults.roadUser"
@@ -29,7 +26,7 @@
 			</div>
 		</div>
 		<div id="result-panel-clocks-scenario-b" class="result-panel-clocks-scenario">
-			<p class="result-panel-clocks-scenario-title"><strong>Scenario B</strong></p>
+			<p class="result-panel-clocks-scenario-title"><strong>Situatie B</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
 					[tick]="this.results.scenarioBResults.roadUser"
@@ -65,25 +62,16 @@
 		<table class="result-panel-measure-table">
 			<tr>
 				<th>Maatregel</th>
-<!--				<th>E</th>-->
-<!--				<th>B</th>-->
-<!--				<th>W</th>-->
 				<th></th>
 			</tr>
 			<tr *ngFor="let measure of this.data.measures">
 				<td>{{ measure.label }}</td>
-<!--				<td>{{ measure.effect != 0 ? measure.effect : '' }}</td>-->
-<!--				<td>{{ measure.frequency != 0 ? measure.frequency : '' }}</td>-->
-<!--				<td>{{ measure.probability != 0 ? measure.probability : '' }}</td>-->
 				<td class="result-panel-measure-buttons-holder">
 					<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>
 				</td>
 			</tr>
 			<tr class="result-panel-measure-table-last-row">
 				<td><strong>Totaal</strong></td>
-<!--				<td>{{ this.effects.effect > 0 ? '+' : ''}}{{ this.effects.effect | number}}</td>-->
-<!--				<td>{{ this.effects.frequency > 0 ? '+' : '' }}{{ this.effects.frequency | number}}</td>-->
-<!--				<td>{{ this.effects.probability > 0 ? '+' : '' }}{{ this.effects.probability | number}}</td>-->
 				<td></td>
 			</tr>
 		</table>

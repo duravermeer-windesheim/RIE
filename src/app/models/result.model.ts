@@ -1,7 +1,7 @@
 import {RiskScoreGroupCollectionModel, RiskScoreGroupModel, RiskScoreModel} from './risk.model';
 
 export interface CalculationModel {
-	riskType: RiskScoreGroupCollectionModel | {},
+	riskType?: RiskScoreGroupCollectionModel,
 	riskScoreValues: RiskScoreModel,
 	measures: RiskScoreGroupCollectionModel[]
 }

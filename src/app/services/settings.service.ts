@@ -10,7 +10,7 @@ export class SettingsService {
 	constructor() {
 		// Reserve the space in the localStorage.
 		if (localStorage.getItem(environment.localStorageSettingsKey) == null) {
-			this.saveSettings({})
+			this.resetSettings();
 		}
 	}
 
@@ -26,6 +26,14 @@ export class SettingsService {
 		}
 
 		return JSON.parse(json) as SettingsModel;
+	}
+
+	public resetSettings() {
+		this.saveSettings({
+			colorPrimary: environment.colorConfig.dv.primary,
+			colorSecondary: environment.colorConfig.dv.secondary,
+			fontSize: environment.fontConfig.defaultFontSize
+		});
 	}
 
 }

@@ -7,7 +7,6 @@ export interface EntryConfig {
 	min?: number,
 	max?: number,
 	step: number,
-	disabled?: boolean
 	placeholder?: string
 	validationMessage?: string
 }

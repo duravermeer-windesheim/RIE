@@ -12,7 +12,11 @@ app-entry {
 	margin-top: 9px;
 }
 
-#measure {
+#input-panel-select-risk-scores {
+	border-top: 2px solid var(--color-primary);
+}
+
+#input-panel-select-measure {
 	margin-top: 20px;
 	border-top: 2px solid var(--color-primary);
 	display: flex;
@@ -20,7 +24,7 @@ app-entry {
 	justify-content: right;
 }
 
-#measure-add-button {
+#input-panel-select-measure-button {
 	background-color: var(--color-primary);
 	color: var(--color-secondary);
 	width: 150px;
@@ -32,4 +36,13 @@ app-entry {
 	text-align: center;
 	align-self: flex-end;
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+}
+
+#temp-detail-risk-score-btns {
+	margin: 20px;
+	border: 4px dotted red;
+}
+#temp-detail-risk-score-btns::before {
+	content: 'Temporary';
+	display: block;
 }

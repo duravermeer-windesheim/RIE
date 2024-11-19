@@ -1,13 +1,4 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	EventEmitter,
-	OnInit,
-	Output,
-	QueryList,
-	ViewChild,
-	ViewChildren
-} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {SharedModule} from '../../shared/shared.module';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {EntryComponent} from '../../shared/entry/entry.component';
@@ -19,6 +10,13 @@ import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
 import {RiskScoreGroupCollectionModel, RiskScoreModel} from '../../models/risk.model';
 import {SheetDataService} from '../../services/sheet-data.service';
 import {environment} from '../../../environments/environment';
+
+export enum RiskGroup {
+	'Weggebruiker' = 0,
+	'Omwonende' = 1,
+	'VKM ploeg' = 2,
+	'Wegwerker' = 3,
+}
 
 @Component({
 	selector: 'app-input-panel',
@@ -45,9 +43,13 @@ export class InputPanelComponent implements OnInit {
 	public currentRiskDropdownOptions: DropdownItem[] = []
 	public selectedRiskDropdownOption: DropdownItem = defaultDropdownItem;
 
+	public selectedSituationRiskGroup?: {
+		situation: 'a' | 'b',
+		riskGroup: RiskGroup
+	}
+
 	private spreadsheetRisks: RiskScoreGroupCollectionModel[] = [];
 	private spreadsheetMeasures: RiskScoreGroupCollectionModel[] = [];
-
 
 	// In case you want to change the default values in the dropdowns.
 	public defaultDropdownValues = {
@@ -55,14 +57,16 @@ export class InputPanelComponent implements OnInit {
 		measure: defaultDropdownItem
 	}
 
+	// Expose the enum to the HTML.
+	public riskGroup: any = RiskGroup;
 
 	public data: CalculationModel = {
 		riskScoreValues: {
-			probability: 0,
-			frequency: 0.5,
-			effect: 0
+			probability: 1,
+			frequency: 1,
+			effect: 1
 		},
-		riskType: {},
+		riskType: undefined,
 		measures: []
 	}
 
@@ -70,18 +74,13 @@ export class InputPanelComponent implements OnInit {
 	}
 
 	async ngOnInit() {
+		// Retrieve the risk groups out of the spreadsheet.
 		this.spreadsheetRisks = await this.sheetService.getRiskGroups(environment.sheetNames.risks);
 		this.spreadsheetMeasures = await this.sheetService.getRiskGroups(environment.sheetNames.measures);
 
-		this.currentRiskDropdownOptions = this.spreadsheetRisks.map((risk, index) => ({
-			key: index,
-			value: risk.label
-		}));
-
-		this.currentMeasureDropdownOptions = this.spreadsheetMeasures.map((measure, index) => ({
-			key: index,
-			value: measure.label
-		}));
+		// Map the risk groups to dropdown options.
+		this.currentRiskDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetRisks);
+		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
 
 		// Default risk type is the first one found.
 		this.setRiskType(this.currentRiskDropdownOptions[0]);
@@ -146,7 +145,8 @@ export class InputPanelComponent implements OnInit {
 
 
 	// Update methods.
-	setRiskScore(key: "effect" | "probability" | "frequency", value: number) {
+
+	setRiskScore(key: "effect" | "frequency" | "probability", value: number) {
 		this.data.riskScoreValues[key] = value;
 		this.reloadData();
 	}
@@ -154,15 +154,25 @@ export class InputPanelComponent implements OnInit {
 	setRiskType(item: DropdownItem) {
 		this.data.riskType = this.spreadsheetRisks[item.key];
 
-		// TEMP. Just add the default values into the entries.
-		this.spreadsheetRisks.forEach(risk => {
-			if (risk.label == item.value) {
-				this.data.riskScoreValues.probability = risk.riskGroups[3].situationARiskScores.probability;
-				this.data.riskScoreValues.frequency = risk.riskGroups[3].situationARiskScores.frequency;
-				this.data.riskScoreValues.effect = risk.riskGroups[3].situationARiskScores.effect;
-			}
-		});
-
 		this.reloadData();
+	}
+
+	setDetailRiskScore(situation: 'a' | 'b', riskGroup: RiskGroup) {
+		if (!this.data.riskType) {
+			return
+		}
+
+		this.selectedSituationRiskGroup = {
+			situation: situation,
+			riskGroup: riskGroup
+		};
+
+		let idx = riskGroup.valueOf();
+
+		if (situation == 'a') {
+			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].situationARiskScores;
+		} else if (situation == 'b') {
+			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].situationBRiskScores;
+		}
 	}
 }

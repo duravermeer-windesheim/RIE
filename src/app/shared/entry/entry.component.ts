@@ -14,6 +14,9 @@ export class EntryComponent extends BaseInputComponent<EntryConfig> {
 	@Input({required: true})
 	public value: number = 0;
 
+	@Input()
+	public disabled: boolean = false;
+
 	@Output()
 	public onValueChange = new EventEmitter<number>();
 

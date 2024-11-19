@@ -46,7 +46,7 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 			this.line.nativeElement.style.transition = 'none';
 		}
 
-		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees + "deg)";
+		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees % 360 + "deg)";
 	}
 
 	rotateOnce() {
@@ -69,5 +69,18 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 			currentRotation = (currentRotation + 1) % 360;
 			this.setRotation(currentRotation, false);
 		}, 10);
+	}
+
+	onClockClick($event: MouseEvent) {
+		const target = $event.target as HTMLElement;
+
+		// Check if the target is the clock-circle or its valid inner parts
+		if (!target.classList.contains('clock-circle') &&
+			!target.classList.contains('clock-inner-circle') &&
+			!target.classList.contains('clock-dot')) {
+			return;
+		}
+
+		this.rotateOnce()
 	}
 }
