@@ -13,7 +13,7 @@ import {environment} from '../../../environments/environment';
 })
 export class InfoPanelComponent {
 
-	getBankUri() {
-		return "https://docs.google.com/spreadsheets/d/" + environment.googleSpreadsheet.googleSpreadsheetId + "/edit"
+	public getBankUri(): string {
+		return "https://docs.google.com/spreadsheets/d/" + environment.googleSpreadsheet.googleSpreadsheetId + "/edit";
 	}
 }
