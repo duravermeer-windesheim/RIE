@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {MAX_RISK_SCORE} from '../../services/risk-calculation.service';
 
 @Component({
   selector: 'app-clock',
@@ -7,7 +8,8 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChil
 })
 export class ClockComponent implements AfterViewInit, OnChanges {
 
-	@ViewChild('line') line!: ElementRef;
+	@ViewChild('line')
+	public line!: ElementRef;
 
 	@Input({required: true})
 	public tick: number = 0;
@@ -19,19 +21,22 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 	public header?: string;
 
 	@Input()
-	public rotating: boolean = false;
+	public permanentlyRotating: boolean = false;
 
-	ngAfterViewInit(): void {
-		if (this.rotating) {
+	private isCurrentlyRotatingOnce = false;
+	public readonly max = MAX_RISK_SCORE;
+
+	public ngAfterViewInit(): void {
+		if (this.permanentlyRotating) {
 			this.rotate();
 			return;
 		}
 
 		// Rotate.
-		this.setRotation(((this.tick - 1) * 72) + 2, true)
+		this.setRotation((this.tick * (360 / (this.max + 5))) + 2, true)
 	}
 
-	ngOnChanges() {
+	public ngOnChanges(): void {
 		if (!this.line) {
 			return;
 		}
@@ -39,7 +44,7 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 		this.ngAfterViewInit();
 	}
 
-	setRotation(degrees: number, doTransition: boolean) {
+	public setRotation(degrees: number, doTransition: boolean): void {
 		if (doTransition) {
 			this.line.nativeElement.style.transition = 'transform 0.3s linear';
 		} else {
@@ -49,21 +54,27 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 		this.line.nativeElement.style.transform = 'translate(-100%, -143%) rotate(' + degrees % 360 + "deg)";
 	}
 
-	rotateOnce() {
-		if (this.tick == 0) {
+	public rotateOnce(): void {
+		if (this.isCurrentlyRotatingOnce || this.permanentlyRotating) {
 			return;
 		}
 
-		let currentRotation = ((this.tick - 1) * 72) + 2
+		this.isCurrentlyRotatingOnce = true;
+		let currentRotation = this.tick * (360 / (this.max + 5)) + 2;
 		for (let i = 0; i < 360; i++) {
 			setTimeout(() => {
 				currentRotation += 1;
 				this.setRotation(currentRotation, false);
 			}, i * 2);
 		}
+
+		// Turn of the flag after the rotating is done.
+		setTimeout(() => {
+			this.isCurrentlyRotatingOnce = false;
+		}, 720)
 	}
 
-	rotate() {
+	public rotate(): void {
 		let currentRotation = 0;
 		setInterval(() => {
 			currentRotation = (currentRotation + 1) % 360;
@@ -71,7 +82,7 @@ export class ClockComponent implements AfterViewInit, OnChanges {
 		}, 10);
 	}
 
-	onClockClick($event: MouseEvent) {
+	public onClockClick($event: MouseEvent): void {
 		const target = $event.target as HTMLElement;
 
 		// Check if the target is the clock-circle or its valid inner parts

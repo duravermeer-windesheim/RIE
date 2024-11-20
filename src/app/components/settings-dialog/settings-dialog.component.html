@@ -16,9 +16,9 @@
 	<div id="settings-section-font-size">
 		<p id="settings-section-font-size-header">Letter grootte</p>
 		<div id="settings-section-font-size-holder">
-			<button (click)="setFontSize(-1)" [disabled]="!decrementButtonVisible" id="settings-section-font-size-minus">-</button>
+			<button (click)="setFontSize(-1)" [disabled]="!isDecrementButtonVisible" id="settings-section-font-size-minus">-</button>
 			<p id="settings-section-font-size-val">{{ this.fontSize }}</p>
-			<button (click)="setFontSize(1)" [disabled]="!incrementButtonVisible" id="settings-section-font-size-plus">+</button>
+			<button (click)="setFontSize(1)" [disabled]="!isIncrementButtonVisible" id="settings-section-font-size-plus">+</button>
 		</div>
 		<sup>
 			Waarschuwing: Aanpassing aan de lettergrootte<br/>

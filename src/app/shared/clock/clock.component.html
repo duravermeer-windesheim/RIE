@@ -4,6 +4,6 @@
 			<div class="clock-dot"></div>
 		</div>
 		<div class="clock-line" #line></div>
-		<p class="clock-value" *ngIf="valueVisible">{{ this.tick }}</p>
+		<p class="clock-value" [class.clock-value-overflow]="tick == max" *ngIf="valueVisible">{{ this.tick }}</p>
 	</div>
 </div>

@@ -14,7 +14,7 @@ export class SettingsService {
 		}
 	}
 
-	public saveSettings(settings: SettingsModel) {
+	public saveSettings(settings: SettingsModel): void {
 		let json = JSON.stringify(settings);
 		localStorage.setItem(environment.localStorageSettingsKey, json);
 	}
@@ -28,7 +28,7 @@ export class SettingsService {
 		return JSON.parse(json) as SettingsModel;
 	}
 
-	public resetSettings() {
+	public resetSettings(): void {
 		this.saveSettings({
 			colorPrimary: environment.colorConfig.dv.primary,
 			colorSecondary: environment.colorConfig.dv.secondary,

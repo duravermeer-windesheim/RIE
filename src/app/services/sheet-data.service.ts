@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {lastValueFrom} from 'rxjs';
 import {RiskScoreGroupCollectionModel, RiskScoreGroupModel} from '../models/risk.model';
+import {DropdownItem} from '../models/dropdown.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -78,7 +79,7 @@ export class SheetDataService {
 		return collections;
 	}
 
-	private parseScore(score: string) {
+	private parseScore(score: string): number {
 		if (!score) {
 			return 0;
 		}
@@ -87,11 +88,10 @@ export class SheetDataService {
 		return isNaN(parsed) ? 0 : parsed;
 	}
 
-	public mapRiskGroupsToDropdownItems(risks: RiskScoreGroupCollectionModel[]) {
+	public mapRiskGroupsToDropdownItems(risks: RiskScoreGroupCollectionModel[]): DropdownItem[] {
 		return risks.map((risk, index) => ({
 			key: index,
 			value: risk.label
 		})).sort((a, b) => a.value.localeCompare(b.value));
 	}
-
 }

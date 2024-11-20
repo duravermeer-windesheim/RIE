@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {CalculationModel, ResultModel} from '../models/result.model';
-import {RiskScoreGroupCollectionModel} from '../models/risk.model';
 
-const MAX_RISK_SCORE = 400;
+export const MAX_RISK_SCORE = 400;
 
 @Injectable({
 	providedIn: 'root'
@@ -85,5 +84,4 @@ export class RiskCalculationService {
 			}
 		}
 	}
-
 }
