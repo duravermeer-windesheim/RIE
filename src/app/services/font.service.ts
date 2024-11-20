@@ -10,27 +10,28 @@ export class FontService {
 	constructor(private settingsService: SettingsService) {
 	}
 
-	public initializeFont() {
+	public initializeFont(): void {
 		// Retrieve current settings.
 		let settings = this.settingsService.loadSettings();
 
 		// Apply font (if set).
-		if (settings.fontSize)
+		if (settings.fontSize) {
 			this.applyFontSize(settings.fontSize);
+		}
 	}
 
-	public getFontSize() {
+	public getFontSize(): number {
 		// Retrieve current settings.
 		let settings = this.settingsService.loadSettings();
 		return settings.fontSize ?? environment.fontConfig.defaultFontSize;
 	}
 
-	public incrementFontSize(increment: number) {
+	public incrementFontSize(increment: number): void {
 		let fontSize = this.getFontSize();
 		this.setFontSize(fontSize + increment);
 	}
 
-	public setFontSize(fontSize: number) {
+	public setFontSize(fontSize: number): void {
 		// Boundary check.
 		if (fontSize < environment.fontConfig.minimumFontSize || fontSize > environment.fontConfig.maximumFontSize) {
 			return;
@@ -49,8 +50,7 @@ export class FontService {
 		this.applyFontSize(settings.fontSize);
 	}
 
-	private applyFontSize(fontSize: number) {
+	private applyFontSize(fontSize: number): void {
 		document.documentElement.style.setProperty('--font-size', fontSize + "px");
 	}
-
 }

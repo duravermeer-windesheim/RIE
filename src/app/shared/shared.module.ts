@@ -6,9 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {ClockComponent} from './clock/clock.component';
 import {PanelComponent} from './panel/panel.component';
 import {HelpDialogComponent} from './help-dialog/help-dialog.component';
-import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [

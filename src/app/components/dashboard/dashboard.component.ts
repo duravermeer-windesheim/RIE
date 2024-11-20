@@ -25,19 +25,20 @@ import {SettingsDialogComponent} from '../settings-dialog/settings-dialog.compon
 	styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements AfterViewInit {
-	@ViewChild(InputPanelComponent) public inputPanel?: InputPanelComponent;
-	@ViewChild(ResultPanelComponent) public resultPanel?: ResultPanelComponent;
+
+	@ViewChild(InputPanelComponent)
+	public inputPanel?: InputPanelComponent;
 
 	constructor(private cdref: ChangeDetectorRef, private dialog: MatDialog) {}
 
-	openSettings() {
+	public openSettings(): void {
 		this.dialog.open(SettingsDialogComponent, {
 			width: "500px",
 			panelClass: 'settings-dialog-container'
 		});
 	}
 
-	ngAfterViewInit() {
+	ngAfterViewInit(): void {
 		if (this.inputPanel) {
 			this.cdref.detectChanges();
 		}

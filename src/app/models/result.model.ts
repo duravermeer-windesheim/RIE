@@ -23,3 +23,9 @@ export interface ResultScenarioModel {
 	roadWorker: number,
 }
 
+export const emptyScenarioModel: ResultScenarioModel = {
+	roadUser: 0,
+	residents: 0,
+	vkm: 0,
+	roadWorker: 0
+}

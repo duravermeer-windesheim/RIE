@@ -8,16 +8,17 @@ import {EntryConfig} from '../models/entry.model';
 })
 export abstract class BaseInputComponent<T extends DropdownConfig | EntryConfig> implements OnInit {
 
-	@Input({ required: true }) public config!: T;
+	@Input({ required: true })
+	public config!: T;
 
 	protected hasInteracted: boolean = false;
 	protected abstract value: any;
 
 
-	public getKeyValue() {
+	public getKeyValue(): {key: string, value: any} {
 		return {
-			"key": this.config.code,
-			"value": this.value
+			key: this.config.code,
+			value: this.value
 		};
 	}
 
@@ -25,7 +26,7 @@ export abstract class BaseInputComponent<T extends DropdownConfig | EntryConfig>
 		return this.hasInteracted && !this.isValid();
 	}
 
-	protected onInteract() {
+	protected onInteract(): void {
 		this.hasInteracted = true;
 	}
 

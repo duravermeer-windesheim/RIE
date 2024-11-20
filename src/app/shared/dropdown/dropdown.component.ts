@@ -24,7 +24,7 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	@Output()
 	public onValueChange = new EventEmitter<DropdownItem>();
 
-	init() {
+	init(): void {
 		if (this.config.addDefaultEmptyOption) {
 			this.items.unshift(defaultDropdownItem);
 		}
@@ -44,7 +44,7 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 		return this.value.key !== -1;
 	}
 
-	onChange() {
+	onChange(): void {
 		this.onValueChange.emit(this.value);
 	}
 }

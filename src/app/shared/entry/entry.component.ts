@@ -24,7 +24,7 @@ export class EntryComponent extends BaseInputComponent<EntryConfig> {
 		super();
 	}
 
-	init() { }
+	public init() { }
 
 	// Checks if the value is valid.
 	public isValid(): boolean {
@@ -43,7 +43,7 @@ export class EntryComponent extends BaseInputComponent<EntryConfig> {
 	}
 
 
-	openHelpDialog() {
+	public openHelpDialog(): void {
 		this.dialog.open(HelpDialogComponent, {
 			width: "400px",
 			data: {
@@ -52,7 +52,7 @@ export class EntryComponent extends BaseInputComponent<EntryConfig> {
 		});
 	}
 
-	onChange() {
+	public onChange(): void {
 		this.onValueChange.emit(this.value)
 	}
 }

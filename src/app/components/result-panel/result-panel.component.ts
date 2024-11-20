@@ -1,15 +1,6 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output,	SimpleChanges} from '@angular/core';
 import {DecimalPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {CalculationModel, ResultModel} from '../../models/result.model';
+import {CalculationModel, emptyScenarioModel, ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 import {RiskCalculationService} from '../../services/risk-calculation.service';
@@ -32,45 +23,51 @@ import {RiskCalculationService} from '../../services/risk-calculation.service';
 export class ResultPanelComponent implements OnInit, OnChanges {
 
 	@Input({required: true})
-	data!: CalculationModel;
+	public data!: CalculationModel;
 
 	@Input({required: true})
-	allValid!: boolean;
+	public allValid!: boolean;
 
 	@Output()
 	public onRemoveMeasure = new EventEmitter<RiskScoreGroupCollectionModel>();
 
+	// Stores the results calculated from the data model.
 	public results!: ResultModel;
 
 	constructor(private riskCalculationService: RiskCalculationService) {
 	}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		if (this.allValid) {
-			this.getResults();
-		}
-	}
-	ngOnChanges(changes: SimpleChanges): void {
-		if (!this.allValid) {
-			return;
-		}
-
-		if (changes['data']) {
-			this.getResults();
+			this.results = this.getResults();
 		}
 	}
 
-	getResults() {
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (this.allValid && changes['data']) {
+			this.results = this.getResults();
+		}
+	}
+
+	// Retrieves the calculation numbers.
+	public getResults(): ResultModel {
+		// Get results.
 		let results = this.riskCalculationService.getRiskNumbers(this.data);
-		if (results) {
-			this.results = results;
-		} else {
+
+		// If results couldn't be calculated, return empty results.
+		if (!results) {
 			console.error("Could not calculate risk numbers");
+			return {
+				scenarioAResults: emptyScenarioModel,
+				scenarioBResults: emptyScenarioModel
+			};
 		}
+
+		return results;
 	}
 
-	removeMeasure(measure: RiskScoreGroupCollectionModel) {
+	// Invoke the onRemoveMeasure output event.
+	public removeMeasure(measure: RiskScoreGroupCollectionModel): void {
 		this.onRemoveMeasure.emit(measure);
 	}
-
 }

@@ -1,7 +1,8 @@
+
 <div id="result-panel" *ngIf="this.allValid">
 	<div id="result-panel-clocks">
 		<div id="result-panel-clocks-scenario-a" class="result-panel-clocks-scenario">
-			<p class="result-panel-clocks-scenario-title"><strong>Situatie A</strong></p>
+			<p class="result-panel-clocks-scenario-title"><strong>Verkeer omleiden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
 					[tick]="this.results.scenarioAResults.roadUser"
@@ -26,7 +27,7 @@
 			</div>
 		</div>
 		<div id="result-panel-clocks-scenario-b" class="result-panel-clocks-scenario">
-			<p class="result-panel-clocks-scenario-title"><strong>Situatie B</strong></p>
+			<p class="result-panel-clocks-scenario-title"><strong>Werkzaamheden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
 					[tick]="this.results.scenarioBResults.roadUser"
@@ -78,7 +79,7 @@
 	</div>
 </div>
 <div id="result-panel-invalid" *ngIf="!this.allValid">
-	<app-clock [tick]="0" [rotating]="true" style="margin-bottom: 30px"></app-clock>
+	<app-clock [tick]="0" [permanentlyRotating]="true" style="margin-bottom: 30px"></app-clock>
 	<p>Vul eerst de bekende informatie in.</p>
 	<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
 </div>
