@@ -7,6 +7,21 @@
 	#risk
 ></app-dropdown>
 
+<app-dropdown
+	[value]="this.data.frequencies.frequencyA"
+	[config]="this.dropdowns['frequencyA']"
+	[items]="this.frequencyDropdownItems"
+	(onValueChange)="this.setFrequency('a', $event)"
+	[automaticallySelectFirstItem]="true"
+></app-dropdown>
+<app-dropdown
+	[value]="this.data.frequencies.frequencyB"
+	[config]="this.dropdowns['frequencyB']"
+	[items]="this.frequencyDropdownItems"
+	(onValueChange)="this.setFrequency('b', $event)"
+	[automaticallySelectFirstItem]="true"
+></app-dropdown>
+
 <div id="input-panel-select-risk-scores">
 	<p *ngIf="this.selectedSituationRiskGroup; else selectRiskGroupSituationWarning">
 		<strong>Geselecteerd</strong><br/>
@@ -22,18 +37,30 @@
 		[disabled]="!this.selectedSituationRiskGroup"
 		(onValueChange)="this.setRiskScore('effect', $event)"
 	></app-entry>
-	<app-entry
-		[value]="this.data.riskScoreValues.frequency"
-		[config]="this.entries['frequency']"
-		[disabled]="!this.selectedSituationRiskGroup"
-		(onValueChange)="this.setRiskScore('frequency', $event)"
-	></app-entry>
+<!--	<app-entry-->
+<!--		[value]="this.data.riskScoreValues.frequency"-->
+<!--		[config]="this.entries['frequency']"-->
+<!--		[disabled]="!this.selectedSituationRiskGroup"-->
+<!--		(onValueChange)="this.setRiskScore('frequency', $event)"-->
+<!--	></app-entry>-->
 	<app-entry
 		[value]="this.data.riskScoreValues.probability"
 		[config]="this.entries['probability']"
 		[disabled]="!this.selectedSituationRiskGroup"
 		(onValueChange)="this.setRiskScore('probability', $event)"
 	></app-entry>
+	<div id="temp-detail-risk-score-btns">
+		<button (click)="selectDetailRiskScore('a', 0)">A - Weggebruiker</button>
+		<button (click)="selectDetailRiskScore('a', 1)">A - Omwonende</button>
+		<button (click)="selectDetailRiskScore('a', 2)">A - VKM</button>
+		<button (click)="selectDetailRiskScore('a', 3)">A - Wegwerker</button>
+		<br/>
+		<br/>
+		<button (click)="selectDetailRiskScore('b', 0)">B - Weggebruiker</button>
+		<button (click)="selectDetailRiskScore('b', 1)">B - Omwonende</button>
+		<button (click)="selectDetailRiskScore('b', 2)">B - VKM</button>
+		<button (click)="selectDetailRiskScore('b', 3)">B - Wegwerker</button>
+	</div>
 </div>
 
 <div id="input-panel-select-measure">
@@ -51,16 +78,3 @@
 	>Pas maatregel toe</button>
 </div>
 
-
-<div id="temp-detail-risk-score-btns">
-	<button (click)="setDetailRiskScore('a', 0)">A - Road users</button>
-	<button (click)="setDetailRiskScore('a', 	1)">A - Residents</button>
-	<button (click)="setDetailRiskScore('a', 2)">A - VKM</button>
-	<button (click)="setDetailRiskScore('a', 3)">A - Road worker</button>
-	<br/>
-	<br/>
-	<button (click)="setDetailRiskScore('b', 0)">B - Road users</button>
-	<button (click)="setDetailRiskScore('b', 1)">B - Residents</button>
-	<button (click)="setDetailRiskScore('b', 2)">B - VKM</button>
-	<button (click)="setDetailRiskScore('b', 3)">B - Road worker</button>
-</div>

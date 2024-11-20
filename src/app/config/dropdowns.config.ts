@@ -11,6 +11,14 @@ export const dropdownConfigs: { [key: string]: DropdownConfig } = {
 		label: 'Maatregel',
 		code: 'measure',
 		addDefaultEmptyOption: true,
+	},
+	frequencyA: {
+		label: 'Blootstelling Situatie A',
+		code: 'freq_a',
+	},
+	frequencyB: {
+		label: 'Blootstelling Situatie B',
+		code: 'freq_b',
 	}
 }
 

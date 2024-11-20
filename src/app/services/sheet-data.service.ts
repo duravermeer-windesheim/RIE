@@ -58,13 +58,11 @@ export class SheetDataService {
 					group: record[0],
 					situationARiskScores: {
 						effect: this.parseScore(record[1]),
-						frequency: this.parseScore(record[2]),
-						probability: this.parseScore(record[3]),
+						probability: this.parseScore(record[2]),
 					},
 					situationBRiskScores: {
-						effect: this.parseScore(record[4]),
-						frequency: this.parseScore(record[5]),
-						probability: this.parseScore(record[6]),
+						effect: this.parseScore(record[3]),
+						probability: this.parseScore(record[4]),
 					}
 				});
 			}

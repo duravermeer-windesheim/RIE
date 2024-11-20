@@ -18,6 +18,9 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	@Input()
 	public disabled = false;
 
+	@Input()
+	public automaticallySelectFirstItem = false;
+
 	@Output()
 	public onValueChange = new EventEmitter<DropdownItem>();
 
@@ -27,6 +30,10 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 		}
 
 		this.items.sort((a, b) => a.key - b.key);
+
+		if (this.automaticallySelectFirstItem) {
+			this.value = this.items[0];
+		}
 	}
 
 	public isValid(): boolean {
