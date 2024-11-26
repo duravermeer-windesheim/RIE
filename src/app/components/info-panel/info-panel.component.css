@@ -1,14 +1,11 @@
-
-#info-panel-database-redirect {
-	background-color: var(--color-primary);
-	color: var(--color-secondary);
-	padding: 10px;
-	border-radius: 4px;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
-	display: block;
-	margin-top: 30px;
-	width: 150px;
+#info-panel-buttons {
+	margin-top: 40px;
 }
+
+#gray-button-info-panel-databank,
+#gray-button-info-panel-substantiation,
+#gray-button-info-panel-manual {
+	display: block;
+	margin: 8px;
+}
+

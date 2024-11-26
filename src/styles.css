@@ -17,3 +17,14 @@ body {
 p, label, button, option, select, input, a, td, tr {
 	font-size: var(--font-size) !important;
 }
+
+.gray-button {
+	background-color: var(--color-primary);
+	color: var(--color-secondary);
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+}
