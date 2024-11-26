@@ -8,21 +8,25 @@
 					[tick]="this.results.scenarioAResults.roadUser"
 					[valueVisible]="true"
 					header="Weggebruikers"
+					(click)="clickClock('a', 0)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults.residents"
 					[valueVisible]="true"
 					header="Omwonende"
+					(click)="clickClock('a', 1)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults.vkm"
 					[valueVisible]="true"
 					header="VKM Ploeg"
+					(click)="clickClock('a', 2)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults.roadWorker"
 					[valueVisible]="true"
 					header="Wegwerkers"
+					(click)="clickClock('a', 3)"
 				></app-clock>
 			</div>
 		</div>
@@ -33,29 +37,33 @@
 					[tick]="this.results.scenarioBResults.roadUser"
 					[valueVisible]="true"
 					header="Weggebruikers"
+					(click)="clickClock('b', 0)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults.residents"
 					[valueVisible]="true"
 					header="Omwonende"
+					(click)="clickClock('b', 1)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults.vkm"
 					[valueVisible]="true"
 					header="VKM Ploeg"
+					(click)="clickClock('b', 2)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults.roadWorker"
 					[valueVisible]="true"
 					header="Wegwerkers"
+					(click)="clickClock('b', 3)"
 				></app-clock>
 			</div>
 		</div>
 	</div>
 
 	<p>
-		<strong>Advies: </strong>Scenario B is beter gok ik.<br/>
-		Dit is gekozen omdat we een dobbelsteen op hebben gegooid.
+		<strong>Advies: </strong>
+		Hier komt een analyse om welke situatie veiliger zou zijn, en waarom.<br/>
 	</p>
 
 	<!--Measurements -->
@@ -70,10 +78,6 @@
 				<td class="result-panel-measure-buttons-holder">
 					<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>
 				</td>
-			</tr>
-			<tr class="result-panel-measure-table-last-row">
-				<td><strong>Totaal</strong></td>
-				<td></td>
 			</tr>
 		</table>
 	</div>
