@@ -10,6 +10,13 @@ import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 import {SheetDataService} from '../../services/sheet-data.service';
 import {environment} from '../../../environments/environment';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
+import {FormsModule} from '@angular/forms';
+import {MatOption} from '@angular/material/autocomplete';
+import {MatSelect} from '@angular/material/select';
+import {SelectedClockModel} from '../../models/selected-clock.model';
 
 export enum RiskGroup {
 	'Weggebruiker' = 0,
@@ -22,10 +29,17 @@ export enum RiskGroup {
 	selector: 'app-input-panel',
 	standalone: true,
 	imports: [
+		FormsModule,
 		SharedModule,
 		NgForOf,
 		NgIf,
-		JsonPipe
+		JsonPipe,
+		MatSlideToggle,
+		MatCheckbox,
+		MatRadioGroup,
+		MatRadioButton,
+		MatOption,
+		MatSelect
 	],
 	templateUrl: './input-panel.component.html',
 	styleUrl: './input-panel.component.css'
@@ -187,9 +201,10 @@ export class InputPanelComponent implements OnInit {
 
 		// Refresh the current selection.
 		if (this.selectedSituationRiskGroup) {
-			this.selectDetailRiskScore(
-				this.selectedSituationRiskGroup?.situation,
-				this.selectedSituationRiskGroup?.riskGroup);
+			this.selectDetailRiskScore({
+				situation: this.selectedSituationRiskGroup.situation,
+				riskGroup: this.selectedSituationRiskGroup.riskGroup
+			});
 		}
 
 		this.reloadData();
@@ -206,22 +221,19 @@ export class InputPanelComponent implements OnInit {
 	}
 
 	// selects a situation and a risk group.
-	public selectDetailRiskScore(situation: 'a' | 'b', riskGroup: RiskGroup): void {
+	public selectDetailRiskScore(selectedClock: SelectedClockModel): void {
 		if (!this.data.riskType) {
 			return
 		}
 
 		// Select the situation and riskGroup.
-		this.selectedSituationRiskGroup = {
-			situation: situation,
-			riskGroup: riskGroup
-		};
+		this.selectedSituationRiskGroup = selectedClock;
 
 		// Binds the input fields to the new situation.
-		let idx = riskGroup.valueOf();
-		if (situation == 'a') {
+		let idx = selectedClock.riskGroup.valueOf();
+		if (selectedClock.situation == 'a') {
 			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].situationARiskScores;
-		} else if (situation == 'b') {
+		} else if (selectedClock.situation == 'b') {
 			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].situationBRiskScores;
 		}
 	}
