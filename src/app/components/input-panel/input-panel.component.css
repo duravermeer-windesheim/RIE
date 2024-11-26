@@ -24,25 +24,8 @@ app-entry {
 	justify-content: right;
 }
 
-#input-panel-select-measure-button {
-	background-color: var(--color-primary);
-	color: var(--color-secondary);
+#gray-button-input-panel-measure {
 	width: 150px;
 	margin-top: -20px;
-	padding: 10px;
-	border-radius: 4px;
-	cursor: pointer;
-	border: none;
-	text-align: center;
 	align-self: flex-end;
-	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
-}
-
-#temp-detail-risk-score-btns {
-	margin: 20px;
-	border: 4px dotted red;
-}
-#temp-detail-risk-score-btns::before {
-	content: 'Temporary';
-	display: block;
 }

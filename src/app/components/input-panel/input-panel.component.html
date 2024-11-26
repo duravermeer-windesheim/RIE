@@ -29,7 +29,7 @@
 		Risicogroep: {{ riskGroup[this.selectedSituationRiskGroup.riskGroup] }}
 	</p>
 	<ng-template #selectRiskGroupSituationWarning>
-		<p>Selecteer een risicogroep / situatie om de individuele risico scores aan te passen.</p>
+		<p>Selecteer een klok om de individuele risico scores aan te passen.</p>
 	</ng-template>
 	<app-entry
 		[value]="this.data.riskScoreValues.effect"
@@ -49,18 +49,6 @@
 		[disabled]="!this.selectedSituationRiskGroup"
 		(onValueChange)="this.setRiskScore('probability', $event)"
 	></app-entry>
-	<div id="temp-detail-risk-score-btns">
-		<button (click)="selectDetailRiskScore('a', 0)">A - Weggebruiker</button>
-		<button (click)="selectDetailRiskScore('a', 1)">A - Omwonende</button>
-		<button (click)="selectDetailRiskScore('a', 2)">A - VKM</button>
-		<button (click)="selectDetailRiskScore('a', 3)">A - Wegwerker</button>
-		<br/>
-		<br/>
-		<button (click)="selectDetailRiskScore('b', 0)">B - Weggebruiker</button>
-		<button (click)="selectDetailRiskScore('b', 1)">B - Omwonende</button>
-		<button (click)="selectDetailRiskScore('b', 2)">B - VKM</button>
-		<button (click)="selectDetailRiskScore('b', 3)">B - Wegwerker</button>
-	</div>
 </div>
 
 <div id="input-panel-select-measure">
@@ -71,10 +59,11 @@
 		[value]="this.defaultDropdownValues.measure"
 		#measure
 	></app-dropdown>
-	<button
-		id="input-panel-select-measure-button"
+	<a
+		id="gray-button-input-panel-measure"
+		class="gray-button"
 		(click)="addSelectedMeasure()"
 		*ngIf="this.currentMeasureDropdownOptions.length > 0"
-	>Pas maatregel toe</button>
+	>Pas maatregel toe</a>
 </div>
 

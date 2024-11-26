@@ -1,20 +1,34 @@
 <p>
-	Hier komt een hoop tekst die de RI&E tool zal uitleggen. Het gaat kort in op wat het is, hoe het werkt, en wat
-	je eruit krijgt. Ook legt het uit waar je dingen kan vinden en wat het betekend, indien nodig.
+	Welkom bij de Dura Vermeer Risico Inventarisatie & Evalutatie  (RI&E) Tool.
+	Deze tool zal u helpen met beslissingen maken over of de weg gesloten moet
+	worden, of dat alleen het wegvlak afgekadert kan worden.
 </p>
 <p>
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-	Fusce placerat justo mattis consequat vehicula. Aenean vitae
-	consectetur tortor. Cras tempor auctor arcu, ac luctus neque
-	tristique quis. Nulla facilisi. Nunc metus sem, consequat non
-	sem non, interdum imperdiet magna. Sed maximus lacus id diam.
+	Dit wordt gedaan door eerst een risico te selecteren, en vervolgens
+	aan te geven wat de bloostelling van het verkeer zou zijn bij beide
+	situaties. Op basis van de Fine Kinney & Wiruth methode worden dan
+	risicocijfers berekent per risicogroep.
 </p>
 <p>
-	Maar deze data is natuurlijk niet onveranderlijk. Zowel de lijst met maatregelen, als de type risico's zijn
+	Als alles is ingevuld, staan bij de resultaten 8 indicators van de risicocijfers.
+	Deze cijfers komen overeen met de Fine Kinney & Wiruth methode, en geven dus een
+	indicatie van hoe de verschillende risicogroepen reageren op risico's. Als de cijfers
+	niet acceptabel zijn kunnen er ook maatregelen worden toegevoegd, om deze cijfers aan te passen.
+</p>
+<p>
+	Maar de gebruikte data is natuurlijk niet onveranderlijk. Zowel de lijst met maatregelen, als de type risico's zijn
 	gedefinieerd in de databank. Deze databank is een Google Spreadsheet waarin alles kan worden aangepast indien
 	nodig. Wees echter voorzichtig met het aanpassen van deze data, gezien deze aanpassingen gelden voor iedereen
 	die deze tool wilt gebruiken.
 </p>
-<a id="info-panel-database-redirect" [href]="getBankUri()" target="_blank">
-	Naar de databank
-</a>
+<div id="info-panel-buttons">
+	<a class="gray-button" id="gray-button-info-panel-databank" [href]="getBankUri()" target="_blank">
+		Databank
+	</a>
+	<a class="gray-button" id="gray-button-info-panel-manual" href="/manual.pdf" target="_blank">
+		Handleiding
+	</a>
+	<a class="gray-button" id="gray-button-info-panel-substantiation" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+		Onderbouwing
+	</a>
+</div>
