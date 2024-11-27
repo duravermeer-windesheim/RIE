@@ -104,3 +104,8 @@
 .result-panel-measure-button:hover {
 	border: 1px solid var(--color-primary);
 }
+
+.emphasized-span {
+	font-weight: bolder;
+	text-decoration: underline
+}

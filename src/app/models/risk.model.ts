@@ -6,8 +6,8 @@ export interface RiskScoreGroupCollectionModel  {
 
 export interface RiskScoreGroupModel {
 	group: string,
-	situationARiskScores: RiskScoreModel,
-	situationBRiskScores: RiskScoreModel,
+	scenarioARiskScores: RiskScoreModel,
+	scenarioBRiskScores: RiskScoreModel,
 }
 
 export interface RiskScoreModel {

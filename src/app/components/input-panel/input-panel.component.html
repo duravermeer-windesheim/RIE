@@ -23,30 +23,24 @@
 ></app-dropdown>
 
 <div id="input-panel-select-risk-scores">
-	<p *ngIf="this.selectedSituationRiskGroup; else selectRiskGroupSituationWarning">
-		<strong>Geselecteerd</strong><br/>
-		Situatie {{ this.selectedSituationRiskGroup.situation }},
-		Risicogroep: {{ riskGroup[this.selectedSituationRiskGroup.riskGroup] }}
+	<p><strong>Specificeer een risico score</strong></p>
+	<p *ngIf="this.selectedScenarioRiskGroup; else selectRiskGroupScenarioWarning">
+		<strong>Scenario:</strong> {{ this.selectedScenarioRiskGroup.scenario == 'a' ? 'Verkeer omleiden' : 'Langs werkvak' }}<br/>
+		<strong>Risicogroep:</strong> {{ riskGroup[this.selectedScenarioRiskGroup.riskGroup] }}
 	</p>
-	<ng-template #selectRiskGroupSituationWarning>
+	<ng-template #selectRiskGroupScenarioWarning>
 		<p>Selecteer een klok om de individuele risico scores aan te passen.</p>
 	</ng-template>
 	<app-entry
 		[value]="this.data.riskScoreValues.effect"
 		[config]="this.entries['effect']"
-		[disabled]="!this.selectedSituationRiskGroup"
+		[disabled]="!this.selectedScenarioRiskGroup"
 		(onValueChange)="this.setRiskScore('effect', $event)"
 	></app-entry>
-<!--	<app-entry-->
-<!--		[value]="this.data.riskScoreValues.frequency"-->
-<!--		[config]="this.entries['frequency']"-->
-<!--		[disabled]="!this.selectedSituationRiskGroup"-->
-<!--		(onValueChange)="this.setRiskScore('frequency', $event)"-->
-<!--	></app-entry>-->
 	<app-entry
 		[value]="this.data.riskScoreValues.probability"
 		[config]="this.entries['probability']"
-		[disabled]="!this.selectedSituationRiskGroup"
+		[disabled]="!this.selectedScenarioRiskGroup"
 		(onValueChange)="this.setRiskScore('probability', $event)"
 	></app-entry>
 </div>
