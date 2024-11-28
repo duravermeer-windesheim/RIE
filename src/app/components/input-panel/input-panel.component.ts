@@ -188,11 +188,17 @@ export class InputPanelComponent implements OnInit {
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
-	// Clears measures and refreshes the dropdown.
-	private clearMeasures(): void {
+	// Resets measures and refreshes the dropdown.
+	private refreshMeasures(): void {
 		this.data.measures = [];
 
-		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
+		// Grab the measures that are allowed by the current risk type.
+		let measures = this.data.riskType?.extras ?? [];
+		let allowedMeasures = [...this.spreadsheetMeasures].filter(measure =>
+			measures.some(measureLabel => measureLabel.trim() === measure.label)
+		);
+
+		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(allowedMeasures);
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
@@ -214,7 +220,7 @@ export class InputPanelComponent implements OnInit {
 			});
 		}
 
-		this.clearMeasures();
+		this.refreshMeasures();
 		this.reloadData();
 	}
 

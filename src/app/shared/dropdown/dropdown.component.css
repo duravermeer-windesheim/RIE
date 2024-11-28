@@ -36,3 +36,10 @@
 .dropdown-validation-message {
 	color: tomato;
 }
+
+.no-arrow {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	pointer-events: none;
+}

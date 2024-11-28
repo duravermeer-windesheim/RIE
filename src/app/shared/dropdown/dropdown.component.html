@@ -15,6 +15,7 @@
 		(change)="onInteract()"
 		[(ngModel)]="this.value"
 		[disabled]="this.disabled"
+		[class.no-arrow]="this.items.length == 1"
 		(ngModelChange)="onChange()">
 		<option
 			*ngFor="let item of this.items"
