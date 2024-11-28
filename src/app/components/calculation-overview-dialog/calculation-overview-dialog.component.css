@@ -1,0 +1,54 @@
+.dialog-container {
+	color: white;
+	font-family: "Trebuchet MS", serif !important;
+}
+
+.mdc-dialog__surface {
+	border-radius: 4px;
+	background-color: var(--color-primary);
+	box-shadow: 8px 12px 10px rgba(0, 0, 0, 0.25);
+	padding: 10px;
+}
+
+#calculation-overview-title {
+	text-align: center;
+	width: 80%;
+	margin-left: 10%;
+	border-bottom: 2px solid white;
+}
+
+#calculation-overview-close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 30px;
+	height: 30px;
+}
+
+#calculation-overview-table {
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#calculation-overview-table-header {
+	background-color: var(--color-secondary) !important;
+	color: var(--color-primary);
+}
+
+#calculation-overview-table,
+#calculation-overview-table th,
+#calculation-overview-table td {
+	padding: 5px;
+}
+
+#calculation-overview-table th {
+	background-color: transparent;
+}
+#calculation-overview-table tr:nth-child(even) {
+	background-color: rgba(255, 255,255, 0.25);
+}
+#calculation-overview-table tr:nth-child(odd) {
+	background-color: rgba(255, 255,255, 0.15);
+}

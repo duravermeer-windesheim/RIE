@@ -66,7 +66,7 @@ export class RiskCalculationService {
 		}
 
 		// Grab the groups and apply measures to them.
-		let rou = this.applyMeasuresToRiskGroup(calculationModel, 0);
+		let mot = this.applyMeasuresToRiskGroup(calculationModel, 0);
 		let res = this.applyMeasuresToRiskGroup(calculationModel, 1);
 		let vkm = this.applyMeasuresToRiskGroup(calculationModel, 2);
 		let row = this.applyMeasuresToRiskGroup(calculationModel, 3);
@@ -74,13 +74,13 @@ export class RiskCalculationService {
 		// Get the results.
 		let results = {
 			scenarioAResults: {
-				roadUser: this.calculateRiskNumbersForGroup(calculationModel, rou, 'a'),
+				motorist: this.calculateRiskNumbersForGroup(calculationModel, mot, 'a'),
 				residents: this.calculateRiskNumbersForGroup(calculationModel, res, 'a'),
 				vkm: this.calculateRiskNumbersForGroup(calculationModel, vkm, 'a'),
 				roadWorker: this.calculateRiskNumbersForGroup(calculationModel, row, 'a'),
 			},
 			scenarioBResults: {
-				roadUser: this.calculateRiskNumbersForGroup(calculationModel, rou, 'b'),
+				motorist: this.calculateRiskNumbersForGroup(calculationModel, mot, 'b'),
 				residents: this.calculateRiskNumbersForGroup(calculationModel, res, 'b'),
 				vkm: this.calculateRiskNumbersForGroup(calculationModel, vkm, 'b'),
 				roadWorker: this.calculateRiskNumbersForGroup(calculationModel, row, 'b'),

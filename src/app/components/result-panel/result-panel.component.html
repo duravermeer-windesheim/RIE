@@ -5,9 +5,9 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Verkeer omleiden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results.scenarioAResults.roadUser"
+					[tick]="this.results.scenarioAResults.motorist"
 					[valueVisible]="true"
-					header="Weggebruikers"
+					header="Automobilist"
 					(click)="clickClock('a', 0)"
 				></app-clock>
 				<app-clock
@@ -34,9 +34,9 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Langs werkvak</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results.scenarioBResults.roadUser"
+					[tick]="this.results.scenarioBResults.motorist"
 					[valueVisible]="true"
-					header="Weggebruikers"
+					header="Automobilist"
 					(click)="clickClock('b', 0)"
 				></app-clock>
 				<app-clock
@@ -91,6 +91,13 @@
 			</tr>
 		</table>
 	</div>
+
+	<a
+		id="gray-button-result-panel-overview"
+		class="gray-button"
+		(click)="openDialog()"
+	>Bekijk gedetaileerde berekeningen</a>
+
 </div>
 <div id="result-panel-invalid" *ngIf="!this.allValid">
 	<app-clock [tick]="0" [permanentlyRotating]="true" style="margin-bottom: 30px"></app-clock>

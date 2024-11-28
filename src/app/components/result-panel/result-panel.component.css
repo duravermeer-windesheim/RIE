@@ -109,3 +109,8 @@
 	font-weight: bolder;
 	text-decoration: underline
 }
+
+#gray-button-result-panel-overview {
+	display: block;
+	margin: 20px 8px 8px;
+}

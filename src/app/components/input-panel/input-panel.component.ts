@@ -19,7 +19,7 @@ import {MatSelect} from '@angular/material/select';
 import {SelectedClockModel} from '../../models/selected-clock.model';
 
 export enum RiskGroup {
-	'Weggebruiker' = 0,
+	'Auto mobilist' = 0,
 	'Omwonende' = 1,
 	'VKM ploeg' = 2,
 	'Wegwerker' = 3,
