@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import {ResultModel} from '../models/result.model';
 import {AdviceModel} from '../models/advice.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AdviceService {
-
-	private readonly RISK_THRESHOLD = 70;
-	private readonly SCENARIO_DECISION_THRESHOLD = 200;
 
 
 	public getAdvice(resultModel: ResultModel): AdviceModel {
@@ -27,19 +25,19 @@ export class AdviceService {
 		let isAnyOfBOverThreshold = false;
 
 		// Check whether any of A's groups is over the threshold.
-		if (resultModel.scenarioAResults.motorist >= this.SCENARIO_DECISION_THRESHOLD ||
-			resultModel.scenarioAResults.residents >= this.SCENARIO_DECISION_THRESHOLD ||
-			resultModel.scenarioAResults.vkm >= this.SCENARIO_DECISION_THRESHOLD ||
-			resultModel.scenarioAResults.roadWorker >= this.SCENARIO_DECISION_THRESHOLD
+		if (resultModel.scenarioAResults.motorist >= environment.advice.maximumForScenarioDecision ||
+			resultModel.scenarioAResults.residents >= environment.advice.maximumForScenarioDecision ||
+			resultModel.scenarioAResults.vkm >= environment.advice.maximumForScenarioDecision ||
+			resultModel.scenarioAResults.roadWorker >= environment.advice.maximumForScenarioDecision
 		) {
 			isAnyOfAOverThreshold = true;
 		}
 
 		// Check whether any of B's groups is over the threshold.
-		if (resultModel.scenarioBResults.motorist >= this.SCENARIO_DECISION_THRESHOLD ||
-			resultModel.scenarioBResults.residents >= this.SCENARIO_DECISION_THRESHOLD ||
-			resultModel.scenarioBResults.vkm >= this.SCENARIO_DECISION_THRESHOLD ||
-			resultModel.scenarioBResults.roadWorker >= this.SCENARIO_DECISION_THRESHOLD
+		if (resultModel.scenarioBResults.motorist >= environment.advice.maximumForScenarioDecision ||
+			resultModel.scenarioBResults.residents >= environment.advice.maximumForScenarioDecision ||
+			resultModel.scenarioBResults.vkm >= environment.advice.maximumForScenarioDecision ||
+			resultModel.scenarioBResults.roadWorker >= environment.advice.maximumForScenarioDecision
 		) {
 			isAnyOfBOverThreshold = true;
 		}
@@ -71,31 +69,31 @@ export class AdviceService {
 		let advices = [];
 
 		// MOTORIST.
-		if (resultModel.scenarioAResults.motorist >= this.RISK_THRESHOLD ||
-			resultModel.scenarioBResults.motorist >= this.RISK_THRESHOLD
+		if (resultModel.scenarioAResults.motorist >= environment.advice.maximumBeforeMeasureRecs ||
+			resultModel.scenarioBResults.motorist >= environment.advice.maximumBeforeMeasureRecs
 		) {
-			advices.push("Snelheid verlagen", "Flitscamera’s plaatsen");
+			advices.push(...environment.advice.measureRecs.motorist);
 		}
 
 		// RESIDENTS.
-		if (resultModel.scenarioAResults.residents >= this.RISK_THRESHOLD ||
-			resultModel.scenarioBResults.residents >= this.RISK_THRESHOLD
+		if (resultModel.scenarioAResults.residents >= environment.advice.maximumBeforeMeasureRecs ||
+			resultModel.scenarioBResults.residents >= environment.advice.maximumBeforeMeasureRecs
 		) {
-			advices.push("Drempels plaatsen");
+			advices.push(...environment.advice.measureRecs.residents);
 		}
 
 		// VKM.
-		if (resultModel.scenarioAResults.vkm >= this.RISK_THRESHOLD ||
-			resultModel.scenarioBResults.vkm >= this.RISK_THRESHOLD
+		if (resultModel.scenarioAResults.vkm >= environment.advice.maximumBeforeMeasureRecs ||
+			resultModel.scenarioBResults.vkm >= environment.advice.maximumBeforeMeasureRecs
 		) {
-			advices.push("Snelheid verlagen");
+			advices.push(...environment.advice.measureRecs.vkm);
 		}
 
 		// ROAD WORKERS.
-		if (resultModel.scenarioAResults.roadWorker >= this.RISK_THRESHOLD ||
-			resultModel.scenarioBResults.roadWorker >= this.RISK_THRESHOLD
+		if (resultModel.scenarioAResults.roadWorker >= environment.advice.maximumBeforeMeasureRecs ||
+			resultModel.scenarioBResults.roadWorker >= environment.advice.maximumBeforeMeasureRecs
 		) {
-			advices.push("Ingang werkvak bij oprit");
+			advices.push(...environment.advice.measureRecs.roadWorker);
 		}
 
 		return advices;
