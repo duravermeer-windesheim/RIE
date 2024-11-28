@@ -27,11 +27,11 @@ export class CalculationOverviewDialogComponent implements OnInit {
 	public calculation: CalculationModel = inject(MAT_DIALOG_DATA).calculation;
 
 	public overviewData: OverviewData[] = [
-		{ label: "Scenario A - Weggebruikers", frequency: this.calculation.frequencies.frequencyA.key.toString()},
+		{ label: "Scenario A - Automobilist", frequency: this.calculation.frequencies.frequencyA.key.toString()},
 		{ label: "Scenario A - Omwonende", frequency: this.calculation.frequencies.frequencyA.key.toString()},
 		{ label: "Scenario A - VKM Ploeg", frequency: this.calculation.frequencies.frequencyA.key.toString()},
 		{ label: "Scenario A - Wegwerker", frequency: this.calculation.frequencies.frequencyA.key.toString()},
-		{ label: "Scenario B - Weggebruikers", frequency: this.calculation.frequencies.frequencyB.key.toString()},
+		{ label: "Scenario B - Automobilist", frequency: this.calculation.frequencies.frequencyB.key.toString()},
 		{ label: "Scenario B - Omwonende", frequency: this.calculation.frequencies.frequencyB.key.toString()},
 		{ label: "Scenario B - VKM Ploeg", frequency: this.calculation.frequencies.frequencyB.key.toString()},
 		{ label: "Scenario B - Wegwerker", frequency: this.calculation.frequencies.frequencyB.key.toString()},
@@ -41,16 +41,16 @@ export class CalculationOverviewDialogComponent implements OnInit {
 	private dialogRef = inject(MatDialogRef<CalculationOverviewDialogComponent>);
 
 	public ngOnInit(): void {
-		const riskGroupTypes = ["roadUser", "residents", "vkm", "roadWorker"];
+		const riskGroupTypes = ["motorist", "residents", "vkm", "roadWorker"];
 
 		// Stores the effects the measures have on everything.
 		let effects = { effect: {
-				a: { roadUser: 0, residents: 0, vkm: 0, roadWorker: 0, },
-				b: { roadUser: 0, residents: 0, vkm: 0, roadWorker: 0, },
+				a: { motorist: 0, residents: 0, vkm: 0, roadWorker: 0, },
+				b: { motorist: 0, residents: 0, vkm: 0, roadWorker: 0, },
 			},
 			probability: {
-				a: { roadUser: 0, residents: 0, vkm: 0, roadWorker: 0, },
-				b: { roadUser: 0, residents: 0, vkm: 0, roadWorker: 0, },
+				a: { motorist: 0, residents: 0, vkm: 0, roadWorker: 0, },
+				b: { motorist: 0, residents: 0, vkm: 0, roadWorker: 0, },
 			}
 		};
 
@@ -60,7 +60,7 @@ export class CalculationOverviewDialogComponent implements OnInit {
 			riskGroupTypes.forEach((group, index) => {
 
 				// Typescript doesn't like the assumption the group is a valid key.
-				if (group != "roadUser" && group != "residents" && group != "vkm" && group != "roadWorker") {
+				if (group != "motorist" && group != "residents" && group != "vkm" && group != "roadWorker") {
 					return;
 				}
 
@@ -79,7 +79,7 @@ export class CalculationOverviewDialogComponent implements OnInit {
 
 	// This NEEDS refactoring.
 	private calculateRow(effects: any, i: number): void {
-		const groupKeys = ["roadUser", "residents", "vkm", "roadWorker"];
+		const groupKeys = ["motorist", "residents", "vkm", "roadWorker"];
 		const groupKey = groupKeys[i % 4];
 
 		let riskgroups = this.calculation.riskType?.riskGroups;
@@ -97,7 +97,7 @@ export class CalculationOverviewDialogComponent implements OnInit {
 			this.calculation.frequencies[i <= 3 ? 'frequencyA' : 'frequencyB'].key + " x " +
 			(prob + effects.probability[i <= 3 ? 'a' : 'b'][groupKey]);
 
-		this.overviewData[i].result = ((effect + effects.effect[i <= 3 ? 'a' : 'b'].roadUser) *
+		this.overviewData[i].result = ((effect + effects.effect[i <= 3 ? 'a' : 'b'][groupKey]) *
 			this.calculation.frequencies[i <= 3 ? 'frequencyA' : 'frequencyB'].key *
 			(prob + effects.probability[i <= 3 ? 'a' : 'b'][groupKey])).toString();
 	}
