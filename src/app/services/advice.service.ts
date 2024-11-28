@@ -10,39 +10,39 @@ export class AdviceService {
 	private readonly RISK_THRESHOLD = 70;
 
 	public getAdvice(resultModel: ResultModel): AdviceModel {
-		let measure: string | undefined;
+		let advices = [];
 
 		// ROAD USER.
 		if (resultModel.scenarioAResults.roadUser >= this.RISK_THRESHOLD ||
 			resultModel.scenarioBResults.roadUser >= this.RISK_THRESHOLD
 		) {
-			measure = "Snelheid verlagen en/of Flitscamera’s plaatsen";
+			advices.push("Snelheid verlagen", "Flitscamera’s plaatsen");
 		}
 
 		// RESIDENTS.
 		if (resultModel.scenarioAResults.residents >= this.RISK_THRESHOLD ||
 			resultModel.scenarioBResults.residents >= this.RISK_THRESHOLD
 		) {
-			measure = "Drempels plaatsen";
+			advices.push("Drempels plaatsen");
 		}
 
 		// VKM.
 		if (resultModel.scenarioAResults.vkm >= this.RISK_THRESHOLD ||
 			resultModel.scenarioBResults.vkm >= this.RISK_THRESHOLD
 		) {
-			measure = "Snelheid verlagen";
+			advices.push("Snelheid verlagen");
 		}
 
 		// ROAD WORKERS.
 		if (resultModel.scenarioAResults.roadWorker >= this.RISK_THRESHOLD ||
 			resultModel.scenarioBResults.roadWorker >= this.RISK_THRESHOLD
 		) {
-			measure = "Ingang werkvak bij oprit";
+			advices.push("Ingang werkvak bij oprit");
 		}
 
 		return {
 			advisedScenario: "a",
-			advisedMeasure: measure
+			advisedMeasure: [...new Set(advices)]
 		}
 	}
 }

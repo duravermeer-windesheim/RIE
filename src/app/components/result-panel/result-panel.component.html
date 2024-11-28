@@ -68,11 +68,11 @@
 			this.results.advice?.advisedScenario == "a" ? 'Verkeer omleiden' : 'Langs werkvak'
 		}}</span> aan.
 	</p>
-	<p *ngIf="results?.advice?.advisedMeasure">
-		Om het risicocijfer te verlagen kunt u links aanvullende maatregelen selecteren. Wij adviseren
+	<p *ngIf="results?.advice?.advisedMeasure ? results?.advice?.advisedMeasure?.length : false ">
+		Om het risicocijfer te verlagen kunt u links aanvullende maatregelen selecteren. Wij adviseren:
 		<span class="emphasized-span">
-			{{ this.results.advice?.advisedMeasure }}
-		</span>, de ernst en waarschijnlijkheid worden hierdoor één niveau verlaagd.
+			{{ this.results.advice?.advisedMeasure?.join(", ") }}
+		</span>. De ernst en waarschijnlijkheid worden hierdoor één niveau verlaagd.
 		Zie knop Onderbouwing voor meer informatie.
 	</p>
 
