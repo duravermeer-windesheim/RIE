@@ -22,11 +22,11 @@ export class RiskCalculationService {
 		calculationModel.measures.forEach(measure => {
 			let measure_group = measure.riskGroups[idx];
 
-			group.situationARiskScores.effect = measure_group.situationARiskScores.effect;
-			group.situationARiskScores.probability = measure_group.situationARiskScores.probability;
+			group.situationARiskScores.effect += measure_group.situationARiskScores.effect;
+			group.situationARiskScores.probability += measure_group.situationARiskScores.probability;
 
-			group.situationBRiskScores.effect = measure_group.situationBRiskScores.effect;
-			group.situationBRiskScores.probability = measure_group.situationBRiskScores.probability;
+			group.situationBRiskScores.effect += measure_group.situationBRiskScores.effect;
+			group.situationBRiskScores.probability += measure_group.situationBRiskScores.probability;
 		})
 
 		return group;
