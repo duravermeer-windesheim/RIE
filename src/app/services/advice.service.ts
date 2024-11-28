@@ -12,9 +12,9 @@ export class AdviceService {
 	public getAdvice(resultModel: ResultModel): AdviceModel {
 		let advices = [];
 
-		// ROAD USER.
-		if (resultModel.scenarioAResults.roadUser >= this.RISK_THRESHOLD ||
-			resultModel.scenarioBResults.roadUser >= this.RISK_THRESHOLD
+		// MOTORIST.
+		if (resultModel.scenarioAResults.motorist >= this.RISK_THRESHOLD ||
+			resultModel.scenarioBResults.motorist >= this.RISK_THRESHOLD
 		) {
 			advices.push("Snelheid verlagen", "Flitscamera’s plaatsen");
 		}
