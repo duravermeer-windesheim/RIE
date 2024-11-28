@@ -1,0 +1,27 @@
+
+<div class="mat-header">
+	<div id="calculation-overview-title">
+		<h2>Berekening overview</h2>
+	</div>
+	<button id="calculation-overview-close" (click)="close()">✖</button>
+</div>
+<div class="mat-dialog-content">
+	<table id="calculation-overview-table">
+		<tr id="calculation-overview-table-header">
+			<th>Risicogroep</th>
+			<th>Effect</th>
+			<th>Blootstelling</th>
+			<th>Waarschijnlijkheid</th>
+			<th>Som</th>
+			<th>Resultaat</th>
+		</tr>
+		<tr *ngFor="let overviewRow of this.overviewData">
+			<td>{{ overviewRow.label }}</td>
+			<td>{{ overviewRow.effect }}</td>
+			<td>{{ overviewRow.frequency }}</td>
+			<td>{{ overviewRow.probability }}</td>
+			<td>{{ overviewRow.formula }}</td>
+			<td>{{ overviewRow.result }}</td>
+		</tr>
+	</table>
+</div>
