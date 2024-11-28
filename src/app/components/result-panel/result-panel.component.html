@@ -81,6 +81,13 @@
 			</tr>
 		</table>
 	</div>
+
+	<a
+		id="gray-button-result-panel-overview"
+		class="gray-button"
+		(click)="openDialog()"
+	>Bekijk gedetaileerde berekeningen</a>
+
 </div>
 <div id="result-panel-invalid" *ngIf="!this.allValid">
 	<app-clock [tick]="0" [permanentlyRotating]="true" style="margin-bottom: 30px"></app-clock>

@@ -6,6 +6,8 @@ import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 import {RiskCalculationService} from '../../services/risk-calculation.service';
 import {RiskGroup} from '../input-panel/input-panel.component';
 import {SelectedClockModel} from '../../models/selected-clock.model';
+import {CalculationOverviewDialogComponent} from '../calculation-overview-dialog/calculation-overview-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 
 @Component({
@@ -39,7 +41,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	// Stores the results calculated from the data model.
 	public results!: ResultModel;
 
-	constructor(private riskCalculationService: RiskCalculationService) {
+	constructor(private riskCalculationService: RiskCalculationService, private dialog: MatDialog) {
 	}
 
 	public ngOnInit(): void {
@@ -52,6 +54,17 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 		if (this.allValid && changes['data']) {
 			this.results = this.getResults();
 		}
+	}
+
+	public openDialog(): void {
+		this.dialog.open(CalculationOverviewDialogComponent, {
+			width: "800px",
+			maxWidth: 'none',
+			panelClass: 'dialog-container',
+			data: {
+				calculation: this.data
+			}
+		});
 	}
 
 	// Retrieves the calculation numbers.

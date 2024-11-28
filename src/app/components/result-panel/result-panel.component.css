@@ -104,3 +104,8 @@
 .result-panel-measure-button:hover {
 	border: 1px solid var(--color-primary);
 }
+
+#gray-button-result-panel-overview {
+	display: block;
+	margin: 20px 8px 8px;
+}
