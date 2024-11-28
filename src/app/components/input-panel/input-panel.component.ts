@@ -71,9 +71,9 @@ export class InputPanelComponent implements OnInit {
 	public selectedRiskDropdownOption: DropdownItem = defaultDropdownItem;
 
 
-	// Currently selected situation and riskGroups.
-	public selectedSituationRiskGroup?: {
-		situation: 'a' | 'b',
+	// Currently selected scenario and riskGroups.
+	public selectedScenarioRiskGroup?: {
+		scenario: 'a' | 'b',
 		riskGroup: RiskGroup
 	}
 
@@ -188,6 +188,19 @@ export class InputPanelComponent implements OnInit {
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
+	// Resets measures and refreshes the dropdown.
+	private refreshMeasures(): void {
+		this.data.measures = [];
+
+		// Grab the measures that are allowed by the current risk type.
+		let measures = this.data.riskType?.extras ?? [];
+		let allowedMeasures = [...this.spreadsheetMeasures].filter(measure =>
+			measures.some(measureLabel => measureLabel.trim() === measure.label)
+		);
+
+		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(allowedMeasures);
+		this.measureElement.value = this.currentMeasureDropdownOptions[0];
+	}
 
 	// Set a risk score to the riskScoreValues.
 	public setRiskScore(key: "effect" | "probability", value: number): void {
@@ -200,19 +213,20 @@ export class InputPanelComponent implements OnInit {
 		this.data.riskType = this.spreadsheetRisks[item.key];
 
 		// Refresh the current selection.
-		if (this.selectedSituationRiskGroup) {
+		if (this.selectedScenarioRiskGroup) {
 			this.selectDetailRiskScore({
-				situation: this.selectedSituationRiskGroup.situation,
-				riskGroup: this.selectedSituationRiskGroup.riskGroup
+				scenario: this.selectedScenarioRiskGroup.scenario,
+				riskGroup: this.selectedScenarioRiskGroup.riskGroup
 			});
 		}
 
+		this.refreshMeasures();
 		this.reloadData();
 	}
 
 	// Sets the frequency.
-	public setFrequency(situation: 'a' | 'b', item: DropdownItem): void {
-		if (situation == 'a') {
+	public setFrequency(scenario: 'a' | 'b', item: DropdownItem): void {
+		if (scenario == 'a') {
 			this.data.frequencies.frequencyA = item;
 		} else {
 			this.data.frequencies.frequencyB = item;
@@ -220,21 +234,21 @@ export class InputPanelComponent implements OnInit {
 		this.reloadData();
 	}
 
-	// selects a situation and a risk group.
+	// selects a scenario and a risk group.
 	public selectDetailRiskScore(selectedClock: SelectedClockModel): void {
 		if (!this.data.riskType) {
 			return
 		}
 
-		// Select the situation and riskGroup.
-		this.selectedSituationRiskGroup = selectedClock;
+		// Select the scenario and riskGroup.
+		this.selectedScenarioRiskGroup = selectedClock;
 
-		// Binds the input fields to the new situation.
+		// Binds the input fields to the new scenario.
 		let idx = selectedClock.riskGroup.valueOf();
-		if (selectedClock.situation == 'a') {
-			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].situationARiskScores;
-		} else if (selectedClock.situation == 'b') {
-			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].situationBRiskScores;
+		if (selectedClock.scenario == 'a') {
+			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].scenarioARiskScores;
+		} else if (selectedClock.scenario == 'b') {
+			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].scenarioBRiskScores;
 		}
 	}
 }

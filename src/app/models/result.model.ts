@@ -1,5 +1,6 @@
 import {RiskScoreGroupCollectionModel, RiskScoreGroupModel, RiskScoreModel} from './risk.model';
 import {DropdownItem} from './dropdown.model';
+import {AdviceModel} from './advice.model';
 
 export interface CalculationModel {
 	riskType?: RiskScoreGroupCollectionModel,
@@ -14,6 +15,7 @@ export interface CalculationModel {
 export interface ResultModel {
 	scenarioAResults: ResultScenarioModel,
 	scenarioBResults: ResultScenarioModel,
+	advice?: AdviceModel
 }
 
 export interface ResultScenarioModel {

@@ -4,8 +4,8 @@ import {CalculationModel, emptyScenarioModel, ResultModel} from '../../models/re
 import {SharedModule} from '../../shared/shared.module';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 import {RiskCalculationService} from '../../services/risk-calculation.service';
-import {RiskGroup} from '../input-panel/input-panel.component';
 import {SelectedClockModel} from '../../models/selected-clock.model';
+import {AdviceService} from '../../services/advice.service';
 import {CalculationOverviewDialogComponent} from '../calculation-overview-dialog/calculation-overview-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -41,7 +41,9 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	// Stores the results calculated from the data model.
 	public results!: ResultModel;
 
-	constructor(private riskCalculationService: RiskCalculationService, private dialog: MatDialog) {
+	constructor(private riskCalculationService: RiskCalculationService,
+				private adviseService: AdviceService,
+				private dialog: MatDialog) {
 	}
 
 	public ngOnInit(): void {
@@ -67,7 +69,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 		});
 	}
 
-	// Retrieves the calculation numbers.
+	// Calculates the results.
 	public getResults(): ResultModel {
 		// Get results.
 		let results = this.riskCalculationService.getRiskNumbers(this.data);
@@ -77,7 +79,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 			console.error("Could not calculate risk numbers");
 			return {
 				scenarioAResults: emptyScenarioModel,
-				scenarioBResults: emptyScenarioModel
+				scenarioBResults: emptyScenarioModel,
 			};
 		}
 
@@ -90,9 +92,9 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	}
 
 	// Invoke the onSelectClock output event.
-	public clickClock(situation: 'a' | 'b', riskGroup: number): void {
+	public clickClock(scenario: 'a' | 'b', riskGroup: number): void {
 		this.onSelectClock.emit({
-			situation: situation,
+			scenario: scenario,
 			riskGroup: riskGroup,
 		});
 	}

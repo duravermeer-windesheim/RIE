@@ -64,11 +64,11 @@ export class CalculationOverviewDialogComponent implements OnInit {
 					return;
 				}
 
-				effects.effect.a[group] += measure.riskGroups[index].situationARiskScores.effect;
-				effects.probability.a[group] += measure.riskGroups[index].situationARiskScores.probability;
+				effects.effect.a[group] += measure.riskGroups[index].scenarioARiskScores.effect;
+				effects.probability.a[group] += measure.riskGroups[index].scenarioARiskScores.probability;
 
-				effects.effect.b[group] += measure.riskGroups[index].situationBRiskScores.effect;
-				effects.probability.b[group] += measure.riskGroups[index].situationBRiskScores.probability;
+				effects.effect.b[group] += measure.riskGroups[index].scenarioBRiskScores.effect;
+				effects.probability.b[group] += measure.riskGroups[index].scenarioBRiskScores.probability;
 			})
 		});
 
@@ -87,8 +87,8 @@ export class CalculationOverviewDialogComponent implements OnInit {
 			return;
 		}
 
-		let effect = riskgroups[i % 4][i <= 3 ? "situationARiskScores" : "situationBRiskScores"].effect;
-		let prob = riskgroups[i % 4][i <= 3 ? "situationARiskScores" : "situationBRiskScores"].probability;
+		let effect = riskgroups[i % 4][i <= 3 ? "scenarioARiskScores" : "scenarioBRiskScores"].effect;
+		let prob = riskgroups[i % 4][i <= 3 ? "scenarioARiskScores" : "scenarioBRiskScores"].probability;
 
 		this.overviewData[i].effect = effect + (effects.effect[i <= 3 ? 'a' : 'b'][groupKey] != 0 ? "(" + this.signNumber(effects.effect[i <= 3 ? 'a' : 'b'][groupKey]) + ")" : '');
 		this.overviewData[i].probability = prob + (effects.probability[i <= 3 ? 'a' : 'b'][groupKey] != 0 ? "(" + this.signNumber(effects.probability[i <= 3 ? 'a' : 'b'][groupKey]) + ")" : '');

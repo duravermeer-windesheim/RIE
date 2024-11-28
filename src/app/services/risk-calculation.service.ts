@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {CalculationModel, ResultModel} from '../models/result.model';
 import {RiskScoreGroupModel, RiskScoreModel} from '../models/risk.model';
 import {DropdownItem} from '../models/dropdown.model';
+import {AdviceService} from './advice.service';
 
 export const MAX_RISK_SCORE = 400;
 
@@ -10,9 +11,9 @@ export const MAX_RISK_SCORE = 400;
 })
 export class RiskCalculationService {
 
-	constructor() { }
+	constructor(private adviceService: AdviceService) { }
 
-	// Applies measures to a new riskgroup.
+	// Applies measures to a new risk-group.
 	private applyMeasuresToRiskGroup(calculationModel: CalculationModel, idx: number): RiskScoreGroupModel | undefined {
 		let group = calculationModel.riskType?.riskGroups[idx];
 		if (!group) {
@@ -22,17 +23,17 @@ export class RiskCalculationService {
 		calculationModel.measures.forEach(measure => {
 			let measure_group = measure.riskGroups[idx];
 
-			group.situationARiskScores.effect += measure_group.situationARiskScores.effect;
-			group.situationARiskScores.probability += measure_group.situationARiskScores.probability;
+			group.scenarioARiskScores.effect = measure_group.scenarioARiskScores.effect;
+			group.scenarioARiskScores.probability = measure_group.scenarioARiskScores.probability;
 
-			group.situationBRiskScores.effect += measure_group.situationBRiskScores.effect;
-			group.situationBRiskScores.probability += measure_group.situationBRiskScores.probability;
+			group.scenarioBRiskScores.effect = measure_group.scenarioBRiskScores.effect;
+			group.scenarioBRiskScores.probability = measure_group.scenarioBRiskScores.probability;
 		})
 
 		return group;
 	}
 
-	// Calculates the value for a specific risk group.
+	// Calculates the value for a specific risk-group.
 	private calculateRiskNumbersForGroup(calculationModel: CalculationModel,
 		 group: RiskScoreGroupModel | undefined, scenario: 'a' | 'b'): number {
 
@@ -44,10 +45,10 @@ export class RiskCalculationService {
 		let frequency!: DropdownItem;
 
 		if (scenario == 'a') {
-			scores = group.situationARiskScores;
+			scores = group.scenarioARiskScores;
 			frequency = calculationModel.frequencies.frequencyA;
 		} else if (scenario == 'b') {
-			scores = group.situationBRiskScores;
+			scores = group.scenarioBRiskScores;
 			frequency = calculationModel.frequencies.frequencyB;
 		}
 
@@ -70,7 +71,8 @@ export class RiskCalculationService {
 		let vkm = this.applyMeasuresToRiskGroup(calculationModel, 2);
 		let row = this.applyMeasuresToRiskGroup(calculationModel, 3);
 
-		return {
+		// Get the results.
+		let results = {
 			scenarioAResults: {
 				motorist: this.calculateRiskNumbersForGroup(calculationModel, mot, 'a'),
 				residents: this.calculateRiskNumbersForGroup(calculationModel, res, 'a'),
@@ -83,6 +85,14 @@ export class RiskCalculationService {
 				vkm: this.calculateRiskNumbersForGroup(calculationModel, vkm, 'b'),
 				roadWorker: this.calculateRiskNumbersForGroup(calculationModel, row, 'b'),
 			}
-		}
+		};
+
+		// Combine the results and include the advice.
+		return {
+			scenarioAResults: results.scenarioAResults,
+			scenarioBResults: results.scenarioBResults,
+			advice: this.adviceService.getAdvice(results)
+		};
+
 	}
 }

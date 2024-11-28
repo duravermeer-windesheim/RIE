@@ -1,13 +1,14 @@
 
 export interface RiskScoreGroupCollectionModel  {
 	label: string,
+	extras?: string[],
 	riskGroups: RiskScoreGroupModel[]
 }
 
 export interface RiskScoreGroupModel {
 	group: string,
-	situationARiskScores: RiskScoreModel,
-	situationBRiskScores: RiskScoreModel,
+	scenarioARiskScores: RiskScoreModel,
+	scenarioBRiskScores: RiskScoreModel,
 }
 
 export interface RiskScoreModel {

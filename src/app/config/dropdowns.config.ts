@@ -13,11 +13,11 @@ export const dropdownConfigs: { [key: string]: DropdownConfig } = {
 		addDefaultEmptyOption: true,
 	},
 	frequencyA: {
-		label: 'Blootstelling Situatie A',
+		label: 'Blootstelling scenario Langs werkvak',
 		code: 'freq_a',
 	},
 	frequencyB: {
-		label: 'Blootstelling Situatie B',
+		label: 'Blootstelling scenario Verkeer omleiden',
 		code: 'freq_b',
 	}
 }
