@@ -5,9 +5,9 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Verkeer omleiden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results.scenarioAResults.roadUser"
+					[tick]="this.results.scenarioAResults.motorist"
 					[valueVisible]="true"
-					header="Weggebruikers"
+					header="Automobilist"
 					(click)="clickClock('a', 0)"
 				></app-clock>
 				<app-clock
@@ -34,9 +34,9 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Werkzaamheden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results.scenarioBResults.roadUser"
+					[tick]="this.results.scenarioBResults.motorist"
 					[valueVisible]="true"
-					header="Weggebruikers"
+					header="Automobilist"
 					(click)="clickClock('b', 0)"
 				></app-clock>
 				<app-clock
