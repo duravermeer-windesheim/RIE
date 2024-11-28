@@ -53,7 +53,7 @@ export class RiskCalculationService {
 		}
 
 		let val = scores.effect * scores.probability * frequency.key;
-		return val >= MAX_RISK_SCORE ? MAX_RISK_SCORE : val;
+		return Math.min(MAX_RISK_SCORE, Math.max(0, val));
 	}
 
 
