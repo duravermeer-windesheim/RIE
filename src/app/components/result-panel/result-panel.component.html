@@ -63,15 +63,15 @@
 
 	<!--Advice-->
 	<p><strong>Advies </strong></p>
-	<p>Op basis van deze risicocijfers raden wij het scenario
-		<span class="emphasized-span">{{
-			this.results.advice?.advisedScenario == "a" ? 'Verkeer omleiden' : 'Langs werkvak'
-		}}</span> aan.
+	<p>Op basis van deze risicocijfers raden wij
+		<span class="emphasized-span" *ngIf="this.results.advice?.advisedScenario == 'a'">het scenario Verkeer omleiden aan.</span>
+		<span class="emphasized-span" *ngIf="this.results.advice?.advisedScenario == 'b'">het scenario Langs werkvlak aan.</span>
+		<span class="emphasized-span" *ngIf="this.results.advice?.advisedScenario == 'even'">geen van beide scenario's aan, gezien de risiconummers precies hetzelfde zijn.</span>
 	</p>
-	<p *ngIf="results?.advice?.advisedMeasure ? results?.advice?.advisedMeasure?.length : false ">
+	<p *ngIf="results?.advice?.advisedMeasures ? results?.advice?.advisedMeasures?.length : false ">
 		Om het risicocijfer te verlagen kunt u links aanvullende maatregelen selecteren. Wij adviseren:
 		<span class="emphasized-span">
-			{{ this.results.advice?.advisedMeasure?.join(", ") }}
+			{{ this.results.advice?.advisedMeasures?.join(", ") }}
 		</span>. De ernst en waarschijnlijkheid worden hierdoor één niveau verlaagd.
 		Zie knop Onderbouwing voor meer informatie.
 	</p>
