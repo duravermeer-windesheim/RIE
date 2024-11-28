@@ -3,6 +3,16 @@ export const environment = {
 		googleSpreadsheetId: '<Your spreadsheet ID here>',
 		googleSpreadsheetApiKey: '<Your API Key here>',
 	},
+	advice: {
+		maximumForScenarioDecision: 200,
+		maximumBeforeMeasureRecs: 70,
+		measureRecs: {
+			motorist: ["Snelheid verlagen", "Flitscamera’s plaatsen"],
+			residents: ["Drempels plaatsen"],
+			vkm: ["Snelheid verlagen"],
+			roadWorker: ["Ingang werkvak bij oprit"]
+		}
+	},
 	sheetNames: {
 		measures: "Maatregelen",
 		risks: "Risicos"

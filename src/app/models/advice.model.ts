@@ -1,5 +1,5 @@
 
 export interface AdviceModel {
-	advisedScenario: 'a' | 'b',
-	advisedMeasure?: string[],
+	advisedScenario: 'a' | 'b' | 'even',
+	advisedMeasures?: string[],
 }
