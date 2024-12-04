@@ -14,9 +14,10 @@
 
 
 #result-panel-clocks {
-	height: 300px;
+	height: 270px;
 	display: flex;
 	justify-content: center;
+	margin-bottom: 30px;
 }
 
 .result-panel-clocks-scenario {
@@ -114,3 +115,40 @@
 	display: block;
 	margin: 20px 8px 8px;
 }
+
+
+.result-panel-color-blocks {
+	margin-top: 30px;
+	display: flex;
+	justify-content: space-evenly;
+}
+.result-panel-color-block {
+	width: 55px;
+	height: auto;
+	padding: 3px;
+	background-color: tomato;
+	display: inline-block;
+	text-align: center;
+	border-radius: 2px;
+}
+
+#result-panel-color-block-1 { background-color: #92D050; }
+#result-panel-color-block-2 { background-color: #FFFF00; }
+#result-panel-color-block-3 { background-color: #FFC000; }
+#result-panel-color-block-4 {  	background-color: #FF0000; }
+#result-panel-color-block-5 {
+	background-color: #C00000;
+	color: #E9E9E9;
+}
+
+.result-panel-color-block:after {
+	content: '';
+	display: block;
+	font-size: 9px;
+}
+
+#result-panel-color-block-1::after { content: 'Aanvaardbaar'; }
+#result-panel-color-block-2::after { content: 'Risico op langere termijn'; }
+#result-panel-color-block-3::after { content: 'Belangrijk risico'; }
+#result-panel-color-block-4::after { content: 'Direct maatregelen'; }
+#result-panel-color-block-5::after { content: 'Zeer hoog risico'; }
