@@ -12,18 +12,16 @@
 	[config]="this.dropdowns['frequencyA']"
 	[items]="this.frequencyDropdownItems"
 	(onValueChange)="this.setFrequency('a', $event)"
-	[automaticallySelectFirstItem]="true"
 ></app-dropdown>
 <app-dropdown
 	[value]="this.data.frequencies.frequencyB"
 	[config]="this.dropdowns['frequencyB']"
 	[items]="this.frequencyDropdownItems"
 	(onValueChange)="this.setFrequency('b', $event)"
-	[automaticallySelectFirstItem]="true"
 ></app-dropdown>
 
 <div id="input-panel-select-risk-scores">
-	<p><strong>Specificeer een risico score</strong></p>
+	<p><strong>Optioneel: </strong>Specificeer een risico score</p>
 	<p *ngIf="this.selectedScenarioRiskGroup; else selectRiskGroupScenarioWarning">
 		<strong>Scenario:</strong> {{ this.selectedScenarioRiskGroup.scenario == 'a' ? 'Verkeer omleiden' : 'Langs werkvak' }}<br/>
 		<strong>Risicogroep:</strong> {{ riskGroup[this.selectedScenarioRiskGroup.riskGroup] }}

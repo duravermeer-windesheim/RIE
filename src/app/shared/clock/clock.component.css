@@ -25,6 +25,15 @@
 	);
 }
 
+.clock-circle-new-bg {
+	background: conic-gradient(
+		#92D050 0deg 18deg,
+		#FFFF00 19deg 64deg,
+		#FFC000 65deg 181deg,
+		#FF0000 182deg 360deg
+	) !important;
+}
+
 .clock-inner-circle {
 	position: relative;
 	top: 50%;

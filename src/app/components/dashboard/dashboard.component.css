@@ -57,6 +57,10 @@ mat-icon:hover {
 		flex-direction: column;
 	}
 
+	mat-icon {
+		display: none;
+	}
+
 }
 
 /* Small Devices (Tablets) */
@@ -69,6 +73,10 @@ mat-icon:hover {
 	#panels {
 		flex-direction: column;
 	}
+
+	mat-icon {
+		display: none;
+	}
 }
 
 /* Large Devices (Desktops) */
@@ -80,6 +88,9 @@ mat-icon:hover {
 	#panels {
 		flex-direction: row;
 	}
-}
 
+	mat-icon {
+		display: block;
+	}
+}
 
