@@ -152,3 +152,14 @@
 #result-panel-color-block-3::after { content: 'Belangrijk risico'; }
 #result-panel-color-block-4::after { content: 'Direct maatregelen'; }
 #result-panel-color-block-5::after { content: 'Zeer hoog risico'; }
+
+
+/* Extra wide devices (Like the wide screens at Dura Vermeer Hoofddorp*/
+@media (min-width: 2000px) {
+	.result-panel-color-block:after {
+		font-size: 12px;
+	}
+	.result-panel-color-block {
+		width: 80px;
+	}
+}
