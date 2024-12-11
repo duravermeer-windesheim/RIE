@@ -90,7 +90,7 @@ export class InputPanelComponent implements OnInit {
 
 	// Different options a frequency can have.
 	public readonly frequencyDropdownItems: DropdownItem[] = [
-		{ key: 0, value: 'Selecteer een optie', disabled: true },
+		defaultDropdownItem,
 		{ key: 0.5, value: '0.5 | Zeer zelden' },
 		{ key: 1, value: '1 | Zelden (<1% van tijdsduur evenement)' },
 		{ key: 2, value: '2 | Soms, ongewoon (>1%, <10% van de tijdsduur evenement)' },
@@ -157,8 +157,15 @@ export class InputPanelComponent implements OnInit {
 	public addSelectedMeasure(): void {
 		// Get selected measure.
 		let keyValue = this.measureElement.getKeyValue();
-		let measureIdx = keyValue.value.key;
-		let measure = this.spreadsheetMeasures[measureIdx];
+		let measureIdx: number = keyValue.value.key;
+
+		// Extra's are required to add the measure.
+		if (!this.data.riskType?.extras) {
+			return;
+		}
+
+		let measureLabel = this.data.riskType?.extras[measureIdx];
+		let measure = this.spreadsheetMeasures.find(measure => measure.label == measureLabel);
 
 		if (measure == null) {
 			return;

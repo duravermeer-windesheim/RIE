@@ -15,10 +15,12 @@ export const dropdownConfigs: { [key: string]: DropdownConfig } = {
 	frequencyA: {
 		label: 'Blootstelling scenario Langs werkvak',
 		code: 'freq_a',
+		required: true,
 	},
 	frequencyB: {
 		label: 'Blootstelling scenario Verkeer omleiden',
 		code: 'freq_b',
+		required: true,
 	}
 }
 
