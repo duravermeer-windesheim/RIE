@@ -16,6 +16,7 @@ app-entry {
 	border-top: 2px solid var(--color-primary);
 }
 
+#input-panel-select-apply,
 #input-panel-select-measure {
 	margin-top: 20px;
 	border-top: 2px solid var(--color-primary);

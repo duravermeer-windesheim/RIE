@@ -33,7 +33,6 @@ export class SheetDataService {
 
 		// Buffer values.
 		let bufferLabel: string = '';
-		let bufferExtras: string[] = [];
 		let bufferGroups: RiskScoreGroupModel[] = [];
 
 		// For each row in the sheet, except the headers.
@@ -46,23 +45,15 @@ export class SheetDataService {
 
 					collections.push({
 						label: bufferLabel,
-						extras: bufferExtras,
 						riskGroups: bufferGroups
 					});
 
 					// Reset groups & extras for new collection.
 					bufferGroups = [];
-					bufferExtras = [];
 				}
 
 				// Set the new title to the buffer.
 				bufferLabel = record[0];
-
-				// If this sheet has them, add the extras.
-				if (record.length >= 4) {
-					bufferExtras = record[3].split(",");
-				}
-
 			} else {
 				// Push the record to the buffer.
 				bufferGroups.push({
@@ -83,7 +74,6 @@ export class SheetDataService {
 		// Add the last buffer, as it's storage didn't get triggered by a new collection.
 		collections.push({
 			label: bufferLabel,
-			extras: bufferExtras,
 			riskGroups: bufferGroups
 		});
 

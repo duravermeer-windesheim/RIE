@@ -1,10 +1,8 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {SharedModule} from '../../shared/shared.module';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
-import {EntryComponent} from '../../shared/entry/entry.component';
 import {DropdownComponent} from '../../shared/dropdown/dropdown.component';
 import {CalculationModel} from '../../models/result.model';
-import {entryConfigs} from '../../config/entries.config';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
@@ -16,7 +14,6 @@ import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 import {MatOption} from '@angular/material/autocomplete';
 import {MatSelect} from '@angular/material/select';
-import {SelectedClockModel} from '../../models/selected-clock.model';
 
 export enum RiskGroup {
 	'Auto mobilist' = 0,
@@ -46,71 +43,50 @@ export enum RiskGroup {
 })
 export class InputPanelComponent implements OnInit {
 
-	@ViewChildren(EntryComponent)
-	private entryChildren!: QueryList<EntryComponent>;
-
 	@ViewChildren(DropdownComponent)
 	private dropdownChildren!: QueryList<DropdownComponent>;
 
 	@ViewChild("measure")
 	private measureElement!: DropdownComponent;
 
-	@ViewChild("risk")
+	@ViewChild("riskGroup")
 	private riskElement!: DropdownComponent;
 
 
 	// Expose configurations and risk-groups to the template.
-	public entries = entryConfigs;
 	public dropdowns = dropdownConfigs;
 	public riskGroup: any = RiskGroup;
 
 
 	// Current items in the dropdowns.
 	public currentMeasureDropdownOptions: DropdownItem[] = [];
-	public currentRiskDropdownOptions: DropdownItem[] = [];
-	public selectedRiskDropdownOption: DropdownItem = defaultDropdownItem;
 
-
-	// Currently selected scenario and riskGroups.
-	public selectedScenarioRiskGroup?: {
-		scenario: 'a' | 'b',
-		riskGroup: RiskGroup
-	}
-
-	// All risks out of the spreadsheets.
-	private spreadsheetRisks: RiskScoreGroupCollectionModel[] = [];
+	// All measures out of the spreadsheets.
 	private spreadsheetMeasures: RiskScoreGroupCollectionModel[] = [];
 
 
 	// In case you want to change the default values in the dropdowns.
 	public defaultDropdownValues = {
-		riskType: defaultDropdownItem,
 		measure: defaultDropdownItem
 	}
 
 	// Different options a frequency can have.
-	public readonly frequencyDropdownItems: DropdownItem[] = [
-		defaultDropdownItem,
-		{ key: 0.5, value: '0.5 | Zeer zelden' },
-		{ key: 1, value: '1 | Zelden (<1% van tijdsduur evenement)' },
-		{ key: 2, value: '2 | Soms, ongewoon (>1%, <10% van de tijdsduur evenement)' },
-		{ key: 3, value: '3 | Af en toe, occasioneel (>10%, <50% van tijdsduur evenement)' },
-		{ key: 6, value: '6 | Regelmatig, frequent (>50%, <90% van tijdsduur evenement)' },
-		{ key: 10, value: '10 | Voortdurend, (>90% van tijdsduur evenement)' },
-	];
-
 	// Combined object with all relevant and known data.
 	public data: CalculationModel = {
-		riskScoreValues: {
-			probability: 0,
-			effect: 0
+		riskGroup: dropdownConfigs['riskGroup'].defaultItems[0],
+		effect: {
+			scenarioA: dropdownConfigs['effectA'].defaultItems[0],
+			scenarioB: dropdownConfigs['effectB'].defaultItems[0],
 		},
-		riskType: undefined,
+		probability: {
+			scenarioA: dropdownConfigs['probabilityA'].defaultItems[0],
+			scenarioB: dropdownConfigs['probabilityB'].defaultItems[0],
+		},
+		frequency: {
+			scenarioA: dropdownConfigs['freqA'].defaultItems[0],
+			scenarioB: dropdownConfigs['freqB'].defaultItems[0],
+		},
 		measures: [],
-		frequencies: {
-			frequencyA: this.frequencyDropdownItems[0],
-			frequencyB: this.frequencyDropdownItems[0],
-		}
 	}
 
 	constructor(private sheetService: SheetDataService) {
@@ -119,20 +95,12 @@ export class InputPanelComponent implements OnInit {
 
 	public async ngOnInit(): Promise<void> {
 		// Retrieve the risk groups out of the spreadsheet.
-		this.spreadsheetRisks = await this.sheetService.getRiskGroups(environment.sheetNames.risks);
 		this.spreadsheetMeasures = await this.sheetService.getRiskGroups(environment.sheetNames.measures);
 
 		// Map the risk groups to dropdown options.
-		this.currentRiskDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetRisks);
 		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
 
-		this.currentRiskDropdownOptions.unshift(defaultDropdownItem);
-
-		// Default risk type is the first one found.
-		this.setRiskType(this.currentRiskDropdownOptions[0]);
-
 		// Set the dropdowns to display the first item.
-		this.riskElement.value = this.currentRiskDropdownOptions[0];
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
@@ -144,7 +112,7 @@ export class InputPanelComponent implements OnInit {
 
 	// Checks if all entries and dropdowns are valid.
 	public allValid(): boolean {
-		for (let entry of [...this.entryChildren, ...this.dropdownChildren]) {
+		for (let entry of this.dropdownChildren) {
 			if (!entry.isValid()) {
 				return false;
 			}
@@ -153,18 +121,15 @@ export class InputPanelComponent implements OnInit {
 		return true;
 	}
 
+	public applyRisk() {
+		console.log(this.data);
+	}
+
 	// Adds the currently selected measure to the data model.
 	public addSelectedMeasure(): void {
 		// Get selected measure.
 		let keyValue = this.measureElement.getKeyValue();
-		let measureIdx: number = keyValue.value.key;
-
-		// Extra's are required to add the measure.
-		if (!this.data.riskType?.extras) {
-			return;
-		}
-
-		let measureLabel = this.data.riskType?.extras[measureIdx];
+		let measureLabel = keyValue.value.value;
 		let measure = this.spreadsheetMeasures.find(measure => measure.label == measureLabel);
 
 		if (measure == null) {
@@ -176,7 +141,7 @@ export class InputPanelComponent implements OnInit {
 		this.reloadData();
 
 		// Remove measure from the dropdown options.
-		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.key != measureIdx)
+		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.value != measureLabel);
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
@@ -203,62 +168,15 @@ export class InputPanelComponent implements OnInit {
 		this.data.measures = [];
 
 		// Grab the measures that are allowed by the current risk type.
-		let measures = this.data.riskType?.extras ?? [];
-		let allowedMeasures = [...this.spreadsheetMeasures].filter(measure =>
-			measures.some(measureLabel => measureLabel.trim() === measure.label)
-		);
-
-		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(allowedMeasures);
+		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
-	// Set a risk score to the riskScoreValues.
-	public setRiskScore(key: "effect" | "probability", value: number): void {
-		this.data.riskScoreValues[key] = value;
-		this.reloadData();
-	}
-
 	// Sets a risk type.
-	public setRiskType(item: DropdownItem): void {
-		this.data.riskType = this.spreadsheetRisks[item.key];
-
-		// Refresh the current selection.
-		if (this.selectedScenarioRiskGroup) {
-			this.selectDetailRiskScore({
-				scenario: this.selectedScenarioRiskGroup.scenario,
-				riskGroup: this.selectedScenarioRiskGroup.riskGroup
-			});
-		}
-
-		this.refreshMeasures();
-		this.reloadData();
-	}
-
-	// Sets the frequency.
-	public setFrequency(scenario: 'a' | 'b', item: DropdownItem): void {
-		if (scenario == 'a') {
-			this.data.frequencies.frequencyA = item;
-		} else {
-			this.data.frequencies.frequencyB = item;
-		}
-		this.reloadData();
-	}
-
-	// selects a scenario and a risk group.
-	public selectDetailRiskScore(selectedClock: SelectedClockModel): void {
-		if (!this.data.riskType) {
-			return
-		}
-
-		// Select the scenario and riskGroup.
-		this.selectedScenarioRiskGroup = selectedClock;
-
-		// Binds the input fields to the new scenario.
-		let idx = selectedClock.riskGroup.valueOf();
-		if (selectedClock.scenario == 'a') {
-			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].scenarioARiskScores;
-		} else if (selectedClock.scenario == 'b') {
-			this.data.riskScoreValues = this.data.riskType.riskGroups[idx].scenarioBRiskScores;
-		}
-	}
+	// public setRiskGroup(item: DropdownItem): void {
+	// 	this.data.riskGroup = item;
+	//
+	// 	this.refreshMeasures();
+	// 	this.reloadData();
+	// }
 }

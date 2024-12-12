@@ -35,9 +35,6 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	@Output()
 	public onRemoveMeasure = new EventEmitter<RiskScoreGroupCollectionModel>();
 
-	@Output()
-	public onSelectClock = new EventEmitter<SelectedClockModel>();
-
 	// Stores the results calculated from the data model.
 	public results!: ResultModel;
 
@@ -89,13 +86,5 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	// Invoke the onRemoveMeasure output event.
 	public removeMeasure(measure: RiskScoreGroupCollectionModel): void {
 		this.onRemoveMeasure.emit(measure);
-	}
-
-	// Invoke the onSelectClock output event.
-	public clickClock(scenario: 'a' | 'b', riskGroup: number): void {
-		this.onSelectClock.emit({
-			scenario: scenario,
-			riskGroup: riskGroup,
-		});
 	}
 }

@@ -15,45 +15,49 @@ export class RiskCalculationService {
 
 	// Applies measures to a new risk-group.
 	private applyMeasuresToRiskGroup(calculationModel: CalculationModel, idx: number): RiskScoreGroupModel | undefined {
-		let group = calculationModel.riskType?.riskGroups[idx];
-		if (!group) {
-			return;
-		}
+		// let group = calculationModel.riskGroup;
+		// if (!group) {
+		// 	return;
+		// }
 
 		calculationModel.measures.forEach(measure => {
 			let measure_group = measure.riskGroups[idx];
 
-			group.scenarioARiskScores.effect += measure_group.scenarioARiskScores.effect;
-			group.scenarioARiskScores.probability += measure_group.scenarioARiskScores.probability;
+			console.log("Applying measure group: ");
+			console.log(measure_group);
 
-			group.scenarioBRiskScores.effect += measure_group.scenarioBRiskScores.effect;
-			group.scenarioBRiskScores.probability += measure_group.scenarioBRiskScores.probability;
+			// group.scenarioARiskScores.effect += measure_group.scenarioARiskScores.effect;
+			// group.scenarioARiskScores.probability += measure_group.scenarioARiskScores.probability;
+			//
+			// group.scenarioBRiskScores.effect += measure_group.scenarioBRiskScores.effect;
+			// group.scenarioBRiskScores.probability += measure_group.scenarioBRiskScores.probability;
 		})
 
-		return group;
+		return undefined;
 	}
 
 	// Calculates the value for a specific risk-group.
 	private calculateRiskNumbersForGroup(calculationModel: CalculationModel,
 		 group: RiskScoreGroupModel | undefined, scenario: 'a' | 'b'): number {
 
-		if (!group) {
-			return -1;
-		}
-
-		let scores!: RiskScoreModel;
-		let frequency!: DropdownItem;
-
-		if (scenario == 'a') {
-			scores = group.scenarioARiskScores;
-			frequency = calculationModel.frequencies.frequencyA;
-		} else if (scenario == 'b') {
-			scores = group.scenarioBRiskScores;
-			frequency = calculationModel.frequencies.frequencyB;
-		}
-
-		let val = scores.effect * scores.probability * frequency.key;
-		return Math.min(MAX_RISK_SCORE, Math.max(0, val));
+		// if (!group) {
+		// 	return -1;
+		// }
+		//
+		// let scores!: RiskScoreModel;
+		// let frequency!: DropdownItem;
+		//
+		// if (scenario == 'a') {
+		// 	scores = group.scenarioARiskScores;
+		// 	frequency = calculationModel.frequencies.frequencyA;
+		// } else if (scenario == 'b') {
+		// 	scores = group.scenarioBRiskScores;
+		// 	frequency = calculationModel.frequencies.frequencyB;
+		// }
+		//
+		// let val = scores.effect * scores.probability * frequency.key;
+		// return Math.min(MAX_RISK_SCORE, Math.max(0, val));
+		return -1;
 	}
 
 
@@ -61,9 +65,9 @@ export class RiskCalculationService {
 		// Deep copy of the calculation model so that the measures' changes don't persist
 		calculationModel = JSON.parse(JSON.stringify(calculationModel));
 
-		if (!calculationModel.riskType) {
-			return null;
-		}
+		// if (!calculationModel.riskType) {
+		// 	return null;
+		// }
 
 		// Grab the groups and apply measures to them.
 		let mot = this.applyMeasuresToRiskGroup(calculationModel, 0);

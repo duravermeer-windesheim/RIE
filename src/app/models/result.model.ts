@@ -3,13 +3,20 @@ import {DropdownItem} from './dropdown.model';
 import {AdviceModel} from './advice.model';
 
 export interface CalculationModel {
-	riskType?: RiskScoreGroupCollectionModel,
-	riskScoreValues: RiskScoreModel,
-	measures: RiskScoreGroupCollectionModel[]
-	frequencies: {
-		frequencyA: DropdownItem,
-		frequencyB: DropdownItem
-	};
+	riskGroup: DropdownItem,
+	frequency: {
+		scenarioA: DropdownItem,
+		scenarioB: DropdownItem,
+	},
+	effect: {
+		scenarioA: DropdownItem,
+		scenarioB: DropdownItem,
+	},
+	probability: {
+		scenarioA: DropdownItem,
+		scenarioB: DropdownItem,
+	},
+	measures: RiskScoreGroupCollectionModel[],
 }
 
 export interface ResultModel {
