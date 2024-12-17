@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng deploy --cname=ehbort.nl --repo https://github.com/duravermeer-windesheim/RIE"
+    "deploy": "ng deploy --cname=rietool-dv.nl --repo https://github.com/duravermeer-windesheim/RIE"
   },
   "private": true,
   "dependencies": {

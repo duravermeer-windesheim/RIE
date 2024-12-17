@@ -2,7 +2,7 @@ import {RiskScoreGroupCollectionModel, RiskScoreGroupModel, RiskScoreModel} from
 import {DropdownItem} from './dropdown.model';
 import {AdviceModel} from './advice.model';
 
-export interface CalculationModel {
+export interface CalculationSetModel {
 	riskGroup: DropdownItem,
 	frequency: {
 		scenarioA: DropdownItem,
@@ -26,10 +26,10 @@ export interface ResultModel {
 }
 
 export interface ResultScenarioModel {
-	motorist: number,
-	residents: number,
-	vkm: number,
-	roadWorker: number,
+	motorist?: number,
+	residents?: number,
+	vkm?: number,
+	roadWorker?: number,
 }
 
 export const emptyScenarioModel: ResultScenarioModel = {

@@ -48,6 +48,10 @@ export class DropdownComponent implements OnInit {
 		return this.value.key !== -1;
 	}
 
+	public onChange(): void {
+		this.onValueChange.emit(this.value);
+	}
+
 	public getKeyValue(): {key: string, value: any} {
 		return {
 			key: this.config.code,
@@ -55,6 +59,9 @@ export class DropdownComponent implements OnInit {
 		};
 	}
 
+	public resetInteraction() {
+		this.hasInteracted = false;
+	}
 
 	protected get displayInvalid(): boolean {
 		return this.hasInteracted && !this.isValid();
@@ -63,6 +70,5 @@ export class DropdownComponent implements OnInit {
 	protected onInteract(): void {
 		this.hasInteracted = true;
 	}
-
 
 }

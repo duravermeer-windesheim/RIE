@@ -1,8 +1,8 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {SharedModule} from '../../shared/shared.module';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {DropdownComponent} from '../../shared/dropdown/dropdown.component';
-import {CalculationModel} from '../../models/result.model';
+import {CalculationSetModel} from '../../models/result.model';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
@@ -14,13 +14,6 @@ import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 import {MatOption} from '@angular/material/autocomplete';
 import {MatSelect} from '@angular/material/select';
-
-export enum RiskGroup {
-	'Auto mobilist' = 0,
-	'Omwonende' = 1,
-	'VKM ploeg' = 2,
-	'Wegwerker' = 3,
-}
 
 @Component({
 	selector: 'app-input-panel',
@@ -52,10 +45,12 @@ export class InputPanelComponent implements OnInit {
 	@ViewChild("riskGroup")
 	private riskElement!: DropdownComponent;
 
+	@Output()
+	public onAddCalculationSet = new EventEmitter<CalculationSetModel>();
+
 
 	// Expose configurations and risk-groups to the template.
 	public dropdowns = dropdownConfigs;
-	public riskGroup: any = RiskGroup;
 
 
 	// Current items in the dropdowns.
@@ -70,10 +65,13 @@ export class InputPanelComponent implements OnInit {
 		measure: defaultDropdownItem
 	}
 
+	public riskGroupDropdowns = dropdownConfigs['riskGroup'].defaultItems;
+
+
 	// Different options a frequency can have.
 	// Combined object with all relevant and known data.
-	public data: CalculationModel = {
-		riskGroup: dropdownConfigs['riskGroup'].defaultItems[0],
+	public data: CalculationSetModel = {
+		riskGroup:this.riskGroupDropdowns[0],
 		effect: {
 			scenarioA: dropdownConfigs['effectA'].defaultItems[0],
 			scenarioB: dropdownConfigs['effectB'].defaultItems[0],
@@ -122,7 +120,35 @@ export class InputPanelComponent implements OnInit {
 	}
 
 	public applyRisk() {
-		console.log(this.data);
+		this.onAddCalculationSet.emit(JSON.parse(JSON.stringify(this.data)));
+
+		// Remove risk from dropdown.
+		this.riskGroupDropdowns = this.riskGroupDropdowns.filter((riskGroup: DropdownItem) => riskGroup != this.data.riskGroup);
+
+		this.reloadDropdowns();
+	}
+
+	private reloadDropdowns() {
+
+		// Fill the correct values.
+		this.data.riskGroup = dropdownConfigs['riskGroup'].defaultItems[0];
+		this.data.effect = {
+			scenarioA: dropdownConfigs['effectA'].defaultItems[0],
+			scenarioB: dropdownConfigs['effectB'].defaultItems[0],
+		};
+		this.data.probability = {
+			scenarioA: dropdownConfigs['probabilityA'].defaultItems[0],
+			scenarioB: dropdownConfigs['probabilityB'].defaultItems[0],
+		};
+		this.data.frequency = {
+			scenarioA: dropdownConfigs['freqA'].defaultItems[0],
+			scenarioB: dropdownConfigs['freqB'].defaultItems[0],
+		};
+
+		// Reset all interactions.
+		this.dropdownChildren.forEach(ddc => {
+			ddc.resetInteraction();
+		})
 	}
 
 	// Adds the currently selected measure to the data model.
@@ -172,11 +198,16 @@ export class InputPanelComponent implements OnInit {
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 
-	// Sets a risk type.
-	// public setRiskGroup(item: DropdownItem): void {
-	// 	this.data.riskGroup = item;
-	//
-	// 	this.refreshMeasures();
-	// 	this.reloadData();
-	// }
+	// Sets a risk group.
+	public setRiskGroup(item: DropdownItem): void {
+		this.data.riskGroup = item;
+
+		this.refreshMeasures();
+		this.reloadData();
+	}
+
+	public setRiskScore(scenario: 'a' | 'b',key: 'frequency' | 'probability' | 'effect', value: DropdownItem) {
+		let scenarioKey: 'scenarioA' | 'scenarioB' = scenario == 'a' ? 'scenarioA' : 'scenarioB';
+		this.data[key][scenarioKey] = value;
+	}
 }

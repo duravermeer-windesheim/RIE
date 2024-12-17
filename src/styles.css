@@ -18,6 +18,10 @@ p, label, button, option, select, input, a, td, tr {
 	font-size: var(--font-size) !important;
 }
 
+hr {
+	color: var(--color-primary);
+}
+
 .gray-button {
 	background-color: var(--color-primary);
 	color: var(--color-secondary);

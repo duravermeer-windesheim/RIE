@@ -135,11 +135,14 @@
 #result-panel-color-block-1 { background-color: #92D050; }
 #result-panel-color-block-2 { background-color: #FFFF00; }
 #result-panel-color-block-3 { background-color: #FFC000; }
-#result-panel-color-block-4 {  	background-color: #FF0000; }
+#result-panel-color-block-4 { background-color: #FF0000; }
+#result-panel-color-block-5 { background-color: #C00000; }
+
+#result-panel-color-block-4,
 #result-panel-color-block-5 {
-	background-color: #C00000;
 	color: #E9E9E9;
 }
+
 
 .result-panel-color-block:after {
 	content: '';

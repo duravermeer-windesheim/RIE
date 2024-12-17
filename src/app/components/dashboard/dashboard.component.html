@@ -10,14 +10,14 @@
 		<app-info-panel></app-info-panel>
 	</app-panel>
 	<app-panel header="Bekende informatie">
-		<app-input-panel></app-input-panel>
+		<app-input-panel
+			(onAddCalculationSet)="this.resultPanel?.addCalculationSet($event)"
+		></app-input-panel>
 	</app-panel>
 	<app-panel header="Resultaat">
 		<app-result-panel
-			*ngIf="inputPanel"
-			[data]="this.inputPanel.data"
-			[allValid]="this.inputPanel.allValid()"
-			(onRemoveMeasure)="this.inputPanel.removeMeasure($event)"
+			[allValid]="this.inputPanel?.allValid() ?? false"
+			(onRemoveMeasure)="this.inputPanel?.removeMeasure($event)"
 		></app-result-panel>
 	</app-panel>
 </main>

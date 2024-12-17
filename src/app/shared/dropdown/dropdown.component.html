@@ -14,6 +14,7 @@
 		(focus)="onInteract()"
 		(change)="onInteract()"
 		[(ngModel)]="this.value"
+		(ngModelChange)="onChange()"
 		[disabled]="this.disabled"
 		[class.no-arrow]="this.items.length <= 1">
 		<option
