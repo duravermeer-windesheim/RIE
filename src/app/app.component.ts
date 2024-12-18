@@ -1,12 +1,6 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ColorService} from './services/color.service';
 import {FontService} from './services/font.service';
-import {fromEvent, mapTo, merge, Observable, of} from 'rxjs';
-import {MatDialog} from '@angular/material/dialog';
-import {SettingsDialogComponent} from './components/settings-dialog/settings-dialog.component';
-import {
-	CalculationOverviewDialogComponent
-} from './components/calculation-overview-dialog/calculation-overview-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -28,5 +22,15 @@ export class AppComponent {
 			alert("Waarschuwing: Er is geen verbinding met het internet. De website zal waarschijnlijk geen " +
 				"verbinding kunnen maken met de databank, en de risico's en maatrelen zullen niet gevuld worden.")
 		}
+
+		console.log("+=================================================================================+\n" +
+			"|                                                                                 |\n" +
+			"|    ____                      __     __                                          |\n" +
+			"|   |  _ \\  _   _  _ __  __ _  \\ \\   / /___  _ __  _ __ ___    ___   ___  _ __    |\n" +
+			"|   | | | || | | || '__|/ _` |  \\ \\ / // _ \\| '__|| '_ ` _ \\  / _ \\ / _ \\| '__|   |\n" +
+			"|   | |_| || |_| || |  | (_| |   \\ V /|  __/| |   | | | | | ||  __/|  __/| |      |\n" +
+			"|   |____/  \\__,_||_|   \\__,_|    \\_/  \\___||_|   |_| |_| |_| \\___| \\___||_|      |\n" +
+			"|                                                                                 |\n" +
+			"+=================================================================================+")
 	}
 }
