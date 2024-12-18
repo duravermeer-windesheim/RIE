@@ -25,19 +25,19 @@ export class AdviceService {
 		let isAnyOfBOverThreshold = false;
 
 		// Check whether any of A's groups is over the threshold.
-		if (resultModel.scenarioAResults.motorist >= environment.advice.maximumForScenarioDecision ||
-			resultModel.scenarioAResults.residents >= environment.advice.maximumForScenarioDecision ||
-			resultModel.scenarioAResults.vkm >= environment.advice.maximumForScenarioDecision ||
-			resultModel.scenarioAResults.roadWorker >= environment.advice.maximumForScenarioDecision
+		if ((resultModel.scenarioAResults?.motorist ?? 0) >= environment.advice.maximumForScenarioDecision ||
+			(resultModel.scenarioAResults?.residents ?? 0) >= environment.advice.maximumForScenarioDecision ||
+			(resultModel.scenarioAResults?.vkm ?? 0) >= environment.advice.maximumForScenarioDecision ||
+			(resultModel.scenarioAResults?.roadWorker ?? 0) >= environment.advice.maximumForScenarioDecision
 		) {
 			isAnyOfAOverThreshold = true;
 		}
 
 		// Check whether any of B's groups is over the threshold.
-		if (resultModel.scenarioBResults.motorist >= environment.advice.maximumForScenarioDecision ||
-			resultModel.scenarioBResults.residents >= environment.advice.maximumForScenarioDecision ||
-			resultModel.scenarioBResults.vkm >= environment.advice.maximumForScenarioDecision ||
-			resultModel.scenarioBResults.roadWorker >= environment.advice.maximumForScenarioDecision
+		if ((resultModel.scenarioBResults?.motorist ?? 0) >= environment.advice.maximumForScenarioDecision ||
+			(resultModel.scenarioBResults?.residents ?? 0) >= environment.advice.maximumForScenarioDecision ||
+			(resultModel.scenarioBResults?.vkm ?? 0) >= environment.advice.maximumForScenarioDecision ||
+			(resultModel.scenarioBResults?.roadWorker ?? 0) >= environment.advice.maximumForScenarioDecision
 		) {
 			isAnyOfBOverThreshold = true;
 		}
@@ -50,11 +50,15 @@ export class AdviceService {
 		}
 
 		// Check the total scores of both a and b.
-		let totalOfScenarioA = resultModel.scenarioAResults.motorist + resultModel.scenarioAResults.residents +
-			resultModel.scenarioAResults.vkm + resultModel.scenarioAResults.roadWorker;
+		let totalOfScenarioA = (resultModel.scenarioAResults.motorist ?? 0) +
+			(resultModel.scenarioAResults.residents ?? 0) +
+			(resultModel.scenarioAResults.vkm ?? 0) +
+			(resultModel.scenarioAResults.roadWorker ?? 0);
 
-		let totalOfScenarioB = resultModel.scenarioBResults.motorist + resultModel.scenarioBResults.residents +
-			resultModel.scenarioBResults.vkm + resultModel.scenarioBResults.roadWorker;
+		let totalOfScenarioB = (resultModel.scenarioBResults.motorist ?? 0) +
+			(resultModel.scenarioBResults.residents ?? 0) +
+			(resultModel.scenarioBResults.vkm ?? 0) +
+			(resultModel.scenarioBResults.roadWorker ?? 0);
 
 		// If both are even, do that.
 		if (totalOfScenarioA == totalOfScenarioB) {
@@ -69,29 +73,29 @@ export class AdviceService {
 		let advices = [];
 
 		// MOTORIST.
-		if (resultModel.scenarioAResults.motorist >= environment.advice.maximumBeforeMeasureRecs ||
-			resultModel.scenarioBResults.motorist >= environment.advice.maximumBeforeMeasureRecs
+		if ((resultModel.scenarioAResults.motorist ?? 0) >= environment.advice.maximumBeforeMeasureRecs ||
+			(resultModel.scenarioBResults.motorist ?? 0) >= environment.advice.maximumBeforeMeasureRecs
 		) {
 			advices.push(...environment.advice.measureRecs.motorist);
 		}
 
 		// RESIDENTS.
-		if (resultModel.scenarioAResults.residents >= environment.advice.maximumBeforeMeasureRecs ||
-			resultModel.scenarioBResults.residents >= environment.advice.maximumBeforeMeasureRecs
+		if ((resultModel.scenarioAResults.residents ?? 0) >= environment.advice.maximumBeforeMeasureRecs ||
+			(resultModel.scenarioBResults.residents ?? 0) >= environment.advice.maximumBeforeMeasureRecs
 		) {
 			advices.push(...environment.advice.measureRecs.residents);
 		}
 
 		// VKM.
-		if (resultModel.scenarioAResults.vkm >= environment.advice.maximumBeforeMeasureRecs ||
-			resultModel.scenarioBResults.vkm >= environment.advice.maximumBeforeMeasureRecs
+		if ((resultModel.scenarioAResults.vkm ?? 0) >= environment.advice.maximumBeforeMeasureRecs ||
+			(resultModel.scenarioBResults.vkm ?? 0) >= environment.advice.maximumBeforeMeasureRecs
 		) {
 			advices.push(...environment.advice.measureRecs.vkm);
 		}
 
 		// ROAD WORKERS.
-		if (resultModel.scenarioAResults.roadWorker >= environment.advice.maximumBeforeMeasureRecs ||
-			resultModel.scenarioBResults.roadWorker >= environment.advice.maximumBeforeMeasureRecs
+		if ((resultModel.scenarioAResults.roadWorker ?? 0) >= environment.advice.maximumBeforeMeasureRecs ||
+			(resultModel.scenarioBResults.roadWorker ?? 0) >= environment.advice.maximumBeforeMeasureRecs
 		) {
 			advices.push(...environment.advice.measureRecs.roadWorker);
 		}

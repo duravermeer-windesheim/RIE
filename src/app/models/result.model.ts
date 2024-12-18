@@ -2,14 +2,21 @@ import {RiskScoreGroupCollectionModel, RiskScoreGroupModel, RiskScoreModel} from
 import {DropdownItem} from './dropdown.model';
 import {AdviceModel} from './advice.model';
 
-export interface CalculationModel {
-	riskType?: RiskScoreGroupCollectionModel,
-	riskScoreValues: RiskScoreModel,
-	measures: RiskScoreGroupCollectionModel[]
-	frequencies: {
-		frequencyA: DropdownItem,
-		frequencyB: DropdownItem
-	};
+export interface CalculationSetModel {
+	riskGroup: DropdownItem,
+	frequency: {
+		scenarioA: DropdownItem,
+		scenarioB: DropdownItem,
+	},
+	effect: {
+		scenarioA: DropdownItem,
+		scenarioB: DropdownItem,
+	},
+	probability: {
+		scenarioA: DropdownItem,
+		scenarioB: DropdownItem,
+	},
+	measures: RiskScoreGroupCollectionModel[],
 }
 
 export interface ResultModel {
@@ -19,10 +26,10 @@ export interface ResultModel {
 }
 
 export interface ResultScenarioModel {
-	motorist: number,
-	residents: number,
-	vkm: number,
-	roadWorker: number,
+	motorist?: number,
+	residents?: number,
+	vkm?: number,
+	roadWorker?: number,
 }
 
 export const emptyScenarioModel: ResultScenarioModel = {

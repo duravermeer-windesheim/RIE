@@ -1,32 +1,30 @@
 
-<div id="result-panel" *ngIf="this.allValid">
+<!--<pre>{{this.calculationSets | json}}</pre>-->
+
+<div id="result-panel" *ngIf="this.calculationSets.length >= 1">
 	<div id="result-panel-clocks">
 		<div id="result-panel-clocks-scenario-a" class="result-panel-clocks-scenario">
 			<p class="result-panel-clocks-scenario-title"><strong>Verkeer omleiden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results.scenarioAResults.motorist"
+					[tick]="this.results.scenarioAResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
-					(click)="clickClock('a', 0)"
 				></app-clock>
 				<app-clock
-					[tick]="this.results.scenarioAResults.residents"
+					[tick]="this.results.scenarioAResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
-					(click)="clickClock('a', 1)"
 				></app-clock>
 				<app-clock
-					[tick]="this.results.scenarioAResults.vkm"
+					[tick]="this.results.scenarioAResults?.vkm ?? 0"
 					[valueVisible]="true"
-					header="VKM Ploeg"
-					(click)="clickClock('a', 2)"
+					header="VKM-Ploeg"
 				></app-clock>
 				<app-clock
-					[tick]="this.results.scenarioAResults.roadWorker"
+					[tick]="this.results.scenarioAResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
-					(click)="clickClock('a', 3)"
 				></app-clock>
 			</div>
 		</div>
@@ -34,28 +32,24 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Langs werkvak</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results.scenarioBResults.motorist"
+					[tick]="this.results.scenarioBResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
-					(click)="clickClock('b', 0)"
 				></app-clock>
 				<app-clock
-					[tick]="this.results.scenarioBResults.residents"
+					[tick]="this.results.scenarioBResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
-					(click)="clickClock('b', 1)"
 				></app-clock>
 				<app-clock
-					[tick]="this.results.scenarioBResults.vkm"
+					[tick]="this.results.scenarioBResults?.vkm ?? 0"
 					[valueVisible]="true"
-					header="VKM Ploeg"
-					(click)="clickClock('b', 2)"
+					header="VKM-Ploeg"
 				></app-clock>
 				<app-clock
-					[tick]="this.results.scenarioBResults.roadWorker"
+					[tick]="this.results.scenarioBResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
-					(click)="clickClock('b', 3)"
 				></app-clock>
 			</div>
 		</div>
@@ -72,33 +66,17 @@
 	<!--Advice-->
 	<p><strong>Advies </strong></p>
 	<p>Op basis van deze risicocijfers raden wij het scenario
-		<span class="emphasized-span" *ngIf="this.results.advice?.advisedScenario == 'a'">Verkeer omleiden aan.</span>
-		<span class="emphasized-span" *ngIf="this.results.advice?.advisedScenario == 'b'">Langs werkvlak aan.</span>
-		<span class="emphasized-span" *ngIf="this.results.advice?.advisedScenario == 'even'">niet aan, gezien de risiconummers precies hetzelfde zijn.</span>
+		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'a' ?? 'even'">Verkeer omleiden aan.</span>
+		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'b' ?? 'even'">Langs werkvlak aan.</span>
+		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'even' ?? 'even'">niet aan, gezien de risiconummers precies hetzelfde zijn.</span>
 	</p>
 	<p *ngIf="results?.advice?.advisedMeasures ? results?.advice?.advisedMeasures?.length : false ">
 		Om het risicocijfer te verlagen kunt u links aanvullende maatregelen selecteren. Wij adviseren:
 		<span class="emphasized-span">
 			{{ this.results.advice?.advisedMeasures?.join(", ") }}
-		</span>. De ernst en waarschijnlijkheid worden hierdoor één niveau verlaagd.
+		</span>. Het effect en waarschijnlijkheid worden hierdoor één niveau verlaagd.
 		Zie knop Onderbouwing voor meer informatie.
 	</p>
-
-	<!--Measurements -->
-	<div id="measures" *ngIf="this.data.measures.length > 0">
-		<table class="result-panel-measure-table">
-			<tr>
-				<th>Maatregel</th>
-				<th></th>
-			</tr>
-			<tr *ngFor="let measure of this.data.measures">
-				<td>{{ measure.label }}</td>
-				<td class="result-panel-measure-buttons-holder">
-					<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>
-				</td>
-			</tr>
-		</table>
-	</div>
 
 	<a
 		id="gray-button-result-panel-overview"
@@ -107,8 +85,8 @@
 	>Bekijk gedetaileerde berekeningen</a>
 
 </div>
-<div id="result-panel-invalid" *ngIf="!this.allValid">
+<div id="result-panel-invalid" *ngIf="calculationSets.length == 0">
 	<app-clock [tick]="0" [permanentlyRotating]="true" style="margin-bottom: 30px"></app-clock>
-	<p>Vul eerst de bekende informatie in.</p>
+	<p>Voeg eerst minimaal <b>1</b> risicogroep toe.</p>
 	<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
 </div>

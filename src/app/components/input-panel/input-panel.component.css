@@ -16,16 +16,44 @@ app-entry {
 	border-top: 2px solid var(--color-primary);
 }
 
+#input-panel-select-apply,
 #input-panel-select-measure {
-	margin-top: 20px;
-	border-top: 2px solid var(--color-primary);
 	display: flex;
 	flex-direction: column;
 	justify-content: right;
+}
+
+.input-panel-risk-scores {
 }
 
 #gray-button-input-panel-measure {
 	width: 150px;
 	margin-top: -20px;
 	align-self: flex-end;
+}
+
+#gray-button-input-panel-apply {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#gray-button-input-panel-measure,
+#gray-button-input-panel-apply {
+	border: none;
+}
+
+
+.input-panel-risk-scores-set-dropdowns {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+.input-panel-risk-scores-set-dropdowns app-dropdown {
+	width: 200px !important;
+}
+
+.input-panel-risk-scores-set p {
+	padding: 0;
+	text-align: center;
+	margin: 0 0 -10px;
 }

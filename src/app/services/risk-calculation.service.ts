@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {CalculationModel, ResultModel} from '../models/result.model';
+import {CalculationSetModel, ResultModel, ResultScenarioModel} from '../models/result.model';
 import {RiskScoreGroupModel, RiskScoreModel} from '../models/risk.model';
 import {DropdownItem} from '../models/dropdown.model';
 import {AdviceService} from './advice.service';
@@ -14,78 +14,67 @@ export class RiskCalculationService {
 	constructor(private adviceService: AdviceService) { }
 
 	// Applies measures to a new risk-group.
-	private applyMeasuresToRiskGroup(calculationModel: CalculationModel, idx: number): RiskScoreGroupModel | undefined {
-		let group = calculationModel.riskType?.riskGroups[idx];
-		if (!group) {
-			return;
-		}
-
-		calculationModel.measures.forEach(measure => {
+	private applyMeasureToCalculationSet(calculationSet: CalculationSetModel): CalculationSetModel {
+		calculationSet.measures.forEach(measure => {
+			let idx = calculationSet.riskGroup.key - 1;
 			let measure_group = measure.riskGroups[idx];
 
-			group.scenarioARiskScores.effect += measure_group.scenarioARiskScores.effect;
-			group.scenarioARiskScores.probability += measure_group.scenarioARiskScores.probability;
+			calculationSet.effect.scenarioA.key += measure_group.scenarioARiskScores.effect;
+			calculationSet.effect.scenarioB.key += measure_group.scenarioBRiskScores.effect;
 
-			group.scenarioBRiskScores.effect += measure_group.scenarioBRiskScores.effect;
-			group.scenarioBRiskScores.probability += measure_group.scenarioBRiskScores.probability;
-		})
+			calculationSet.frequency.scenarioA.key += measure_group.scenarioARiskScores.frequency;
+			calculationSet.frequency.scenarioB.key += measure_group.scenarioBRiskScores.frequency;
 
-		return group;
+			calculationSet.probability.scenarioA.key += measure_group.scenarioARiskScores.probability;
+			calculationSet.probability.scenarioB.key += measure_group.scenarioBRiskScores.probability;
+		});
+
+		return calculationSet;
 	}
 
-	// Calculates the value for a specific risk-group.
-	private calculateRiskNumbersForGroup(calculationModel: CalculationModel,
-		 group: RiskScoreGroupModel | undefined, scenario: 'a' | 'b'): number {
-
-		if (!group) {
-			return -1;
-		}
-
-		let scores!: RiskScoreModel;
-		let frequency!: DropdownItem;
-
-		if (scenario == 'a') {
-			scores = group.scenarioARiskScores;
-			frequency = calculationModel.frequencies.frequencyA;
-		} else if (scenario == 'b') {
-			scores = group.scenarioBRiskScores;
-			frequency = calculationModel.frequencies.frequencyB;
-		}
-
-		let val = scores.effect * scores.probability * frequency.key;
-		return Math.min(MAX_RISK_SCORE, Math.max(0, val));
-	}
-
-
-	public getRiskNumbers(calculationModel: CalculationModel): ResultModel | null {
+	public getRiskNumbers(calculationSetModels: CalculationSetModel[]): ResultModel | null {
 		// Deep copy of the calculation model so that the measures' changes don't persist
-		calculationModel = JSON.parse(JSON.stringify(calculationModel));
+		calculationSetModels = JSON.parse(JSON.stringify(calculationSetModels));
 
-		if (!calculationModel.riskType) {
-			return null;
-		}
-
-		// Grab the groups and apply measures to them.
-		let mot = this.applyMeasuresToRiskGroup(calculationModel, 0);
-		let res = this.applyMeasuresToRiskGroup(calculationModel, 1);
-		let vkm = this.applyMeasuresToRiskGroup(calculationModel, 2);
-		let row = this.applyMeasuresToRiskGroup(calculationModel, 3);
-
-		// Get the results.
-		let results = {
-			scenarioAResults: {
-				motorist: this.calculateRiskNumbersForGroup(calculationModel, mot, 'a'),
-				residents: this.calculateRiskNumbersForGroup(calculationModel, res, 'a'),
-				vkm: this.calculateRiskNumbersForGroup(calculationModel, vkm, 'a'),
-				roadWorker: this.calculateRiskNumbersForGroup(calculationModel, row, 'a'),
-			},
-			scenarioBResults: {
-				motorist: this.calculateRiskNumbersForGroup(calculationModel, mot, 'b'),
-				residents: this.calculateRiskNumbersForGroup(calculationModel, res, 'b'),
-				vkm: this.calculateRiskNumbersForGroup(calculationModel, vkm, 'b'),
-				roadWorker: this.calculateRiskNumbersForGroup(calculationModel, row, 'b'),
-			}
+		let results: ResultModel = {
+			scenarioAResults: { },
+			scenarioBResults: { },
 		};
+
+		calculationSetModels.forEach(calculationSet => {
+			calculationSet = this.applyMeasureToCalculationSet(calculationSet);
+
+			let group: keyof ResultScenarioModel  = 'motorist';
+			switch (calculationSet.riskGroup.key) {
+				case 1:
+					group = "motorist";
+					break;
+				case 2:
+					group = "residents";
+					break;
+				case 3:
+					group = "vkm"
+					break;
+				case 4:
+					group = "roadWorker"
+					break;
+			}
+
+			// Calculate values.
+			results.scenarioAResults[group] = Math.max(Math.min((
+				Math.floor((
+					calculationSet.effect.scenarioA.key *
+					calculationSet.probability.scenarioA.key *
+					calculationSet.frequency.scenarioA.key) * 100) / 100
+			), MAX_RISK_SCORE), 0);
+
+			results.scenarioBResults[group] = Math.max(Math.min((
+				Math.floor((
+					calculationSet.effect.scenarioB.key *
+					calculationSet.probability.scenarioB.key *
+					calculationSet.frequency.scenarioB.key) * 100) / 100
+			), MAX_RISK_SCORE), 0);
+		});
 
 		// Combine the results and include the advice.
 		return {
@@ -93,6 +82,5 @@ export class RiskCalculationService {
 			scenarioBResults: results.scenarioBResults,
 			advice: this.adviceService.getAdvice(results)
 		};
-
 	}
 }

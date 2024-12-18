@@ -1,19 +1,21 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {defaultDropdownItem, DropdownConfig, DropdownItem} from '../../models/dropdown.model';
-import {BaseInputComponent} from '../base-input.component';
 
 @Component({
 	selector: 'app-dropdown',
 	templateUrl: './dropdown.component.html',
 	styleUrl: './dropdown.component.css'
 })
-export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
+export class DropdownComponent implements OnInit {
 
 	@Input({required: true})
 	public value!: DropdownItem;
 
 	@Input({required: true})
 	public items!: DropdownItem[];
+
+	@Input({ required: true })
+	public config!: DropdownConfig;
 
 	@Input()
 	public disabled = false;
@@ -24,7 +26,9 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	@Output()
 	public onValueChange = new EventEmitter<DropdownItem>();
 
-	init(): void {
+	protected hasInteracted: boolean = false;
+
+	ngOnInit(): void {
 		if (this.config.addDefaultEmptyOption) {
 			this.items.unshift(defaultDropdownItem);
 		}
@@ -37,14 +41,34 @@ export class DropdownComponent extends BaseInputComponent<DropdownConfig> {
 	}
 
 	public isValid(): boolean {
-		if (!this.config.required) {
+		if (!this.config.required && this.value.key !== -1) {
 			return true;
 		}
 
 		return this.value.key !== -1;
 	}
 
-	onChange(): void {
+	public onChange(): void {
 		this.onValueChange.emit(this.value);
 	}
+
+	public getKeyValue(): {key: string, value: any} {
+		return {
+			key: this.config.code,
+			value: this.value
+		};
+	}
+
+	public resetInteraction() {
+		this.hasInteracted = false;
+	}
+
+	protected get displayInvalid(): boolean {
+		return this.hasInteracted && !this.isValid();
+	}
+
+	protected onInteract(): void {
+		this.hasInteracted = true;
+	}
+
 }

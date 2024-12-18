@@ -18,6 +18,10 @@ p, label, button, option, select, input, a, td, tr {
 	font-size: var(--font-size) !important;
 }
 
+hr {
+	color: var(--color-primary);
+}
+
 .gray-button {
 	background-color: var(--color-primary);
 	color: var(--color-secondary);
@@ -27,4 +31,8 @@ p, label, button, option, select, input, a, td, tr {
 	text-align: center;
 	text-decoration: none;
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+}
+.gray-button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }

@@ -4,6 +4,7 @@ export interface DropdownConfig {
 	required?: boolean,
 	validationMessage?: string,
 	addDefaultEmptyOption?: boolean,
+	defaultItems: DropdownItem[];
 }
 
 export interface DropdownItem {

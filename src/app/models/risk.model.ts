@@ -1,7 +1,6 @@
 
 export interface RiskScoreGroupCollectionModel  {
 	label: string,
-	extras?: string[],
 	riskGroups: RiskScoreGroupModel[]
 }
 
@@ -13,5 +12,6 @@ export interface RiskScoreGroupModel {
 
 export interface RiskScoreModel {
 	effect: number,
+	frequency: number,
 	probability: number,
 }

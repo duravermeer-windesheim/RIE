@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output,	SimpleChanges} from '@angular/core';
 import {DecimalPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {CalculationModel, emptyScenarioModel, ResultModel} from '../../models/result.model';
+import {CalculationSetModel, emptyScenarioModel, ResultModel} from '../../models/result.model';
 import {SharedModule} from '../../shared/shared.module';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
 import {RiskCalculationService} from '../../services/risk-calculation.service';
-import {SelectedClockModel} from '../../models/selected-clock.model';
 import {AdviceService} from '../../services/advice.service';
 import {CalculationOverviewDialogComponent} from '../calculation-overview-dialog/calculation-overview-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -26,34 +25,23 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class ResultPanelComponent implements OnInit, OnChanges {
 
-	@Input({required: true})
-	public data!: CalculationModel;
-
-	@Input({required: true})
-	public allValid!: boolean;
-
-	@Output()
-	public onRemoveMeasure = new EventEmitter<RiskScoreGroupCollectionModel>();
-
-	@Output()
-	public onSelectClock = new EventEmitter<SelectedClockModel>();
+	public calculationSets: CalculationSetModel[] = [];
 
 	// Stores the results calculated from the data model.
 	public results!: ResultModel;
 
-	constructor(private riskCalculationService: RiskCalculationService,
-				private adviseService: AdviceService,
-				private dialog: MatDialog) {
+	constructor(
+		private riskCalculationService: RiskCalculationService,
+		private adviseService: AdviceService,
+		private dialog: MatDialog) {
 	}
 
 	public ngOnInit(): void {
-		if (this.allValid) {
-			this.results = this.getResults();
-		}
+		this.results = this.getResults();
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (this.allValid && changes['data']) {
+		if (this.calculationSets.length >= 1 && changes['data']) {
 			this.results = this.getResults();
 		}
 	}
@@ -64,7 +52,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 			maxWidth: 'none',
 			panelClass: 'dialog-container',
 			data: {
-				calculation: this.data
+				calculationSets: this.calculationSets
 			}
 		});
 	}
@@ -72,7 +60,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	// Calculates the results.
 	public getResults(): ResultModel {
 		// Get results.
-		let results = this.riskCalculationService.getRiskNumbers(this.data);
+		let results = this.riskCalculationService.getRiskNumbers(this.calculationSets);
 
 		// If results couldn't be calculated, return empty results.
 		if (!results) {
@@ -86,16 +74,8 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 		return results;
 	}
 
-	// Invoke the onRemoveMeasure output event.
-	public removeMeasure(measure: RiskScoreGroupCollectionModel): void {
-		this.onRemoveMeasure.emit(measure);
-	}
-
-	// Invoke the onSelectClock output event.
-	public clickClock(scenario: 'a' | 'b', riskGroup: number): void {
-		this.onSelectClock.emit({
-			scenario: scenario,
-			riskGroup: riskGroup,
-		});
+	public addCalculationSet(calculationSet: CalculationSetModel) {
+		this.calculationSets.push(calculationSet);
+		this.results = this.getResults();
 	}
 }
