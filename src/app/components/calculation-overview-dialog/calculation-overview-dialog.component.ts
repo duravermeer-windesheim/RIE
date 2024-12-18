@@ -92,14 +92,14 @@ export class CalculationOverviewDialogComponent implements OnInit {
 				effect: effect_a + (effects.a.effect == 0 ? "" : "(" + this.signNumber(effects.a.effect) + ")" ),
 				probability: probability_a + (effects.a.probability == 0 ? "" : "(" + this.signNumber(effects.a.probability) + ")" ),
 				frequency: frequency_a + (effects.a.frequency == 0 ? "" : "(" + this.signNumber(effects.a.frequency) + ")" ),
-				formula: (effect_a + effects.a.effect) + " × " + (frequency_a + effects.a.frequency) + " × " + (probability_a + effects.a.probability),
+				formula: (probability_a + effects.a.probability) + " × " + (frequency_a + effects.a.frequency) + " × " + (effect_a + effects.a.effect),
 				result: result_a + ""
 			}, {
 				label: "Scenario B - " + calculationSet.riskGroup.value,
 				effect: effect_b + (effects.b.effect == 0 ? "" : "(" + this.signNumber(effects.b.effect) + ")" ),
 				probability: probability_b + (effects.b.probability == 0 ? "" : "(" + this.signNumber(effects.b.probability) + ")" ),
 				frequency: frequency_b + (effects.b.frequency == 0 ? "" : "(" + this.signNumber(effects.b.frequency) + ")" ),
-				formula: (effect_b + effects.b.effect) + " × " + (frequency_b + effects.b.frequency) + " × " + (probability_b + effects.b.probability),
+				formula: (probability_b + effects.b.probability) + " × " + (frequency_b + effects.b.frequency) + " × " + (effect_b + effects.b.effect),
 				result: result_b + ""
 			});
 		});
