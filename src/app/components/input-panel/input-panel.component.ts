@@ -199,4 +199,18 @@ export class InputPanelComponent implements OnInit {
 		let scenarioKey: 'scenarioA' | 'scenarioB' = scenario == 'a' ? 'scenarioA' : 'scenarioB';
 		this.data[key][scenarioKey] = value;
 	}
+
+	removeMeasure(measure: RiskScoreGroupCollectionModel) {
+		// Remove the measure.
+		this.data.measures = this.data.measures.filter(m => m.label != measure.label);
+		this.reloadData();
+
+		// Add measure back to the dropdown options.
+		this.currentMeasureDropdownOptions.push({
+			key: this.spreadsheetMeasures.indexOf(measure),
+			value: measure.label
+		});
+		this.measureElement.value = this.currentMeasureDropdownOptions[0];
+
+	}
 }

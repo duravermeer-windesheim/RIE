@@ -89,8 +89,11 @@
 		(click)="this.addSelectedMeasure()"
 		*ngIf="this.currentMeasureDropdownOptions.length > 0"
 	>Pas maatregel toe</button>
-	<ul>
-		<li *ngFor="let measure of this.data.measures">{{ measure.label }}</li>
-	</ul>
+	<table>
+		<tr *ngFor="let measure of this.data.measures">
+			<td class="input-panel-measure-delete-button" (click)="removeMeasure(measure)">×</td>
+			<td>{{ measure.label }}</td>
+		</tr>
+	</table>
 </div>
 
