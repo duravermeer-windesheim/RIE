@@ -4,6 +4,3 @@ export interface SettingsModel {
 	colorSecondary?: string,
 	fontSize?: number
 }
-
-
-
