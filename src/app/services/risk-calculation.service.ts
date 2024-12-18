@@ -22,6 +22,9 @@ export class RiskCalculationService {
 			calculationSet.effect.scenarioA.key += measure_group.scenarioARiskScores.effect;
 			calculationSet.effect.scenarioB.key += measure_group.scenarioBRiskScores.effect;
 
+			calculationSet.frequency.scenarioA.key += measure_group.scenarioARiskScores.frequency;
+			calculationSet.frequency.scenarioB.key += measure_group.scenarioBRiskScores.frequency;
+
 			calculationSet.probability.scenarioA.key += measure_group.scenarioARiskScores.probability;
 			calculationSet.probability.scenarioB.key += measure_group.scenarioBRiskScores.probability;
 		});
@@ -42,13 +45,12 @@ export class RiskCalculationService {
 			calculationSet = this.applyMeasureToCalculationSet(calculationSet);
 
 			let group: keyof ResultScenarioModel  = 'motorist';
-
 			switch (calculationSet.riskGroup.key) {
 				case 1:
-					group = 'motorist';
+					group = "motorist";
 					break;
 				case 2:
-					group = 'residents';
+					group = "residents";
 					break;
 				case 3:
 					group = "vkm"
@@ -58,15 +60,20 @@ export class RiskCalculationService {
 					break;
 			}
 
-			results.scenarioAResults[group] = Math.round(
-				calculationSet.effect.scenarioA.key *
-				calculationSet.probability.scenarioA.key *
-				calculationSet.frequency.scenarioA.key);
+			// Calculate values.
+			results.scenarioAResults[group] = Math.max(Math.min((
+				Math.floor((
+					calculationSet.effect.scenarioA.key *
+					calculationSet.probability.scenarioA.key *
+					calculationSet.frequency.scenarioA.key) * 100) / 100
+			), MAX_RISK_SCORE), 0);
 
-			results.scenarioBResults[group] = Math.round(
-				calculationSet.effect.scenarioB.key *
-				calculationSet.probability.scenarioB.key *
-				calculationSet.frequency.scenarioB.key);
+			results.scenarioBResults[group] = Math.max(Math.min((
+				Math.floor((
+					calculationSet.effect.scenarioB.key *
+					calculationSet.probability.scenarioB.key *
+					calculationSet.frequency.scenarioB.key) * 100) / 100
+			), MAX_RISK_SCORE), 0);
 		});
 
 		// Combine the results and include the advice.
@@ -75,6 +82,5 @@ export class RiskCalculationService {
 			scenarioBResults: results.scenarioBResults,
 			advice: this.adviceService.getAdvice(results)
 		};
-
 	}
 }

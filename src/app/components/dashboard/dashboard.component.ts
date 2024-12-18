@@ -26,9 +26,6 @@ import {SettingsDialogComponent} from '../settings-dialog/settings-dialog.compon
 })
 export class DashboardComponent implements AfterViewInit {
 
-	@ViewChild(InputPanelComponent)
-	public inputPanel?: InputPanelComponent;
-
 	@ViewChild(ResultPanelComponent)
 	public resultPanel?: ResultPanelComponent;
 
@@ -42,5 +39,8 @@ export class DashboardComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
+		if (this.resultPanel) {
+			this.cdref.detectChanges();
+		}
 	}
 }

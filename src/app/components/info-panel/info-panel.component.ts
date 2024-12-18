@@ -16,4 +16,8 @@ export class InfoPanelComponent {
 	public getBankUri(): string {
 		return "https://docs.google.com/spreadsheets/d/" + environment.googleSpreadsheet.googleSpreadsheetId + "/edit";
 	}
+
+	public getSubstantiationUri(): string {
+		return "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+	}
 }

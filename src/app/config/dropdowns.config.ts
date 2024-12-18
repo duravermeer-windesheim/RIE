@@ -47,7 +47,7 @@ export const dropdownConfigs: { [key: string]: DropdownConfig } = {
 		defaultItems: riskGroupDropdownItems
 	},
 	measure: {
-		label: 'Maatregel',
+		label: 'Optioneel: Maatregel',
 		code: 'measure',
 		addDefaultEmptyOption: true,
 		defaultItems: [],

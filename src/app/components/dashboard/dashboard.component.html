@@ -3,7 +3,7 @@
 	<h1>Dura Vermeer RI&E</h1>
 </header>
 
-<mat-icon (click)="openSettings()">menu</mat-icon>
+<mat-icon (click)="this.openSettings()">menu</mat-icon>
 
 <main id="panels">
 	<app-panel header="De RI&E tool">
@@ -15,9 +15,6 @@
 		></app-input-panel>
 	</app-panel>
 	<app-panel header="Resultaat">
-		<app-result-panel
-			[allValid]="this.inputPanel?.allValid() ?? false"
-			(onRemoveMeasure)="this.inputPanel?.removeMeasure($event)"
-		></app-result-panel>
+		<app-result-panel></app-result-panel>
 	</app-panel>
 </main>

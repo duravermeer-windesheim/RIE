@@ -59,12 +59,14 @@ export class SheetDataService {
 				bufferGroups.push({
 					group: record[0],
 					scenarioARiskScores: {
-						effect: this.parseScore(record[1]),
-						probability: this.parseScore(record[2]),
+						probability: this.parseScore(record[1]),
+						frequency: this.parseScore(record[2]),
+						effect: this.parseScore(record[3]),
 					},
 					scenarioBRiskScores: {
-						effect: this.parseScore(record[3]),
 						probability: this.parseScore(record[4]),
+						frequency: this.parseScore(record[5]),
+						effect: this.parseScore(record[6]),
 					}
 				});
 			}

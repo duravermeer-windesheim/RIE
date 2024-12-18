@@ -25,56 +25,152 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class ResultPanelComponent implements OnInit, OnChanges {
 
-	@Input({required: true})
-	public allValid!: boolean;
-
-	@Output()
-	public onRemoveMeasure = new EventEmitter<RiskScoreGroupCollectionModel>();
-
-	public calculationSets: CalculationSetModel[] = [{
-		"riskGroup": {
-			"key": 3,
-			"value": "VKM-ploeg"
-		},
-		"effect": {
-			"scenarioA": {
-				"key": 15,
-				"value": "15 | Eén dode"
-			},
-			"scenarioB": {
-				"key": 40,
-				"value": "40 | Meerdere doden"
-			}
-		},
-		"probability": {
-			"scenarioA": {
-				"key": 0.2,
-				"value": "0.2 | Praktisch onmogelijk (nooit van gehoord binnen bedrijfstak en branche)"
-			},
-			"scenarioB": {
-				"key": 1,
-				"value": "1 | Onwaarschijnlijk, maar mogelijk in grensgeval (in laatste 10 jaar niet binnen het bedrijf voorgekomen)"
-			}
-		},
-		"frequency": {
-			"scenarioA": {
-				"key": 3,
-				"value": "3 | Af en toe (wekelijks)"
-			},
-			"scenarioB": {
-				"key": 6,
-				"value": "6 | Regelmatig (dagelijks)"
-			}
-		},
-		"measures": []
-	}];
+	public calculationSets: CalculationSetModel[] = [
+		// {
+		// 	"riskGroup": {
+		// 		"key": 3,
+		// 		"value": "VKM-ploeg"
+		// 	},
+		// 	"effect": {
+		// 		"scenarioA": {
+		// 			"key": 40,
+		// 			"value": "40 | Meerdere doden"
+		// 		},
+		// 		"scenarioB": {
+		// 			"key": 15,
+		// 			"value": "15 | Eén dode"
+		// 		}
+		// 	},
+		// 	"probability": {
+		// 		"scenarioA": {
+		// 			"key": 0.5,
+		// 			"value": "0.5 | Denkbaar, maar onwaarschijnlijk (wel van gehoord binnen bedrijfstak en branche, maar niet binnen het bedrijf zelf)"
+		// 		},
+		// 		"scenarioB": {
+		// 			"key": 6,
+		// 			"value": "6 | Zeer wel mogelijk (enkele keren per jaar binnen het bedrijf gebeurd)"
+		// 		}
+		// 	},
+		// 	"frequency": {
+		// 		"scenarioA": {
+		// 			"key": 6,
+		// 			"value": "6 | Regelmatig (dagelijks)"
+		// 		},
+		// 		"scenarioB": {
+		// 			"key": 10,
+		// 			"value": "10 | Voortdurend"
+		// 		}
+		// 	},
+		// 	"measures": [
+		// 		{
+		// 			"label": "Drempels neerleggen",
+		// 			"riskGroups": [
+		// 				{
+		// 					"group": "Automobilist",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					}
+		// 				},
+		// 				{
+		// 					"group": "Omwonende",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					}
+		// 				},
+		// 				{
+		// 					"group": "VKM ploeg",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 15,
+		// 						"probability": 6
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 15,
+		// 						"probability": -8
+		// 					}
+		// 				},
+		// 				{
+		// 					"group": "Wegwerker",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					}
+		// 				}
+		// 			]
+		// 		},
+		// 		{
+		// 			"label": "Snelheid verlagen",
+		// 			"riskGroups": [
+		// 				{
+		// 					"group": "Automobilist",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					}
+		// 				},
+		// 				{
+		// 					"group": "Omwonende",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					}
+		// 				},
+		// 				{
+		// 					"group": "VKM ploeg",
+		// 					"scenarioARiskScores": {
+		// 						"effect": -4,
+		// 						"probability": -2
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": -3,
+		// 						"probability": -1
+		// 					}
+		// 				},
+		// 				{
+		// 					"group": "Wegwerker",
+		// 					"scenarioARiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					},
+		// 					"scenarioBRiskScores": {
+		// 						"effect": 0,
+		// 						"probability": 0
+		// 					}
+		// 				}
+		// 			]
+		// 		}
+		// 	]
+		// }
+	];
 
 	// Stores the results calculated from the data model.
 	public results!: ResultModel;
 
-	constructor(private riskCalculationService: RiskCalculationService,
-				private adviseService: AdviceService,
-				private dialog: MatDialog) {
+	constructor(
+		private riskCalculationService: RiskCalculationService,
+		private adviseService: AdviceService,
+		private dialog: MatDialog) {
 	}
 
 	public ngOnInit(): void {
@@ -113,11 +209,6 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 		}
 
 		return results;
-	}
-
-	// Invoke the onRemoveMeasure output event.
-	public removeMeasure(measure: RiskScoreGroupCollectionModel): void {
-		this.onRemoveMeasure.emit(measure);
 	}
 
 	public addCalculationSet(calculationSet: CalculationSetModel) {

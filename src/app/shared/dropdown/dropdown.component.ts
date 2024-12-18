@@ -41,7 +41,7 @@ export class DropdownComponent implements OnInit {
 	}
 
 	public isValid(): boolean {
-		if (!this.config.required) {
+		if (!this.config.required && this.value.key !== -1) {
 			return true;
 		}
 

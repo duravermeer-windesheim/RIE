@@ -4,31 +4,33 @@
 	worden, of dat alleen het wegvlak afgekadert kan worden.
 </p>
 <p>
-	Dit wordt gedaan door eerst een risico te selecteren, en vervolgens
-	aan te geven wat de bloostelling van het verkeer zou zijn bij beide
-	scenario's. Op basis van de Fine Kinney & Wiruth methode worden dan
-	risicocijfers berekent per risicogroep.
+	Dit wordt gedaan door eerst een risicogroep te selecteren. Daarmee
+	worden vervolgens de waarschijnlijkheid, blootstelling, en het effect
+	ingevuld voor beide situaties ingevuld, op basis van de Fine Kinney &
+	Wiruth methode. Hieruit worden de risiccijfers vervolgens berekend.
 </p>
 <p>
-	Als alles is ingevuld, staan bij de resultaten 8 indicators van de risicocijfers.
-	Deze cijfers komen overeen met de Fine Kinney & Wiruth methode, en geven dus een
-	indicatie van hoe de verschillende risicogroepen reageren op risico's. Als de cijfers
-	niet acceptabel zijn kunnen er ook maatregelen worden toegevoegd, om deze cijfers aan te passen.
+	Als alles is ingevuld, drukt u op de knop "Voeg toe", waarna de berekening
+	gemaakt wordt voor de risicogroep. Dit is dan te zien bij de resultaten, waar
+	het cijfer overeenkomt met de Fine Kinney & Wiruth methode. Als de cijfers
+	niet acceptabel zijn kunnen er ook maatregelen worden toegevoegd, om deze
+	cijfers aan te passen.
 </p>
 <p>
-	Maar de gebruikte data is natuurlijk niet onveranderlijk. Zowel de lijst met maatregelen, als de type risico's zijn
-	gedefinieerd in de databank. Deze databank is een Google Spreadsheet waarin alles kan worden aangepast indien
-	nodig. Wees echter voorzichtig met het aanpassen van deze data, gezien deze aanpassingen gelden voor iedereen
-	die deze tool wilt gebruiken.
+	Maar de gebruikte data is natuurlijk niet onveranderlijk. De lijst met alle
+	maatregelen, en hun waarden zijn gedefinieerd in de databank. Deze databank is
+	een Google Spreadsheet waarin alles kan worden aangepast indien nodig. Wees
+	echter voorzichtig met het aanpassen van deze data, gezien deze aanpassingen gelden
+	voor iedereen die van deze tool gebruik maakt.
 </p>
 <div id="info-panel-buttons">
-	<a class="gray-button" id="gray-button-info-panel-databank" [href]="getBankUri()" target="_blank">
+	<a class="gray-button" id="gray-button-info-panel-databank" [href]="this.getBankUri()" target="_blank">
 		Databank
 	</a>
 	<a class="gray-button" id="gray-button-info-panel-manual" href="/docs/Manual.pdf" target="_blank">
 		Handleiding
 	</a>
-	<a class="gray-button" id="gray-button-info-panel-substantiation" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+	<a class="gray-button" id="gray-button-info-panel-substantiation" [href]="this.getSubstantiationUri()" target="_blank">
 		Onderbouwing
 	</a>
 </div>

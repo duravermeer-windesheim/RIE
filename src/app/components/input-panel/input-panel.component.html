@@ -68,7 +68,8 @@
 	<button
 		id="gray-button-input-panel-apply"
 		class="gray-button"
-		(click)="applyRisk()"
+		[disabled]="!allValid()"
+		(click)="this.applyRisk()"
 	>Voeg toe</button>
 </div>
 
@@ -85,8 +86,11 @@
 	<button
 		id="gray-button-input-panel-measure"
 		class="gray-button"
-		(click)="addSelectedMeasure()"
+		(click)="this.addSelectedMeasure()"
 		*ngIf="this.currentMeasureDropdownOptions.length > 0"
 	>Pas maatregel toe</button>
+	<ul>
+		<li *ngFor="let measure of this.data.measures">{{ measure.label }}</li>
+	</ul>
 </div>
 

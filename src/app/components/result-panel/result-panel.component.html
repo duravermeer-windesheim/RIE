@@ -7,22 +7,22 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Verkeer omleiden</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results?.scenarioAResults?.motorist ?? 0"
+					[tick]="this.results.scenarioAResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
 				></app-clock>
 				<app-clock
-					[tick]="this.results?.scenarioAResults?.residents ?? 0"
+					[tick]="this.results.scenarioAResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
 				></app-clock>
 				<app-clock
-					[tick]="this.results?.scenarioAResults?.vkm ?? 0"
+					[tick]="this.results.scenarioAResults?.vkm ?? 0"
 					[valueVisible]="true"
 					header="VKM-Ploeg"
 				></app-clock>
 				<app-clock
-					[tick]="this.results?.scenarioAResults?.roadWorker ?? 0"
+					[tick]="this.results.scenarioAResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
 				></app-clock>
@@ -32,22 +32,22 @@
 			<p class="result-panel-clocks-scenario-title"><strong>Langs werkvak</strong></p>
 			<div class="result-panel-clocks-holder">
 				<app-clock
-					[tick]="this.results?.scenarioBResults?.motorist ?? 0"
+					[tick]="this.results.scenarioBResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
 				></app-clock>
 				<app-clock
-					[tick]="this.results?.scenarioBResults?.residents ?? 0"
+					[tick]="this.results.scenarioBResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
 				></app-clock>
 				<app-clock
-					[tick]="this.results?.scenarioBResults?.vkm ?? 0"
+					[tick]="this.results.scenarioBResults?.vkm ?? 0"
 					[valueVisible]="true"
 					header="VKM-Ploeg"
 				></app-clock>
 				<app-clock
-					[tick]="this.results?.scenarioBResults?.roadWorker ?? 0"
+					[tick]="this.results.scenarioBResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
 				></app-clock>
@@ -74,25 +74,9 @@
 		Om het risicocijfer te verlagen kunt u links aanvullende maatregelen selecteren. Wij adviseren:
 		<span class="emphasized-span">
 			{{ this.results.advice?.advisedMeasures?.join(", ") }}
-		</span>. De ernst en waarschijnlijkheid worden hierdoor één niveau verlaagd.
+		</span>. Het effect en waarschijnlijkheid worden hierdoor één niveau verlaagd.
 		Zie knop Onderbouwing voor meer informatie.
 	</p>
-
-	<!--Measurements -->
-<!--	<div id="measures" *ngIf="this.calculationSets.measures.length > 0">-->
-<!--		<table class="result-panel-measure-table">-->
-<!--			<tr>-->
-<!--				<th>Maatregel</th>-->
-<!--				<th></th>-->
-<!--			</tr>-->
-<!--			<tr *ngFor="let measure of this.data.measures">-->
-<!--				<td>{{ measure.label }}</td>-->
-<!--				<td class="result-panel-measure-buttons-holder">-->
-<!--					<button class="result-panel-measure-button" (click)="removeMeasure(measure)">✖</button>-->
-<!--				</td>-->
-<!--			</tr>-->
-<!--		</table>-->
-<!--	</div>-->
 
 	<a
 		id="gray-button-result-panel-overview"
@@ -103,6 +87,6 @@
 </div>
 <div id="result-panel-invalid" *ngIf="calculationSets.length == 0">
 	<app-clock [tick]="0" [permanentlyRotating]="true" style="margin-bottom: 30px"></app-clock>
-	<p>Vul eerst de bekende informatie in.</p>
+	<p>Voeg eerst minimaal <b>1</b> risicogroep toe.</p>
 	<img src="/verkeersbord.png" alt="Verkeersbord gevaar">
 </div>

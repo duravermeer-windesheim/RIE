@@ -108,8 +108,12 @@ export class InputPanelComponent implements OnInit {
 	}
 
 
-	// Checks if all entries and dropdowns are valid.
+	// Checks if all dropdowns are valid.
 	public allValid(): boolean {
+		// These aren't loaded yet when it's first getting called.
+		if (this.dropdownChildren == undefined) {
+			return false;
+		}
 		for (let entry of this.dropdownChildren) {
 			if (!entry.isValid()) {
 				return false;
@@ -124,7 +128,6 @@ export class InputPanelComponent implements OnInit {
 
 		// Remove risk from dropdown.
 		this.riskGroupDropdowns = this.riskGroupDropdowns.filter((riskGroup: DropdownItem) => riskGroup != this.data.riskGroup);
-
 		this.reloadDropdowns();
 	}
 
@@ -132,6 +135,7 @@ export class InputPanelComponent implements OnInit {
 
 		// Fill the correct values.
 		this.data.riskGroup = dropdownConfigs['riskGroup'].defaultItems[0];
+		this.data.measures = [];
 		this.data.effect = {
 			scenarioA: dropdownConfigs['effectA'].defaultItems[0],
 			scenarioB: dropdownConfigs['effectB'].defaultItems[0],
@@ -144,6 +148,9 @@ export class InputPanelComponent implements OnInit {
 			scenarioA: dropdownConfigs['freqA'].defaultItems[0],
 			scenarioB: dropdownConfigs['freqB'].defaultItems[0],
 		};
+
+		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
+		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 
 		// Reset all interactions.
 		this.dropdownChildren.forEach(ddc => {
@@ -168,24 +175,6 @@ export class InputPanelComponent implements OnInit {
 
 		// Remove measure from the dropdown options.
 		this.currentMeasureDropdownOptions = this.currentMeasureDropdownOptions.filter(m => m.value != measureLabel);
-		this.measureElement.value = this.currentMeasureDropdownOptions[0];
-	}
-
-	// Removes the given measure from the data model.
-	public removeMeasure(measure: RiskScoreGroupCollectionModel): void {
-		// Find location of measure.
-		let measureIdx = this.spreadsheetMeasures.indexOf(measure);
-
-		// Remove the measure from the selection of measures.
-		this.data = { ...this.data, measures: this.data.measures.filter(m => m !== measure) };
-
-		// Add measure back to the dropdown option.
-		this.currentMeasureDropdownOptions.push({
-			key: measureIdx,
-			value: measure.label
-		});
-
-		// Update the dropdown.
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 	}
 

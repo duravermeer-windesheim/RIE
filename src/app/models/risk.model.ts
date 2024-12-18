@@ -13,5 +13,6 @@ export interface RiskScoreGroupModel {
 
 export interface RiskScoreModel {
 	effect: number,
+	frequency: number,
 	probability: number,
 }

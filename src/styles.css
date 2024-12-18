@@ -32,3 +32,7 @@ hr {
 	text-decoration: none;
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
 }
+.gray-button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
