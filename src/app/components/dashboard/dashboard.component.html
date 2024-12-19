@@ -15,6 +15,8 @@
 		></app-input-panel>
 	</app-panel>
 	<app-panel header="Resultaat">
-		<app-result-panel></app-result-panel>
+		<app-result-panel
+			(onSelectClock)="this.inputPanel?.selectCalculationSet($event)"
+		></app-result-panel>
 	</app-panel>
 </main>

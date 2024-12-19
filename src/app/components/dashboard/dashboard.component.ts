@@ -26,6 +26,10 @@ import {SettingsDialogComponent} from '../settings-dialog/settings-dialog.compon
 })
 export class DashboardComponent implements AfterViewInit {
 
+	@ViewChild(InputPanelComponent)
+	public inputPanel?: InputPanelComponent;
+
+
 	@ViewChild(ResultPanelComponent)
 	public resultPanel?: ResultPanelComponent;
 

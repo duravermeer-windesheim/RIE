@@ -1,4 +1,3 @@
-
 <!--<pre>{{this.calculationSets | json}}</pre>-->
 
 <div id="result-panel" *ngIf="this.calculationSets.length >= 1">
@@ -10,21 +9,25 @@
 					[tick]="this.results.scenarioAResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
+					(click)="clickClock(1)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
+					(click)="clickClock(2)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults?.vkm ?? 0"
 					[valueVisible]="true"
 					header="VKM-Ploeg"
+					(click)="clickClock(3)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
+					(click)="clickClock(4)"
 				></app-clock>
 			</div>
 		</div>
@@ -35,21 +38,25 @@
 					[tick]="this.results.scenarioBResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
+					(click)="clickClock(1)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
+					(click)="clickClock(2)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults?.vkm ?? 0"
 					[valueVisible]="true"
 					header="VKM-Ploeg"
+					(click)="clickClock(3)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
+					(click)="clickClock(4)"
 				></app-clock>
 			</div>
 		</div>
