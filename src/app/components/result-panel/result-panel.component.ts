@@ -88,7 +88,7 @@ export class ResultPanelComponent implements OnInit, OnChanges {
 	public clickClock(riskGroup: number): void {
 		let calculationSet = this.calculationSets.find(cs => cs.riskGroup.key == riskGroup);
 		if (!calculationSet) {
-			let emptyCalculationSet = emptyCalculationSetModel;
+			let emptyCalculationSet = JSON.parse(JSON.stringify(emptyCalculationSetModel));
 			emptyCalculationSet.riskGroup = dropdownConfigs['riskGroup'].defaultItems[riskGroup];
 			this.onSelectClock.emit(emptyCalculationSet);
 			return;
