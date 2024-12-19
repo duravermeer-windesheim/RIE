@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChild
 import {SharedModule} from '../../shared/shared.module';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {DropdownComponent} from '../../shared/dropdown/dropdown.component';
-import {CalculationSetModel} from '../../models/result.model';
+import {CalculationSetModel, emptyCalculationSetModel} from '../../models/result.model';
 import {dropdownConfigs} from '../../config/dropdowns.config';
 import {defaultDropdownItem, DropdownItem} from '../../models/dropdown.model';
 import {RiskScoreGroupCollectionModel} from '../../models/risk.model';
@@ -65,13 +65,9 @@ export class InputPanelComponent implements OnInit {
 		measure: defaultDropdownItem
 	}
 
-	public riskGroupDropdowns = dropdownConfigs['riskGroup'].defaultItems;
-
-
-	// Different options a frequency can have.
 	// Combined object with all relevant and known data.
-	public data: CalculationSetModel = {
-		riskGroup:this.riskGroupDropdowns[0],
+	public currentCalculationSet: CalculationSetModel = {
+		riskGroup: dropdownConfigs['riskGroup'].defaultItems[0],
 		effect: {
 			scenarioA: dropdownConfigs['effectA'].defaultItems[0],
 			scenarioB: dropdownConfigs['effectB'].defaultItems[0],
@@ -104,7 +100,7 @@ export class InputPanelComponent implements OnInit {
 
 	// Trigger the angular change detection system by re-creating the data.
 	private reloadData(): void {
-		this.data = { ...this.data }
+		this.currentCalculationSet = { ...this.currentCalculationSet }
 	}
 
 
@@ -115,6 +111,10 @@ export class InputPanelComponent implements OnInit {
 			return false;
 		}
 		for (let entry of this.dropdownChildren) {
+			if (entry == this.measureElement) {
+				return true;
+			}
+
 			if (!entry.isValid()) {
 				return false;
 			}
@@ -124,31 +124,14 @@ export class InputPanelComponent implements OnInit {
 	}
 
 	public applyRisk() {
-		this.onAddCalculationSet.emit(JSON.parse(JSON.stringify(this.data)));
+		this.onAddCalculationSet.emit(JSON.parse(JSON.stringify(this.currentCalculationSet)));
 
-		// Remove risk from dropdown.
-		this.riskGroupDropdowns = this.riskGroupDropdowns.filter((riskGroup: DropdownItem) => riskGroup != this.data.riskGroup);
 		this.reloadDropdowns();
 	}
 
 	private reloadDropdowns() {
-
 		// Fill the correct values.
-		this.data.riskGroup = dropdownConfigs['riskGroup'].defaultItems[0];
-		this.data.measures = [];
-		this.data.effect = {
-			scenarioA: dropdownConfigs['effectA'].defaultItems[0],
-			scenarioB: dropdownConfigs['effectB'].defaultItems[0],
-		};
-		this.data.probability = {
-			scenarioA: dropdownConfigs['probabilityA'].defaultItems[0],
-			scenarioB: dropdownConfigs['probabilityB'].defaultItems[0],
-		};
-		this.data.frequency = {
-			scenarioA: dropdownConfigs['freqA'].defaultItems[0],
-			scenarioB: dropdownConfigs['freqB'].defaultItems[0],
-		};
-
+		this.currentCalculationSet = JSON.parse(JSON.stringify(emptyCalculationSetModel));
 		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
 		this.measureElement.value = this.currentMeasureDropdownOptions[0];
 
@@ -170,7 +153,7 @@ export class InputPanelComponent implements OnInit {
 		}
 
 		// Add the measure.
-		this.data.measures.push(measure);
+		this.currentCalculationSet.measures.push(measure);
 		this.reloadData();
 
 		// Remove measure from the dropdown options.
@@ -180,7 +163,7 @@ export class InputPanelComponent implements OnInit {
 
 	// Resets measures and refreshes the dropdown.
 	private refreshMeasures(): void {
-		this.data.measures = [];
+		this.currentCalculationSet.measures = [];
 
 		// Grab the measures that are allowed by the current risk type.
 		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(this.spreadsheetMeasures);
@@ -188,15 +171,41 @@ export class InputPanelComponent implements OnInit {
 	}
 
 	// Sets a risk group.
+	public selectCalculationSet(calculationSet: CalculationSetModel): void {
+		this.currentCalculationSet = calculationSet;
+
+		// Remove all measures already in this data.
+		this.currentMeasureDropdownOptions = this.sheetService.mapRiskGroupsToDropdownItems(
+			this.spreadsheetMeasures.filter(ssm => !this.currentCalculationSet.measures.some(measure => measure.label == ssm.label))
+		);
+
+		this.reloadData();
+	}
+
 	public setRiskGroup(item: DropdownItem): void {
-		this.data.riskGroup = item;
+		this.currentCalculationSet = JSON.parse(JSON.stringify(emptyCalculationSetModel));
+		this.currentCalculationSet.riskGroup = item;
 
 		this.refreshMeasures();
 		this.reloadData();
 	}
 
-	public setRiskScore(scenario: 'a' | 'b',key: 'frequency' | 'probability' | 'effect', value: DropdownItem) {
+	public setRiskScore(scenario: 'a' | 'b', key: 'frequency' | 'probability' | 'effect', value: DropdownItem) {
 		let scenarioKey: 'scenarioA' | 'scenarioB' = scenario == 'a' ? 'scenarioA' : 'scenarioB';
-		this.data[key][scenarioKey] = value;
+		this.currentCalculationSet[key][scenarioKey] = value;
+	}
+
+	public removeMeasure(measure: RiskScoreGroupCollectionModel) {
+		// Remove the measure.
+		this.currentCalculationSet.measures = this.currentCalculationSet.measures.filter(m => m.label != measure.label);
+		this.reloadData();
+
+		// Add measure back to the dropdown options.
+		this.currentMeasureDropdownOptions.push({
+			key: this.spreadsheetMeasures.indexOf(measure),
+			value: measure.label
+		});
+		this.measureElement.value = this.currentMeasureDropdownOptions[0];
+
 	}
 }

@@ -40,12 +40,20 @@ export class DropdownComponent implements OnInit {
 		}
 	}
 
+	public compareByKey(item1: any, item2: any): boolean {
+		return item1?.key === item2?.key;
+	}
+
 	public isValid(): boolean {
-		if (!this.config.required && this.value.key !== -1) {
+		try {
+			if ((!this.config?.required) && this.value.key !== -1) {
+				return true;
+			}
+
+			return this.value.key !== -1;
+		} catch {
 			return true;
 		}
-
-		return this.value.key !== -1;
 	}
 
 	public onChange(): void {

@@ -1,4 +1,3 @@
-
 <!--<pre>{{this.calculationSets | json}}</pre>-->
 
 <div id="result-panel" *ngIf="this.calculationSets.length >= 1">
@@ -10,21 +9,25 @@
 					[tick]="this.results.scenarioAResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
+					(click)="clickClock(1)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
+					(click)="clickClock(2)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults?.vkm ?? 0"
 					[valueVisible]="true"
 					header="VKM-Ploeg"
+					(click)="clickClock(3)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioAResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
+					(click)="clickClock(4)"
 				></app-clock>
 			</div>
 		</div>
@@ -35,21 +38,25 @@
 					[tick]="this.results.scenarioBResults?.motorist ?? 0"
 					[valueVisible]="true"
 					header="Automobilist"
+					(click)="clickClock(1)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults?.residents ?? 0"
 					[valueVisible]="true"
 					header="Omwonende"
+					(click)="clickClock(2)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults?.vkm ?? 0"
 					[valueVisible]="true"
 					header="VKM-Ploeg"
+					(click)="clickClock(3)"
 				></app-clock>
 				<app-clock
 					[tick]="this.results.scenarioBResults?.roadWorker ?? 0"
 					[valueVisible]="true"
 					header="Wegwerkers"
+					(click)="clickClock(4)"
 				></app-clock>
 			</div>
 		</div>
@@ -67,7 +74,7 @@
 	<p><strong>Advies </strong></p>
 	<p>Op basis van deze risicocijfers raden wij het scenario
 		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'a' ?? 'even'">Verkeer omleiden aan.</span>
-		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'b' ?? 'even'">Langs werkvlak aan.</span>
+		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'b' ?? 'even'">Langs werkvak aan.</span>
 		<span class="emphasized-span" *ngIf="this.results?.advice?.advisedScenario == 'even' ?? 'even'">niet aan, gezien de risiconummers precies hetzelfde zijn.</span>
 	</p>
 	<p *ngIf="results?.advice?.advisedMeasures ? results?.advice?.advisedMeasures?.length : false ">

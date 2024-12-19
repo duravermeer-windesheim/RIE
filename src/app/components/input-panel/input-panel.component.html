@@ -1,7 +1,7 @@
 <app-dropdown
 	[config]="this.dropdowns['riskGroup']"
-	[items]="this.riskGroupDropdowns"
-	[value]="this.data.riskGroup"
+	[items]="this.dropdowns['riskGroup'].defaultItems"
+	[value]="this.currentCalculationSet.riskGroup"
 	(onValueChange)="this.setRiskGroup($event)"
 	#riskGroup
 ></app-dropdown>
@@ -14,13 +14,13 @@
 		<p>Waarschijnlijkheid</p>
 		<div class="input-panel-risk-scores-set-dropdowns">
 			<app-dropdown
-				[value]="this.data.probability.scenarioA"
+				[value]="this.currentCalculationSet.probability.scenarioA"
 				[config]="this.dropdowns['probabilityA']"
 				[items]="this.dropdowns['probabilityA'].defaultItems"
 				(onValueChange)="this.setRiskScore('a', 'probability', $event)"
 			></app-dropdown>
 			<app-dropdown
-				[value]="this.data.probability.scenarioB"
+				[value]="this.currentCalculationSet.probability.scenarioB"
 				[config]="this.dropdowns['probabilityB']"
 				[items]="this.dropdowns['probabilityB'].defaultItems"
 				(onValueChange)="this.setRiskScore('b', 'probability', $event)"
@@ -33,13 +33,13 @@
 		<p>Blootstelling</p>
 		<div class="input-panel-risk-scores-set-dropdowns">
 			<app-dropdown
-				[value]="this.data.frequency.scenarioA"
+				[value]="this.currentCalculationSet.frequency.scenarioA"
 				[config]="this.dropdowns['freqA']"
 				[items]="this.dropdowns['freqA'].defaultItems"
 				(onValueChange)="this.setRiskScore('a', 'frequency', $event)"
 			></app-dropdown>
 			<app-dropdown
-				[value]="this.data.frequency.scenarioB"
+				[value]="this.currentCalculationSet.frequency.scenarioB"
 				[config]="this.dropdowns['freqB']"
 				[items]="this.dropdowns['freqB'].defaultItems"
 				(onValueChange)="this.setRiskScore('b', 'frequency', $event)"
@@ -52,13 +52,13 @@
 		<p>Effect</p>
 		<div class="input-panel-risk-scores-set-dropdowns">
 			<app-dropdown
-				[value]="this.data.effect.scenarioA"
+				[value]="this.currentCalculationSet.effect.scenarioA"
 				[config]="this.dropdowns['effectA']"
 				[items]="this.dropdowns['effectA'].defaultItems"
 				(onValueChange)="this.setRiskScore('a', 'effect', $event)"
 			></app-dropdown>
 			<app-dropdown
-				[value]="this.data.effect.scenarioB"
+				[value]="this.currentCalculationSet.effect.scenarioB"
 				[config]="this.dropdowns['effectB']"
 				[items]="this.dropdowns['effectB'].defaultItems"
 				(onValueChange)="this.setRiskScore('b', 'effect', $event)"
@@ -87,10 +87,14 @@
 		id="gray-button-input-panel-measure"
 		class="gray-button"
 		(click)="this.addSelectedMeasure()"
+		[disabled]="!this.riskGroup.isValid()"
 		*ngIf="this.currentMeasureDropdownOptions.length > 0"
 	>Pas maatregel toe</button>
-	<ul>
-		<li *ngFor="let measure of this.data.measures">{{ measure.label }}</li>
-	</ul>
+	<table>
+		<tr *ngFor="let measure of this.currentCalculationSet.measures">
+			<td class="input-panel-measure-delete-button" (click)="removeMeasure(measure)">×</td>
+			<td>{{ measure.label }}</td>
+		</tr>
+	</table>
 </div>
 

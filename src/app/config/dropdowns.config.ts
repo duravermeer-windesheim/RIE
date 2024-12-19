@@ -30,6 +30,7 @@ const effectDropdownItems: DropdownItem[] = [
 	{ key: 40, value: '40 | Meerdere doden' },
 ];
 
+// Due to some bad structuring, the keys need to match the indexes here
 const riskGroupDropdownItems: DropdownItem[] = [
 	defaultDropdownItem,
 	{ key: 1, value: 'Automobilist' },

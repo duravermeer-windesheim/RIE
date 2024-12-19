@@ -16,6 +16,7 @@
 		[(ngModel)]="this.value"
 		(ngModelChange)="onChange()"
 		[disabled]="this.disabled"
+		[compareWith]="compareByKey"
 		[class.no-arrow]="this.items.length <= 1">
 		<option
 			*ngFor="let item of this.items"

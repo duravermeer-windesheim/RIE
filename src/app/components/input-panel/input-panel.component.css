@@ -57,3 +57,18 @@ app-entry {
 	text-align: center;
 	margin: 0 0 -10px;
 }
+
+.input-panel-measure-delete-button {
+	color: red;
+	width: 20px;
+	height: 20px;
+	padding: 6px;
+	margin: 2px;
+	cursor: pointer;
+	border-radius: 50%;
+	transition: background-color 300ms;
+	text-align: center;
+}
+.input-panel-measure-delete-button:hover {
+	background-color: rgba(255, 255, 255, 0.4);
+}
